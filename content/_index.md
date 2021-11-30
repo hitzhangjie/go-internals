@@ -26,7 +26,6 @@ nunc! Fragosis suae dextra geruntur functus vulgata.
 
 {{< /columns >}}
 
-
 ## Go语言之我见
 
 Lorem **markdownum** emicat gestu. Cannis sol pressit ducta. **Est** Idaei,

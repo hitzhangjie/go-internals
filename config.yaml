@@ -8,6 +8,7 @@ theme: hugo-book
 disablePathToLower: true
 enableGitInfo: false
 defaultContentLanguage: zh
+publishDir: docs
 
 # Needed for mermaid/katex shortcodes
 markup:
@@ -60,7 +61,7 @@ params:
   # BookMenuBundle: /menu
 
   # (Optional, default docs) Specify root page to render child pages as menu.
-  # Page is resoled by .GetPage function: https://gohugo.io/functions/getpage/
+  # Page is resolved by .GetPage function: https://gohugo.io/functions/getpage/
   # For backward compatibility you can set '*' to render all sections to menu. Acts same as '/'
   BookSection: docs
 
@@ -73,7 +74,7 @@ params:
   # Requires 'BookRepo' param.
   # Value used to construct a URL consisting of BookRepo/BookCommitPath/<commit-hash>
   # Github uses 'commit', Bitbucket uses 'commits'
-  # BookCommitPath: commit
+  BookCommitPath: commit
 
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.
