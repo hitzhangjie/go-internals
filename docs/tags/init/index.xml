@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>init on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/init/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/init/</link>
     <description>Recent content in init on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/init/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/init/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>init functions</title>
-      <link>https://hitzhangjie.pro/posts/init-functions/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/init-functions/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/init-functions/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/init-functions/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了go程序中func init()函数的调用时机以及如何避免重复调用的。
 package a依赖package b，那么先执行b中的全局变量初始化、func init函数，再执行a中的全局变量初始化、func init函数，这些都是在执行main.main之前完成的。
 Source Analysis #  References #   https://medium.com/a-journey-with-go/go-init-functions-319dbb12831c  </description>

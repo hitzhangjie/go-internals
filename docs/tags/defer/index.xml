@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>defer on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/defer/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/defer/</link>
     <description>Recent content in defer on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/defer/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/defer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>defer internals</title>
-      <link>https://hitzhangjie.pro/posts/defer-internals/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/defer-internals/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/defer-internals/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/defer-internals/</guid>
       <description>Let&amp;rsquo;s Summarize #  本文内容很多，我只关注了其对openDefer的解释，一个openDefer的defer，或者说一个open-coded defer指的是这样的defer，不是在for循环中被调用的defer。
 举个例子：
 func TestOpenAndNonOpenDefers(t *testing.T) { // f() is a more complicated function that is recover()&amp;ldquo;ed for { defer f() // &amp;lt;&amp;ndash; non open-coded defer } defer f() // &amp;lt;&amp;ndash; open-coded defer }

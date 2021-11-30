@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>syscall on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/syscall/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/syscall/</link>
     <description>Recent content in syscall on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/syscall/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/syscall/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>how does go runtime handles syscall</title>
-      <link>https://hitzhangjie.pro/posts/how-does-go-runtime-handles-syscall/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-runtime-handles-syscall/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-does-go-runtime-handles-syscall/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-runtime-handles-syscall/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了linux系统调用的一种分类方式：阻塞型系统调用和非阻塞型系统调用。
 线程执行阻塞型系统调用时，一定会陷入不可中断等待状态，除了内核本身，没有任何外部事件可以将线程唤醒。go runtime需要感知对阻塞型系统调用的使用，避免线程被阻塞导致无线程调度goroutines。
 go对系统调用进行了包装，阻塞型系统调用对应的是Syscall，非阻塞型系统调用是RawSyscall，后者不会导致线程阻塞，没什么好讨论的，我们只讨论Syscall。

@@ -13,17 +13,17 @@
  解析阶段：对每个源文件进行词法分析、语法分析，并构建对应的语法树； 类型检查和语法树转换：进行类型检查，如名字解析、类型推断、函数定义是否结束、是否存在但定义未使用的问题。然后还会转换为抽象语法树AST，这个过程中还会根据类型信息做一系列调整优化，如函数内联、deadcode移除等；  以上两个阶段经常成为编译器的frontend，那后端backend指的是哪几个阶段呢？
  generic SSA：AST被转换成SSA（静态单赋值）形式，它是一种中间代码表示，在它基础上可以方便做优化，并转换为机器指令。这个阶段有些rewrite规则，编译器会使用一些高度优化的指令来替换掉一些特殊的内置函数，如cap、len、copy等（前面提过这些函数是没有函数体实现的），了解更多see https://en.wikipedia.org/wiki/Intrinsic_function。这个阶段还会有些节点的形式被做进一步转换，如copy、range别转换成为mov、for-loop等。然后会做有多遍与机器无关的操作和重写，如deadcode移除、nilcheck等等； 生成机器指令：编译器中机器相关的优化从ssa lower pass就开始了，会不断的做出一些更加接近机器低级细节的优化，直到达到机器低级特性之后，最终代码优化就开始了。比如deadcode移除，将value移到最近访问的地方，移除无用的局部变量和不必要的寄存器分配。还有会对栈帧中的变量计算好偏移量，访问更快，并计算GC safepoint处哪些栈上的指针可以保持liveness。ssa生成阶段，go函数被转换为一系列的obj.Prog指令，然后再由汇编器生成目标文件，其中包含了反射数据、导出数据、调试信息。  Source Analysis #  References #   https://github.com/golang/go/blob/release-branch.go1.13/src/cmd/compile/README.md  " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" /><meta property="article:section" content="docs" />
+<meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler/" /><meta property="article:section" content="docs" />
 
 
 
 <title>introduction to the go compiler | Go设计实现内幕</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
-<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+<link rel="manifest" href="/go-internals-v2/manifest.json">
+<link rel="icon" href="/go-internals-v2/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/go-internals-v2/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/go-internals-v2/zh.search.min.11c7f9052a0367999d4ad7c1d4a6e855fff004ebbb45683eed1b2e9995a0bd03.js" integrity="sha256-Ecf5BSoDZ5mdStfB1KboVf/wBOu7RWg&#43;7RsumZWgvQM="></script>
 
-<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<script defer src="/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js" integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -41,7 +41,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  <a href="/go-internals-v2"><img src="/go-internals-v2/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
   </a>
 </h2>
 
@@ -77,7 +77,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/preface/" class="">前言</a>
   
 
         </li>
@@ -90,7 +90,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/introduction/" class="">简介</a>
   
 
         </li>
@@ -103,7 +103,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/" class="">Table of Contents</a>
   
 
           
@@ -116,7 +116,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/with-toc/" class="">With ToC</a>
   
 
         </li>
@@ -129,7 +129,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/without-toc/" class="">Without ToC</a>
   
 
         </li>
@@ -163,7 +163,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/" class="">3rd Level</a>
   
 
           
@@ -176,7 +176,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
   
 
         </li>
@@ -215,7 +215,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
   
 
         </li>
@@ -228,7 +228,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
   
 
         </li>
@@ -241,7 +241,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
   
 
         </li>
@@ -254,7 +254,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
   
 
         </li>
@@ -267,7 +267,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
   
 
         </li>
@@ -280,7 +280,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
   
 
         </li>
@@ -293,7 +293,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
   
 
         </li>
@@ -306,7 +306,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
   
 
         </li>
@@ -319,7 +319,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class=" active">introduction to the go compiler</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler/" class=" active">introduction to the go compiler</a>
   
 
         </li>
@@ -332,7 +332,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
   
 
         </li>
@@ -345,7 +345,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
   
 
         </li>
@@ -358,7 +358,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
   
 
         </li>
@@ -371,7 +371,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
   
 
         </li>
@@ -384,7 +384,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
   
 
         </li>
@@ -435,7 +435,7 @@ https://github.com/alex-shpak/hugo-book
 <ul>
   
   <li>
-    <a href="/posts/" >
+    <a href="/go-internals-v2/posts/" >
         Posts
       </a>
   </li>
@@ -476,14 +476,14 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+    <img src="/go-internals-v2/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
   <strong>introduction to the go compiler</strong>
 
   <label for="toc-control">
     
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    <img src="/go-internals-v2/svg/toc.svg" class="book-icon" alt="Table of Contents" />
     
   </label>
 </div>
@@ -558,7 +558,7 @@ https://github.com/alex-shpak/hugo-book
 <div class="book-languages" tabindex="0" aria-haspopup="true">
   <ul>
     <li class="flex align-center">
-      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      <img src="/go-internals-v2/svg/translate.svg" class="book-icon" alt="Languages" />
       Chinese
     </li> 
   </ul>
@@ -566,15 +566,15 @@ https://github.com/alex-shpak/hugo-book
   <ul class="book-languages-list">
     
     <li class="active">
-      <a href="https://hitzhangjie.pro/" class="flex align-center">
-        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      <a href="https://hitzhangjie.pro/go-internals-v2/" class="flex align-center">
+        <img src="/go-internals-v2/svg/translate.svg" class="book-icon" alt="Languages" />
         Chinese
       </a>
     </li>
     
     <li class="">
-      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
-        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      <a href="https://hitzhangjie.pro/go-internals-v2/en/" class="flex align-center">
+        <img src="/go-internals-v2/svg/translate.svg" class="book-icon" alt="Languages" />
         English
       </a>
     </li>
@@ -589,7 +589,7 @@ https://github.com/alex-shpak/hugo-book
 
   <div>
     <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/docs/compiler/introduction%20to%20the%20go%20compiler.md" target="_blank" rel="noopener">
-      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <img src="/go-internals-v2/svg/edit.svg" class="book-icon" alt="Edit" />
       <span>编辑本页</span>
     </a>
   </div>

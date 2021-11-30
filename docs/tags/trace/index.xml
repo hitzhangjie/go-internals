@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>trace on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/trace/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/trace/</link>
     <description>Recent content in trace on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/trace/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/trace/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>discovery of the trace package</title>
-      <link>https://hitzhangjie.pro/posts/discovery-of-the-trace-package/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/discovery-of-the-trace-package/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/discovery-of-the-trace-package/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/discovery-of-the-trace-package/</guid>
       <description>Let&amp;rsquo;s Summarize #  如何激活trace？
 go test -trace，通过选项-trace来激活trace功能，我们可以通过trace package提供的方法来增强默认的trace能力，下面简单总结下。
 go test -trace，或者代码中通过trace.Start()/defer trace.Stop来输出trace数据到文件都可以。然后通过go tool trace trace文件，即可进行可视化展示。

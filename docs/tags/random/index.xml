@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>random on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/random/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/random/</link>
     <description>Recent content in random on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/random/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/random/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>how are random numbers generated</title>
-      <link>https://hitzhangjie.pro/posts/how-are-random-numbers-generated/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-are-random-numbers-generated/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-are-random-numbers-generated/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-are-random-numbers-generated/</guid>
       <description>Let&amp;rsquo;s Summarize #  go标准库提供了两个package来生成随机数：math/rand和crypto/rand。
   math/rand：生成的是伪随机数，可以通过rand.Seed(int)指定种子，然后math/rand会根据种子生成一个sequence source，然后rand.Int()生成随机数，但是因为这里的sequence source是固定的，所以生成的随机数是可预测的。
   crypto/rand：这种方式做了更多的数学运算，可以实现更好的随机性；

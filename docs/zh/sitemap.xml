@@ -2,399 +2,399 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hitzhangjie.pro/docs/table-of-contents/with-toc/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/with-toc/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/preface/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/preface/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/introduction/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/introduction/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/table-of-contents/without-toc/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/without-toc/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/table-of-contents/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/collapsed/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/collapsed/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/</loc>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://hitzhangjie.pro/en/docs/"
+                href="https://hitzhangjie.pro/go-internals-v2/en/docs/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://hitzhangjie.pro/docs/"
+                href="https://hitzhangjie.pro/go-internals-v2/docs/"
                 />
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/4th-level/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/collapsed/3rd-level/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/hidden/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/hidden/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/runtime/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/runtime/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/SUMMARY/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/SUMMARY/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/buttons/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/buttons/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/columns/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/columns/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/details/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/details/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/expand/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/expand/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/hints/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/hints/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/katex/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/katex/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/mermaid/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/mermaid/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/section/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/section/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/section/page1/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/section/page1/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/section/page2/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/section/page2/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/tabs/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/tabs/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/a-race-detector-unfurled/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/a-race-detector-unfurled/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/aliases-simple-and-efficient/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/aliases-simple-and-efficient/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/aliases-simple-and-efficient/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/an-insight-into-go-garbage-collector/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/an-insight-into-go-garbage-collector/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/ast/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/ast/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/asynchronous-preemption/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/asynchronous-preemption/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/buffered-and-unbuffered-channels/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/buffered-and-unbuffered-channels/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/build-a-better-linker/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/build-a-better-linker/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/builds-linkers-timeline/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/builds-linkers-timeline/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/builds-linkers-timeline/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/built-in-functions-optimizations/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/built-in-functions-optimizations/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/built-in-functions-optimizations/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/categories/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://hitzhangjie.pro/en/categories/"
+                href="https://hitzhangjie.pro/go-internals-v2/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://hitzhangjie.pro/categories/"
+                href="https://hitzhangjie.pro/go-internals-v2/categories/"
                 />
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/chan/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/chan/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/chan-select-case/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/chan-select-case/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/closure/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/closure/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/compiler-linker/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/compiler-linker/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/concurrency/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/concurrency/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/concurrency-scheduler-affinity/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/concurrency-scheduler-affinity/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/concurrent-access-with-maps-part-3/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/concurrent-access-with-maps-part-3/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/context/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/context/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/context-and-cancellation-by-propagation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/context-and-cancellation-by-propagation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/debug/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/debug/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/debugging-with-delve-coredumps/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/debugging-with-delve-coredumps/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/defer/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/defer/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/defer-internals/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/defer-internals/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/defer-panic/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/defer-panic/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/defer-panic-recover/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/defer-panic-recover/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/demystifying-memory-management-in-modern-programming-languages/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/demystifying-memory-management-in-modern-programming-languages/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/design-philosophy-on-data-and-semantics/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/design-philosophy-on-data-and-semantics/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/diagnostics/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/diagnostics/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/diagnostics-methods/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/diagnostics-methods/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/discovery-of-the-trace-package/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/discovery-of-the-trace-package/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/finalizers/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/finalizers/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/fuzzy-test/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/fuzzy-test/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/g0-special-goroutines/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/g0-special-goroutines/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/garbage-collector/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/garbage-collector/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/go-GC-latency-problem-solved/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/go-GC-latency-problem-solved/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/go-GC-prioritizing-low-latency-and-simplicity/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/go-GC-prioritizing-low-latency-and-simplicity/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/GOMAXPROCS-live-updates/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/GOMAXPROCS-live-updates/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/goroutine/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/goroutine/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/goroutine-and-preemption/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-and-preemption/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/goroutine-gpm-scheduler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/goroutine-gpm-scheduler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/goroutine-os-thread-and-cpu-management/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-os-thread-and-cpu-management/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/goroutine-select-case/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/goroutine-select-case/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/gpm-scheduler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/gpm-scheduler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/gsignal-master-of-signals/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/gsignal-master-of-signals/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/how-go-build-works/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-go-build-works/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-go-build-works/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-go-build-works/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-are-loops-translated-to-assembly/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-are-loops-translated-to-assembly/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-are-loops-translated-to-assembly/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-are-random-numbers-generated/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-are-random-numbers-generated/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-a-goroutine-start-and-exit/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-goroutine-start-and-exit/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-a-program-recover/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-program-recover/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-defer-statement-work/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-defer-statement-work/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-GC-mark-the-memory/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-GC-mark-the-memory/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-GC-watch-your-application/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-GC-watch-your-application/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-go-implement-closures/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-implement-closures/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-go-recycle-goroutines/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-recycle-goroutines/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-go-runtime-handles-syscall/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-runtime-handles-syscall/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-does-go-stop-the-world/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-stop-the-world/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-goroutine-stack-size-evolve/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-goroutine-stack-size-evolve/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-to-reduce-lock-contention-with-the-atomic-package/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-to-reduce-lock-contention-with-the-atomic-package/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-to-take-advantage-of-symbols-tables/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/how-to-take-advantage-of-symbols-tables/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/how-to-take-advantage-of-symbols-tables/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/init/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/init/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/init-functions/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/init-functions/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/inline-strategy-limitation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/inline-strategy-limitation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/inline-strategy-limitation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/instrumentation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/instrumentation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/instrumentation-in-go/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/instrumentation-in-go/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/interface/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/interface/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-escape-analysis/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/introduction-to-the-escape-analysis/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/introduction-to-the-escape-analysis/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/introduction-to-the-go-compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/introduction-to-the-go-compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler-ssa-backend/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/introduction-to-the-go-compiler-ssa-backend/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/introduction-to-the-go-compiler-ssa-backend/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/keeping-a-variable-alive/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/keeping-a-variable-alive/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/language-mechanics-on-stacks-and-pointers/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/language-mechanics-on-stacks-and-pointers/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/language-semantics-on-escape-analysis/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/language-semantics-on-escape-analysis/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/language-semantics-on-memory-profiling/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/language-semantics-on-memory-profiling/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/learn-go-with-tests/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/learn-go-with-tests/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/linker/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/linker/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/locks/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/locks/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/locks-sync.Mutex-internals/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/locks-sync.Mutex-internals/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/map/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/map/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/map-design-by-code-part-1/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/map-design-by-code-part-1/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/map-design-by-code-part-2/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/map-design-by-code-part-2/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/map-race-detector/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/map-race-detector/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/mechanics/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/mechanics/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/memory-management/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/memory-management/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/memory-management-and-allocation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/memory-management-and-allocation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/memory-management-and-memory-sweep/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/memory-management-and-memory-sweep/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/memory-safety-with-bounds-check/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/memory-safety-with-bounds-check/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/memory-safety-with-bounds-check/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/monitor/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/monitor/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/monitor-pattern/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/monitor-pattern/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/mutex-and-starvation/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/mutex-and-starvation/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/object-file-relocations/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/object-file-relocations/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/observing-stack-grow-and-shrink/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/observing-stack-grow-and-shrink/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/ordering-in-select-statements/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/ordering-in-select-statements/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/overview-of-the-compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/overview-of-the-compiler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/overview-of-the-compiler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/pointer/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/pointer/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://hitzhangjie.pro/en/posts/"
+                href="https://hitzhangjie.pro/go-internals-v2/en/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://hitzhangjie.pro/posts/"
+                href="https://hitzhangjie.pro/go-internals-v2/posts/"
                 />
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/pprof/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/pprof/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/practical-fuzzing-with-go/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/practical-fuzzing-with-go/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/race-detector/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/race-detector/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/race-detector-with-thread-sanitizer/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/race-detector-with-thread-sanitizer/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/random/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/random/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/rethinking-classical-concurrency-patterns/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/rethinking-classical-concurrency-patterns/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/samples-collection-with-pprof/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/samples-collection-with-pprof/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/scheduling-in-go-part-i-os-scheduler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/scheduling-in-go-part-i-os-scheduler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/scheduling-in-go-part-ii-go-scheduler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/scheduling-in-go-part-ii-go-scheduler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/scheduling-in-go-part-iii-concurrency/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/scheduling-in-go-part-iii-concurrency/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/should-i-use-pointer-instead-of-a-copy-of-struct/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/should-i-use-pointer-instead-of-a-copy-of-struct/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/slice-and-memory-management/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/slice-and-memory-management/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/slice-and-memory-management/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/string/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/string/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/string-conversion-optimization/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/string-conversion-optimization/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/sync.pool/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/sync.pool/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/syscall/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/syscall/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://hitzhangjie.pro/en/tags/"
+                href="https://hitzhangjie.pro/go-internals-v2/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://hitzhangjie.pro/tags/"
+                href="https://hitzhangjie.pro/go-internals-v2/tags/"
                 />
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/tdd-test/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/tdd-test/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/test/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/test/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/the-garbage-collection-handbook/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/the-garbage-collection-handbook/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/the-rules-of-unsafe.Pointer-and-uintptr/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/the-rules-of-unsafe.Pointer-and-uintptr/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/timer/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/timer/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/timers-life-cycle/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/timers-life-cycle/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/trace/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/trace/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/tracing-garbage-collection/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/tracing-garbage-collection/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/understand-the-design-of-sync.pool/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/understand-the-design-of-sync.pool/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/understand-the-empty-interface/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/understand-the-empty-interface/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/docs/compiler/understanding-compiler-directives/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/understanding-compiler-directives/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/understanding-compiler-directives/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/unknown-parts-of-the-test-package/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/unknown-parts-of-the-test-package/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/tags/unsafe/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/tags/unsafe/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/visualize-your-go-code/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/visualize-your-go-code/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/visualizing-memory-management-in-go/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/visualizing-memory-management-in-go/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/what-does-a-goroutine-switch-actually-involve/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/what-does-a-goroutine-switch-actually-involve/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/what-is-the-unsafe-package/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/what-is-the-unsafe-package/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/posts/work-stealing-in-go-scheduler/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/posts/work-stealing-in-go-scheduler/</loc>
   </url><url>
-    <loc>https://hitzhangjie.pro/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://hitzhangjie.pro/en/"
+                href="https://hitzhangjie.pro/go-internals-v2/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="https://hitzhangjie.pro/"
+                href="https://hitzhangjie.pro/go-internals-v2/"
                 />
   </url><url>
-    <loc>https://hitzhangjie.pro/examples/shortcodes/</loc>
+    <loc>https://hitzhangjie.pro/go-internals-v2/examples/shortcodes/</loc>
   </url>
 </urlset>

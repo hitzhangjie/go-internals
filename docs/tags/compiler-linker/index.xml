@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>compiler, linker on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/compiler-linker/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/compiler-linker/</link>
     <description>Recent content in compiler, linker on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/compiler-linker/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/compiler-linker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>builds &amp; linker&#34;s timeline</title>
-      <link>https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/compiler/builds-linkers-timeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/compiler/builds-linkers-timeline/</guid>
       <description>Let&amp;rsquo;s Summarize #  go build涉及到的工作步骤包括：
  创建临时工作目录； 编译各个package及其依赖； 链接器连接成可执行程序； 将可执行程序移动到当前目录，并删除临时工作目录；  go build -x会显示整个编译过程中执行的命令，在编译链接过程中，由于编译可能会涉及到应用编译缓存，链接器链接部分的耗时则会变得很突出，如何优化链接器提升其效率就变得很重要。
 linker的目的是为了构建一个可执行程序，其步骤包括：
@@ -22,10 +22,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-builds
     
     <item>
       <title>builds &amp; linker&#34;s timeline</title>
-      <link>https://hitzhangjie.pro/posts/builds-linkers-timeline/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/builds-linkers-timeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/builds-linkers-timeline/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/builds-linkers-timeline/</guid>
       <description>Let&amp;rsquo;s Summarize #  go build涉及到的工作步骤包括：
  创建临时工作目录； 编译各个package及其依赖； 链接器连接成可执行程序； 将可执行程序移动到当前目录，并删除临时工作目录；  go build -x会显示整个编译过程中执行的命令，在编译链接过程中，由于编译可能会涉及到应用编译缓存，链接器链接部分的耗时则会变得很突出，如何优化链接器提升其效率就变得很重要。
 linker的目的是为了构建一个可执行程序，其步骤包括：
@@ -37,10 +37,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-builds
     
     <item>
       <title>how &#34;go build&#34; works</title>
-      <link>https://hitzhangjie.pro/docs/compiler/how-go-build-works/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-go-build-works/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/docs/compiler/how-go-build-works/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-go-build-works/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了go编译过程中的一系列步骤，这里的介绍不是从编译器编译经过几个步骤，而是从工具角度来说，重点做了什么工作：
  创建临时目录$WORK； 根据源码构建action graph，根节点是main package，对应的构建子目录是b001，其他依赖也有对应的节点，也有对应构建目录，目录编号通常是递增的； 构建过程中从叶子节点开始构建，然后构建父节点，持续下去直到根节点构建完成； 在构建过程中，每个编译单元对应的*.o或者*.a文件包括最后的可执行程序都会写入一个buildid，它包括actionid/contentid两部分构成，它用于创建索引缓存之前的编译输出，提升后续编译过程中的效率；  Source Analysis #  关于action及action graph，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go
 每个依赖对应的编译目录，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go#L318
@@ -50,10 +50,10 @@ References #   https://maori.geek.nz/how-go-build-works-750bb2ba6d8e  </descript
     
     <item>
       <title>how &#34;go build&#34; works</title>
-      <link>https://hitzhangjie.pro/posts/how-go-build-works/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-go-build-works/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-go-build-works/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-go-build-works/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了go编译过程中的一系列步骤，这里的介绍不是从编译器编译经过几个步骤，而是从工具角度来说，重点做了什么工作：
  创建临时目录$WORK； 根据源码构建action graph，根节点是main package，对应的构建子目录是b001，其他依赖也有对应的节点，也有对应构建目录，目录编号通常是递增的； 构建过程中从叶子节点开始构建，然后构建父节点，持续下去直到根节点构建完成； 在构建过程中，每个编译单元对应的*.o或者*.a文件包括最后的可执行程序都会写入一个buildid，它包括actionid/contentid两部分构成，它用于创建索引缓存之前的编译输出，提升后续编译过程中的效率；  Source Analysis #  关于action及action graph，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go
 每个依赖对应的编译目录，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go#L318

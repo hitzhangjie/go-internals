@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>defer, panic, recover on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/defer-panic-recover/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/defer-panic-recover/</link>
     <description>Recent content in defer, panic, recover on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/defer-panic-recover/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/defer-panic-recover/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>how does a program recover</title>
-      <link>https://hitzhangjie.pro/posts/how-does-a-program-recover/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-program-recover/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-does-a-program-recover/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-program-recover/</guid>
       <description>Let&amp;rsquo;s Summarize #  defer对应newdefer panic对应gopanic recover对应gorecover
 defer细节：
 defer调用会创建_defer对象并添加到g._defer，_defer通过内部的_defer.link构成了一个LIFO的defer栈，函数return（runtime.deferreturn）或者panic（内部会遍历g._defer并执行）时，就按照栈的方式来执行注册的defer函数。

@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>unsafe on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/unsafe/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/unsafe/</link>
     <description>Recent content in unsafe on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/unsafe/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/unsafe/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>what is the unsafe package</title>
-      <link>https://hitzhangjie.pro/posts/what-is-the-unsafe-package/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/what-is-the-unsafe-package/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/what-is-the-unsafe-package/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/what-is-the-unsafe-package/</guid>
       <description>Let&amp;rsquo;s Summarize #  package unsafe，见名知意，就是不安全，而且有可能代码后续会不兼容，因为unsafe的实现依赖go内部实现，比如数据类型的内部表示。
 go文档中有明确指出：
  package unsafe包含了一些可能破坏go类型安全的操作； 引用package unsafe的代码兼容性差，并且不受Go 1 兼容性指引保护；  1 类型安全

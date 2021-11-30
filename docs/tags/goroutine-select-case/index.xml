@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>goroutine, select-case on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/goroutine-select-case/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/goroutine-select-case/</link>
     <description>Recent content in goroutine, select-case on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/goroutine-select-case/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/goroutine-select-case/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>g0, special goroutines</title>
-      <link>https://hitzhangjie.pro/posts/g0-special-goroutines/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/g0-special-goroutines/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/g0-special-goroutines/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/g0-special-goroutines/</guid>
       <description>Let&amp;rsquo;s Summarize #  goroutines是由go scheduler来调度的，go scheduler在某些goroutine出现阻塞的时候调度其他goroutines继续执行，以提高cpu的利用率。
 goroutines其实是运行在操作系统线程里面的，GOMAXPROCS限制了最多可以并发执行的线程数量（实际线程可能有阻塞的，线程总数会大于等于该环境变量值）。go scheduler负责将goroutines调度到操作系统线程上执行，在程序初始化阶段，会为每个持有P的线程M创建一个特殊的协程g0，这里的g0其实就是会干go scheduler的工作，g0会调度就绪的goroutines在关联的线程M上执行。
 g0的职责

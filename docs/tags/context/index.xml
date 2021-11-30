@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>context on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/context/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/context/</link>
     <description>Recent content in context on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/context/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/context/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>context and cancellation by propagation</title>
-      <link>https://hitzhangjie.pro/posts/context-and-cancellation-by-propagation/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/context-and-cancellation-by-propagation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/context-and-cancellation-by-propagation/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/context-and-cancellation-by-propagation/</guid>
       <description>Let&amp;rsquo;s Summarize #  context有两个特殊的context.TODO()和context.Background()，这两个context是永远不会超时和取消的，实际上它们都是emptyCtx{}。
 context tree：
 通过一个context可以派生其他子context，从而形成一棵context tree。比如cancelCtx中通过字段children维护了parent context和derived contexts的派生关系。

@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>tdd, test on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/tdd-test/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/tdd-test/</link>
     <description>Recent content in tdd, test on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/tdd-test/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/tdd-test/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>learn-go-with-tests</title>
-      <link>https://hitzhangjie.pro/posts/learn-go-with-tests/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/learn-go-with-tests/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/learn-go-with-tests/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/learn-go-with-tests/</guid>
       <description>Let&amp;rsquo;s Summarize #  通过测试来学习go的使用，掌握tdd测试驱动开发模式。
 tdd遵循如下开发模式：
  write a test make the compiler pass run test, see that it fails and check the error message is meaningful write enough code to make the test pass refactor  tdd遵循上述流程的意义：

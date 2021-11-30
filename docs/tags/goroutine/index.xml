@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>goroutine on Go设计实现内幕</title>
-    <link>https://hitzhangjie.pro/tags/goroutine/</link>
+    <link>https://hitzhangjie.pro/go-internals-v2/tags/goroutine/</link>
     <description>Recent content in goroutine on Go设计实现内幕</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/tags/goroutine/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/goroutine/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>asynchronous preemption</title>
-      <link>https://hitzhangjie.pro/posts/asynchronous-preemption/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/asynchronous-preemption/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/asynchronous-preemption/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/asynchronous-preemption/</guid>
       <description>Let&amp;rsquo;s Summarize #  这里的异步抢占，就是我们说的抢占式调度了，是通过SIGURG信号、信号处理、协程调度来共同实现的。
 首先，正如前面介绍的，go程序中有一个sysmon线程，它会定期检查所有的P，检查其是否运行时间超过了10ms，如果超过了则执行抢占逻辑，preemptone(p)，其内部其实是设置P上当前g的preempt标记位为true，然后再尝试去抢占p.m，preemptM(p.m)，这个preemptM内部会给m这个线程发送一个SIGURG信号。
 前面介绍gsignal时我们提过了，sighanlder这里会区分信号类型并做处理，这里的SIGURG信号就是go中选定的抢占式信号sigPreempt，然后执行抢占逻辑，这个逻辑也简单，就是保存当前g上下文，并切换到g0，g0选择下一个要调度的g并恢复其上下文执行。抢占就完成了。
@@ -27,10 +27,10 @@ g.preemptStop决定是挂起g还是重新调度g：
     
     <item>
       <title>concurrency &amp; scheduler affinity</title>
-      <link>https://hitzhangjie.pro/posts/concurrency-scheduler-affinity/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/concurrency-scheduler-affinity/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/concurrency-scheduler-affinity/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/concurrency-scheduler-affinity/</guid>
       <description>Let&amp;rsquo;s Summarize #  GM模型
 go1.1之前的调度模型是GM模型，有一个全局goroutine队列global queue，它的问题是：
  访问global queue中的g，需要通过一个全局锁，锁粒度大，锁竞争严重； global queue中的g被恢复执行后，不一定在原来的线程上恢复，也不一定在原来的核上执行，cache命中率低；  GMP模型
@@ -53,10 +53,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-concur
     
     <item>
       <title>goroutine and preemption</title>
-      <link>https://hitzhangjie.pro/posts/goroutine-and-preemption/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-and-preemption/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/goroutine-and-preemption/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-and-preemption/</guid>
       <description>Let&amp;rsquo;s Summarize #  go1.14之前，在什么情况下一个goroutine可以被标记为可被抢占呢：
  在函数序言prologue中会判断当前函数是否需要更大的栈空间，编译器会插入runtime.morestack_noctxt(SB)指令来对此做检查，这个插入的函数里面也会检查当前goroutine运行时间是否超过10ms，超过就标记为可被抢占；  ps: 这里的说法可能并不准确，我也没有用之前的版本与验证，这个10ms检查到底是在哪里判断的呢？不知道 TODO
 在新版本中，比如现在的go1.16.3中，sysmon中会检查所有的P检查其运行时间是否超过了10ms时间，超过则强制抢占，preemptone(p)，内部会设置g.preempt=true。
@@ -69,10 +69,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-gorout
     
     <item>
       <title>goroutine, os thread, and cpu management</title>
-      <link>https://hitzhangjie.pro/posts/goroutine-os-thread-and-cpu-management/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-os-thread-and-cpu-management/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/goroutine-os-thread-and-cpu-management/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/goroutine-os-thread-and-cpu-management/</guid>
       <description>Let&amp;rsquo;s Summarize #  首先介绍了GMP调度模型中G、M、P的概念以及意义，介绍了大致的执行过程，如M需要获得一个P来执行G。
 针对以下两种情形进行了简单总结：
 系统调用：介绍了如果M执行阻塞型系统调用后的情况，P被释放交给其他M使用，M恢复后尝试获取原来的P（有线程之前的数据cache性能更好），被占用了就获取空闲的P，没有则将当前goroutine放到全局等待队列中，并将当前M park掉放到空闲m队列中，等待调度器调度其他goroutine时复用。
@@ -82,10 +82,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-gorout
     
     <item>
       <title>gsignal, master of signals</title>
-      <link>https://hitzhangjie.pro/posts/gsignal-master-of-signals/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/gsignal-master-of-signals/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/gsignal-master-of-signals/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/gsignal-master-of-signals/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了go程序内部的信号处理过程。GMP调度模型里面，每个M都有一个独立的gsignal goroutine，系统投递信号给进程时实际上是有gsignal goroutine来接受这个信号，然后检查下是否可处理。如果可处理就将其push到一个信号队列中，然后有一个专门的goroutine执行signal.loop，这个函数从上述信号队列中取信号，并转移到用户自定义的chan os.Signal中，再由我们自己写的chan read代码消费，并执行处理。
 对应到源码中主要有几个函数：
  os/signal/signal.go：这个函数里面在func init()的时候有启动一个loop函数，这个函数内调用runtime.signal_recv来不停地接收信号，然后检查程序通过os.Notify为哪些chan os.Signal订阅了该信号，就将该信号push到对应的chan中，后面应用程序就可以自行处理了； runtime/sigqueue.go：runtime.sigsend、runtime.signal_recv这两个函数很重要，前者是程序收到系统发送来的信号时将信号写入outgoing sigqueue中，其实就是sig结构体的mask字段，后面signal_recv的时候也是从该mask字段读取，并写入recv字段中，recv中非0的应该就是表示收到了信号（信号编号为索引值）； runtime/signal_unix.go：有个函数sighandler，这个函数负责对不同的信号执行不同的处理，比如抢占式调度SIGURG的处理，比如SIGPROF的处理，比如我们这里讨论的一些异步信号的处理sigsend。在go程序中不管是什么信号，这些信号是在sighandler做不同处理。sighandler虽然名字是信号处理函数，我们也看到了通过setsig将所有信号全部设置sighandler为信号处理函数，但是其实这只是表现。setsig函数内部又做了一个转换，将信号的信号处理函数设置为了sigtramp活着cgosigtramp，这些函数内部又调用sighandler。下面会提到sigtramp的逻辑； runtime/runtime2.go：这里定义了GMP调度模型中的m，m包含一个成员gsignal，它表示信号处理用的goroutine。os_linux.go中mpreinit会为创建一个goroutine，协程栈被初始化一个32KB大小的信号处理栈，很大这是为了兼容不同操作系统的一些问题，linux要≥2KB，OSX要≥8KB&amp;hellip; sigtramp是注册到操作系统的信号处理函数，当操作系统执行系统调用返回时检查进程有没有信号到达，有并且没有屏蔽信号则执行对应的信号处理函数，这个时候是切到了用户态去执行信号处理函数。在执行信号处理函数的时候比较特殊，go需要为信号处理函数准备一个不同的栈帧，即信号处理栈，这个前面提过了是一个32KB大小的栈，然后将当前m.g设置为gsignal（栈大小为32KB），栈准备好之后，执行前面提过的sighandler执行信号处理，处理完成返回后，再将m.g设置为原来的g恢复正常执行。其实signhandler执行过程中，sigsend发送到outgoing sigqueue，然后signal_recv收信号发送到os.Notify订阅的chan，就完事了，后面就是我们熟悉的chan read并处理逻辑了。  Source Analysis #  go os.signal package对信号处理做了封装，其中信号SIGKILL、SIGSTOP是操作系统规定的不允许捕获的信号，是不受os.signal这个package影响的
@@ -110,10 +110,10 @@ References #   https://medium.</description>
     
     <item>
       <title>how does a goroutine start and exit</title>
-      <link>https://hitzhangjie.pro/posts/how-does-a-goroutine-start-and-exit/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-goroutine-start-and-exit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-does-a-goroutine-start-and-exit/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-does-a-goroutine-start-and-exit/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了goroutine是如何创建、退出的，创建runtime.newproc函数，有提到goroutine的复用问题，有提到goroutine退出时的goexit函数。
 说实话这篇文章介绍的非常浅，很多细节都没有涉及，可以看看右边我结合源码中关键函数逻辑的总结。
 Source Analysis #  goroutine创建：runtime.newproc(siz int32, fn *funcval)
@@ -135,10 +135,10 @@ goroutine创建成功、栈空间也ok了之后，就要把goroutine要执行的
     
     <item>
       <title>how does go recycle goroutines</title>
-      <link>https://hitzhangjie.pro/posts/how-does-go-recycle-goroutines/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-recycle-goroutines/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-does-go-recycle-goroutines/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-does-go-recycle-goroutines/</guid>
       <description>Let&amp;rsquo;s Summarize #  go fn()创建一个goroutine去执行函数fn，这里的创建一个goroutine其实重要的是分配一个栈空间以及一个goroutine描述信息g，维护一下函数fn的指令地址等等信息。
 我们说创建一个g，其实涉及了栈内存空间的分配动作，涉及到对象分配的，我们都知道通过对象池可以优化内存分配问题，goroutine这里也不例外。
 当一个goroutine执行完成函数fn时，并不意味着这个goroutine就被彻底销毁了，它会被保存到P的gFree字段中，后续如果需要创建goroutine时就可以复用，当然了gFree中如果g比较多，也会被迁移到调度器的g空闲链表中，方便其他P复用。
@@ -149,10 +149,10 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-do
     
     <item>
       <title>how goroutine stack size evolve</title>
-      <link>https://hitzhangjie.pro/posts/how-goroutine-stack-size-evolve/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/how-goroutine-stack-size-evolve/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/how-goroutine-stack-size-evolve/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/how-goroutine-stack-size-evolve/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了goroutine的栈空间的演进，从segmented stack到continous stack，以及栈空间从4K→8K→2K的变化：
  栈管理最初是分段栈，存在hot split问题，即如果在一个循环内存在函数调用切需要栈增长，那么会频繁发生alloc/free的情况，影响性能，为了减轻hot split，所以从4K改为8K； 在实现了连续栈之后，newStkSize=oldStkSize*2，栈空间够用，可以解决hot split问题，又从8K改为了2K；  本文提供了一个简单的函数调用demo（通过局部数组大小控制栈空间分配）、禁用内联、打开runtime.stackDebug来观测栈空间变化。
 Source Analysis #    copystack：拷贝栈实现逻辑 https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/stack.go#L848
@@ -162,10 +162,10 @@ Source Analysis #    copystack：拷贝栈实现逻辑 https://sourcegraph.com/g
     
     <item>
       <title>improve the usage of your goroutines with GODEBUG</title>
-      <link>https://hitzhangjie.pro/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/improve-the-usage-of-your-goroutines-with-GODEBUG/</guid>
       <description>Let&amp;rsquo;s Summarize #  这篇文章介绍了通过goroutine调度latency来分析程序中增加更多的goroutines数量是否有必要，这个示例中的goroutine大部分会因为请求服务端数据而阻塞，这个阻塞时间比较长，严重影响计算，这里增加很多的goroutines并不能充分地利用起计算资源，主要是这里大部分都会阻塞，并不是会切来切去地，无助于提高并发效率。
 1 GODEBUG=schedtrace=1 go test 2 runtime/trace, trace.Start(), defer trace.Stop()
 输出信息的解释： see https://github.com/golang/go/wiki/Performance#scheduler-trace：
@@ -175,20 +175,20 @@ SCHED 1004ms: gomaxprocs=4 idleprocs=0 threads=11 idlethreads=4 runqueue=8 [0 1 
     
     <item>
       <title>observing stack grow and shrink</title>
-      <link>https://hitzhangjie.pro/posts/observing-stack-grow-and-shrink/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/observing-stack-grow-and-shrink/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/observing-stack-grow-and-shrink/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/observing-stack-grow-and-shrink/</guid>
       <description>Let&amp;rsquo;s Summarize #  调试、观察stack增长、缩减需要打开一个变量runtime.stackDebug，非导出变量，需要直接修改go源码编译出go，然后再编译程序进行观测
 Source Analysis #  References #   https://ops.tips/notes/go-observing-stack-grow-and-shrink/  </description>
     </item>
     
     <item>
       <title>what does a goroutine switch actually involve</title>
-      <link>https://hitzhangjie.pro/posts/what-does-a-goroutine-switch-actually-involve/</link>
+      <link>https://hitzhangjie.pro/go-internals-v2/posts/what-does-a-goroutine-switch-actually-involve/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://hitzhangjie.pro/posts/what-does-a-goroutine-switch-actually-involve/</guid>
+      <guid>https://hitzhangjie.pro/go-internals-v2/posts/what-does-a-goroutine-switch-actually-involve/</guid>
       <description>Let&amp;rsquo;s Summarize #  介绍了go程序中goroutine切换的时机、切换的方式、切换的开销。
 1 切换时机
 我们类比一下加深对goroutine切换时机的理解。
