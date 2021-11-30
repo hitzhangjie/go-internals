@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&rsquo;s Summarize #  介绍了go的垃圾回收器是如何标记正在使用中的内存的，go中采用的是并发三色标记清除算法（concurrent tricolor mark and sweep），先结合字面含义解释几个事情。
+基本概念：
+ 并发，这里的并发指的是GC逻辑和我们的应用处理逻辑是并发进行的； 三色，为了区分哪些对象是可达对象（正在被引用的），哪些是不可达对象（没有被引用的），使用了黑色、白色来区分，因为这个标记过程是通过递归渐进式的扫描，过程也需要用到灰色。  mspan &amp; mspan on scan：
+GC扫描标记过程是比较耗时的，如果一个对象中没有任何指针字段，那么完全不需要扫描它，如何识别一个对象有没有指针呢？在内存分配的时候，就可以提前介入处理了。我们知道P下有mcache，mcache根据不同对象大小建立了很多不同大小的span，每个尺寸的span都有两类，一类是普通span，一类是span no scan。后者在GC扫描标记过程中是不需要去扫描的，就是说如果当前扫描到一个对象，发现其是在mspan no scan中分配的，则可以直接将其标记为黑色，结束当前这个对象的递归扫描；而如果是分配在普通mspan中的，那么就应该将其标记为灰色，并将其放入到workpool中，供mark workers取出并继续递归扫描其内部指针。
+write barriers：
+这里的写屏障可不是处理器提供的锁屏障哦，很多人一听名字一样以为是一个东西。处理器提供的write memory barriers，是一种内存同步原语，而这里的write barriers指的是编译器安插的一些指令，用来跟踪程序和GC并发执行期间对一些指针所做的更改，避免正在被引用的对象被错误地回收掉。
+大致GC过程：
+进程启动时，就会启动一些mark worker，用来执行一些标记工作。触发GC时，比如显示地执行runtime.GC()，首先会通过抢占式调度通知各个G停下来，M和P解除关系，P被抢占，M被放到空闲M列表，G放到全局queue，打开write barriers，就是一个开关，对指针进行操作时走到一个记录指针修改的分支记录一下。
+每个P准备一个mark worker，mark worker开始扫描G的栈上的一些变量，称为roots对象，然后递归地进行扫描。这里用到了前面的三色标记，刚开始所有对象都是白的，然后这些roots对象全部染成灰色的。然后重复执行下述过程：
+ pick 1个灰色的，将其染成黑色的； 然后将其内部指针指向的对象全部染为灰色的； 重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。  黑色的就是正在被引用的，白色的就是未被引用的。
+GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。
+这个扫描过程是借助了一个workpool&#43;mark workers来实现的，实现也算比较优雅吧。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  ">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="how does GC mark the memory" />
+<meta property="og:description" content="Let&rsquo;s Summarize #  介绍了go的垃圾回收器是如何标记正在使用中的内存的，go中采用的是并发三色标记清除算法（concurrent tricolor mark and sweep），先结合字面含义解释几个事情。
+基本概念：
+ 并发，这里的并发指的是GC逻辑和我们的应用处理逻辑是并发进行的； 三色，为了区分哪些对象是可达对象（正在被引用的），哪些是不可达对象（没有被引用的），使用了黑色、白色来区分，因为这个标记过程是通过递归渐进式的扫描，过程也需要用到灰色。  mspan &amp; mspan on scan：
+GC扫描标记过程是比较耗时的，如果一个对象中没有任何指针字段，那么完全不需要扫描它，如何识别一个对象有没有指针呢？在内存分配的时候，就可以提前介入处理了。我们知道P下有mcache，mcache根据不同对象大小建立了很多不同大小的span，每个尺寸的span都有两类，一类是普通span，一类是span no scan。后者在GC扫描标记过程中是不需要去扫描的，就是说如果当前扫描到一个对象，发现其是在mspan no scan中分配的，则可以直接将其标记为黑色，结束当前这个对象的递归扫描；而如果是分配在普通mspan中的，那么就应该将其标记为灰色，并将其放入到workpool中，供mark workers取出并继续递归扫描其内部指针。
+write barriers：
+这里的写屏障可不是处理器提供的锁屏障哦，很多人一听名字一样以为是一个东西。处理器提供的write memory barriers，是一种内存同步原语，而这里的write barriers指的是编译器安插的一些指令，用来跟踪程序和GC并发执行期间对一些指针所做的更改，避免正在被引用的对象被错误地回收掉。
+大致GC过程：
+进程启动时，就会启动一些mark worker，用来执行一些标记工作。触发GC时，比如显示地执行runtime.GC()，首先会通过抢占式调度通知各个G停下来，M和P解除关系，P被抢占，M被放到空闲M列表，G放到全局queue，打开write barriers，就是一个开关，对指针进行操作时走到一个记录指针修改的分支记录一下。
+每个P准备一个mark worker，mark worker开始扫描G的栈上的一些变量，称为roots对象，然后递归地进行扫描。这里用到了前面的三色标记，刚开始所有对象都是白的，然后这些roots对象全部染成灰色的。然后重复执行下述过程：
+ pick 1个灰色的，将其染成黑色的； 然后将其内部指针指向的对象全部染为灰色的； 重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。  黑色的就是正在被引用的，白色的就是未被引用的。
+GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。
+这个扫描过程是借助了一个workpool&#43;mark workers来实现的，实现也算比较优雅吧。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/how-does-GC-mark-the-memory/" /><meta property="article:section" content="posts" />
+
+
+
+<title>how does GC mark the memory | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>how does GC mark the memory</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/how-does-GC-mark-the-memory/">how does GC mark the memory</a>
+  </h1>
+  
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/garbage-collector/">garbage collector</a>
+  </div>
+  
+
+
+
+<h1 id="lets-summarize">
+  Let&rsquo;s Summarize
+  <a class="anchor" href="#lets-summarize">#</a>
+</h1>
+<p>介绍了go的垃圾回收器是如何标记正在使用中的内存的，go中采用的是并发三色标记清除算法（concurrent tricolor mark and sweep），先结合字面含义解释几个事情。</p>
+<p>基本概念：</p>
+<ul>
+<li>并发，这里的并发指的是GC逻辑和我们的应用处理逻辑是并发进行的；</li>
+<li>三色，为了区分哪些对象是可达对象（正在被引用的），哪些是不可达对象（没有被引用的），使用了黑色、白色来区分，因为这个标记过程是通过递归渐进式的扫描，过程也需要用到灰色。</li>
+</ul>
+<p>mspan &amp; mspan on scan：</p>
+<p>GC扫描标记过程是比较耗时的，如果一个对象中没有任何指针字段，那么完全不需要扫描它，如何识别一个对象有没有指针呢？在内存分配的时候，就可以提前介入处理了。我们知道P下有mcache，mcache根据不同对象大小建立了很多不同大小的span，每个尺寸的span都有两类，一类是普通span，一类是span no scan。后者在GC扫描标记过程中是不需要去扫描的，就是说如果当前扫描到一个对象，发现其是在mspan no scan中分配的，则可以直接将其标记为黑色，结束当前这个对象的递归扫描；而如果是分配在普通mspan中的，那么就应该将其标记为灰色，并将其放入到workpool中，供mark workers取出并继续递归扫描其内部指针。</p>
+<p>write barriers：</p>
+<p>这里的写屏障可不是处理器提供的锁屏障哦，很多人一听名字一样以为是一个东西。处理器提供的write memory barriers，是一种内存同步原语，而这里的write barriers指的是编译器安插的一些指令，用来跟踪程序和GC并发执行期间对一些指针所做的更改，避免正在被引用的对象被错误地回收掉。</p>
+<p>大致GC过程：</p>
+<p>进程启动时，就会启动一些mark worker，用来执行一些标记工作。触发GC时，比如显示地执行runtime.GC()，首先会通过抢占式调度通知各个G停下来，M和P解除关系，P被抢占，M被放到空闲M列表，G放到全局queue，打开write barriers，就是一个开关，对指针进行操作时走到一个记录指针修改的分支记录一下。</p>
+<p>每个P准备一个mark worker，mark worker开始扫描G的栈上的一些变量，称为roots对象，然后递归地进行扫描。这里用到了前面的三色标记，刚开始所有对象都是白的，然后这些roots对象全部染成灰色的。然后重复执行下述过程：</p>
+<ul>
+<li>pick 1个灰色的，将其染成黑色的；</li>
+<li>然后将其内部指针指向的对象全部染为灰色的；
+重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。</li>
+</ul>
+<p>黑色的就是正在被引用的，白色的就是未被引用的。</p>
+<p>GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。</p>
+<p>这个扫描过程是借助了一个workpool+mark workers来实现的，实现也算比较优雅吧。</p>
+<h1 id="source-analysis">
+  Source Analysis
+  <a class="anchor" href="#source-analysis">#</a>
+</h1>
+<h1 id="references">
+  References
+  <a class="anchor" href="#references">#</a>
+</h1>
+<ol>
+<li><a href="https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976">https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/how%20does%20GC%20mark%20the%20memory.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

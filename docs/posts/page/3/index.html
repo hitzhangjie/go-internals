@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/" />
+
+<title>Posts | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="alternate" hreflang="en" href="https://hitzhangjie.pro/en/posts/" title="Notes">
+
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<link rel="alternate" type="application/rss+xml" href="https://hitzhangjie.pro/posts/index.xml" title="Go设计实现内幕" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Posts</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/ast/">ast</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan/">chan</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan-select-case/">chan, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/closure/">closure</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler/">compiler</a>
+          <span>24</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler-linker/">compiler, linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/concurrency/">concurrency</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/context/">context</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/debug/">debug</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer/">defer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic/">defer, panic</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic-recover/">defer, panic, recover</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/diagnostics/">diagnostics</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fuzzy-test/">fuzzy, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/garbage-collector/">garbage collector</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine/">goroutine</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-select-case/">goroutine, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/init/">init</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/instrumentation/">instrumentation</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/interface/">interface</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linker/">linker</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/locks/">locks</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map/">map</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map-race-detector/">map, race detector</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/mechanics/">mechanics</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/memory-management/">memory management</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/monitor/">monitor</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pointer/">pointer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pprof/">pprof</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/race-detector/">race detector</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/random/">random</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/string/">string</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/sync.pool/">sync.pool</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/syscall/">syscall</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/tdd-test/">tdd, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/test/">test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/timer/">timer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/trace/">trace</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/unsafe/">unsafe</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/go-GC-prioritizing-low-latency-and-simplicity/">go GC: prioritizing low latency and simplicity</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/garbage-collector/">garbage collector</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了当前软硬件大规模发展的趋势以及go GC需要优先解决的问题：低延迟和简单性（通过一个参数就可以控制，而非像JVM调参那样）。
+go团队的目标是设计一个面向未来十年的垃圾回收器，借鉴了十几年前发明的算法。go GC使用的是并发三色标记清除算法（concurrent, tri-color, mark-sweep collector），由Dijkstra在1978年提出。该算法与现在大多数企业级的GC实现不同，但是go团队认为该算法更适合于现代硬件的发展，也更有助于实现现代软件的GC低延迟目标。
+该GC算法中，每个对象只能是white、grey、black中的其中一种，heap可以看做是互相连接的对象构成的一个graph。GC算法流程是：
+ GC开始时，所有对象都是white； GC遍历所有的roots对象（比如全局变量、栈变量）将其标记为灰色； 然后GC选择一个grey对象，将其标记为black，并扫描（scan）该对象检查它内部的指向其他对象的指针。如果发现有指针指向其他white对象，将white对象标记为grey； 该过程重复执行，直到没有任何的灰色对象； 最后，剩下的白色对象即认为是不可达对象，可以被回收再利用；  GC过程和应用程序执行是并发进行的，应用程序也称为mutator，它会在GC运行期间修改一些指针的值。mutator必须遵循这样一条规则，就是不允许出现一个黑色对象指向一个白色对象，这样会导致对象被错误地回收。为了保证该规则成立，就需要引入写屏障（write barrier），它是编译阶段由编译器对mutator指针操作安插的一些特殊指令，用来跟踪对指针的修改，write barrier如果发现当前黑色对象的内部指针字段指向了外部的一个白色对象，则会将白色对象染色为grey，避免其被错误地GC掉，也保证其可以被继续扫描。
+有些GC相关的问题：
+ 什么时候启动GC？ 通过哪些指标来判断要启动GC？ GC应该如何与scheduler进行交互？ 如何暂停一个mutator线程足够长时间，以扫描器stack？ 如何表示white、grey和black三种颜色来实现高效地查找、扫描grey对象？ 如何知道roots对象在哪里？ 如何知道一个指向对象的指针的位置？ 如何最小化内存碎片？ 如何解决cache性能问题？ heap应该设置为多大？ 等等。  上述问题有些与内存分配有关，有些与可达对象分析有关，有些与goroutine调度有关，有些与性能有关，关于这些内容的讨论远远超出本文篇幅，可以自己参考相关的材料。
+为了解决GC性能问题，可以考虑为每一种优化加个参数来控制，开发人员可以自己调整这里的参数来达到想要的优化效果。但是这种做法时间久了之后会发现有非常多的参数，调优就会变得非常困难，比如JVM调优。go团队不想走这样的老路，力求简单高效。
+go通过GOGC这个环境变量来控制整个堆大小相对于现阶段可达对象大小的比例。GOGC默认值是100%，意味着当堆大小增长了当前可达对象大小的1倍时（2倍大小），就会触发GC；200%则意味着继续增长了当前可达对象的2倍时触发GC（3倍大小）。
+ 如果想降低GC花费的时间，就把这个值设置的大一点，因为这样不容易频繁触发GC； 如果愿意花费更多的GC时间来换取更少的内存占用，就把这个值设置的小一点，因为这样能够更加频繁地GC；  前面提到go团队要设计一个面向未来十年的垃圾回收器，未来十年机器内存容量可能会翻倍或者成倍增长，简单地将GOGC设置为一定倍率也可以很好地工作，也不用像JVM调优那样重新设置一堆地参数，调参大军好惨。go团队也可以倾听用户真正地诉求在运行时方面做更多的优化。
+Source Analysis #  References #   https://blog.golang.org/go15gc  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/GOMAXPROCS-live-updates/">GOMAXPROCS &amp; live updates</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/gpm-scheduler/">gpm scheduler</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了GOMAXPROCS的作用，它控制了最多同时有多少个操作系统线程并发执行。除了这个环境变量，也可以在运行时通过runtime.MAXPROCS(n)来设置，也就是说允许live update（实时更新）。
+该值默认等于可见的CPU核数，但是在docker容器里面希望做些资源隔离，比如希望go程序将最大并发执行操作系统线程数设置为分配给容器的CPU核数，而非母机的CPU核数，实际开发过程中有遇到因为容器中获取的不是分配的实际核数导致的调度问题。
+GOMAXPROCS通常建议设置为可见CPU数或者核数。如果设置值偏大，则更多的线程被创建，操作系统调度多线程到有限的处理器核上将会引入更多的上下文切换开销，切换后协程相关的调度问题也将引入更多的开销。如果设置更小，并发度低，显而易见不利于获得更高性能。
+ps：uber开源了一个库来专门获取、设置容器内CPU的数量。 see https://github.com/uber-go/automaxprocs
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-gomaxprocs-live-updates-407ad08624e1  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/goroutine-and-preemption/">goroutine and preemption</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  go1.14之前，在什么情况下一个goroutine可以被标记为可被抢占呢：
+ 在函数序言prologue中会判断当前函数是否需要更大的栈空间，编译器会插入runtime.morestack_noctxt(SB)指令来对此做检查，这个插入的函数里面也会检查当前goroutine运行时间是否超过10ms，超过就标记为可被抢占；  ps: 这里的说法可能并不准确，我也没有用之前的版本与验证，这个10ms检查到底是在哪里判断的呢？不知道 TODO
+在新版本中，比如现在的go1.16.3中，sysmon中会检查所有的P检查其运行时间是否超过了10ms时间，超过则强制抢占，preemptone(p)，内部会设置g.preempt=true。
+ 但是有些循环是计算密集型的，会一直执行，这样可能很久之后才会进入下一个函数调用的prologue中检查到早就该标记为可被抢占了，但是太迟了；  go1.14之前的版本中可以通过一些协作式抢占的办法来实现goroutine抢占，比如在for循环内如果没有 函数调用的话，可以：
+ 安插一些无用的函数调用，比较屁的方法； 显示执行runtime.Gosched()触发调度； 编译的时候打开实验特性，来实现for循环协作式抢占，编译器会安插指令随机得调用runtime.GoSched()，GOEXPERIMENT=preemptibleloops go build，或者go build -gcflags -d=ssa/insert_resched_checks/on；  go1.14中，引入了抢占式调度，来解决上述提及的循环不能抢占的问题：
+抢占式调度，不用引入那么多的不必要的检查，引入的运行时开销更低，see https://github.com/golang/proposal/blob/master/design/24543-non-cooperative-preemption.md。
+截止到我学习这篇文章时，go早已经实现了抢占式调度，我使用的是go1.16.3，我将在后面文章或者阅读源码时总结go抢占式调度的细节。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-goroutine-and-preemption-d6bc2aa2f4b7  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/goroutine-os-thread-and-cpu-management/">goroutine, os thread, and cpu management</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  首先介绍了GMP调度模型中G、M、P的概念以及意义，介绍了大致的执行过程，如M需要获得一个P来执行G。
+针对以下两种情形进行了简单总结：
+系统调用：介绍了如果M执行阻塞型系统调用后的情况，P被释放交给其他M使用，M恢复后尝试获取原来的P（有线程之前的数据cache性能更好），被占用了就获取空闲的P，没有则将当前goroutine放到全局等待队列中，并将当前M park掉放到空闲m队列中，等待调度器调度其他goroutine时复用。
+网络调用：网络库基于IO多路复用+非阻塞进行了实现，线程虽然不会因为网络IO进行阻塞了，但是数据没准备好goroutine还是不能执行的。这个工作不能交给内核来做了，需要runtime+netpoller来配合完成。runtime执行schedule()函数查找一个runnable的goroutine时，除了从global queue、p的local queue、其他p的local queue中进行查找外，也会询问netpoller，当前有没有IO事件就绪的goroutine，有就给我一个列表我好执行。当然当前M知会执行一个goroutine，netpoller返回的就绪列表中的其他goroutine会被加入到global queue中。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-goroutine-os-thread-and-cpu-management-2f5a5eaf518a  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/gsignal-master-of-signals/">gsignal, master of signals</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了go程序内部的信号处理过程。GMP调度模型里面，每个M都有一个独立的gsignal goroutine，系统投递信号给进程时实际上是有gsignal goroutine来接受这个信号，然后检查下是否可处理。如果可处理就将其push到一个信号队列中，然后有一个专门的goroutine执行signal.loop，这个函数从上述信号队列中取信号，并转移到用户自定义的chan os.Signal中，再由我们自己写的chan read代码消费，并执行处理。
+对应到源码中主要有几个函数：
+ os/signal/signal.go：这个函数里面在func init()的时候有启动一个loop函数，这个函数内调用runtime.signal_recv来不停地接收信号，然后检查程序通过os.Notify为哪些chan os.Signal订阅了该信号，就将该信号push到对应的chan中，后面应用程序就可以自行处理了； runtime/sigqueue.go：runtime.sigsend、runtime.signal_recv这两个函数很重要，前者是程序收到系统发送来的信号时将信号写入outgoing sigqueue中，其实就是sig结构体的mask字段，后面signal_recv的时候也是从该mask字段读取，并写入recv字段中，recv中非0的应该就是表示收到了信号（信号编号为索引值）； runtime/signal_unix.go：有个函数sighandler，这个函数负责对不同的信号执行不同的处理，比如抢占式调度SIGURG的处理，比如SIGPROF的处理，比如我们这里讨论的一些异步信号的处理sigsend。在go程序中不管是什么信号，这些信号是在sighandler做不同处理。sighandler虽然名字是信号处理函数，我们也看到了通过setsig将所有信号全部设置sighandler为信号处理函数，但是其实这只是表现。setsig函数内部又做了一个转换，将信号的信号处理函数设置为了sigtramp活着cgosigtramp，这些函数内部又调用sighandler。下面会提到sigtramp的逻辑； runtime/runtime2.go：这里定义了GMP调度模型中的m，m包含一个成员gsignal，它表示信号处理用的goroutine。os_linux.go中mpreinit会为创建一个goroutine，协程栈被初始化一个32KB大小的信号处理栈，很大这是为了兼容不同操作系统的一些问题，linux要≥2KB，OSX要≥8KB&hellip; sigtramp是注册到操作系统的信号处理函数，当操作系统执行系统调用返回时检查进程有没有信号到达，有并且没有屏蔽信号则执行对应的信号处理函数，这个时候是切到了用户态去执行信号处理函数。在执行信号处理函数的时候比较特殊，go需要为信号处理函数准备一个不同的栈帧，即信号处理栈，这个前面提过了是一个32KB大小的栈，然后将当前m.g设置为gsignal（栈大小为32KB），栈准备好之后，执行前面提过的sighandler执行信号处理，处理完成返回后，再将m.g设置为原来的g恢复正常执行。其实signhandler执行过程中，sigsend发送到outgoing sigqueue，然后signal_recv收信号发送到os.Notify订阅的chan，就完事了，后面就是我们熟悉的chan read并处理逻辑了。  Source Analysis #  go os.signal package对信号处理做了封装，其中信号SIGKILL、SIGSTOP是操作系统规定的不允许捕获的信号，是不受os.signal这个package影响的
+go中将信号分为两类：同步信号和异步信号。
+  同步信号：指的是go程序运行时程序内部错误触发的一些问题，如SIGBUS、SIGFPE、SIGSEGV，这些信号会被转换成运行时panic信息；
+  异步信号：除了上述提及的信号之外的信号，就是异步信号了。异步信号不是程序内部错误导致的，而是由操作系统或者外部其他程序发送给它的。
+  有哪些异步信号？
+ 当程序失去对控制终端的控制时，会收到SIGHUP信号； 在控制终端中输入Ctrl+C时会收到SIGINT信号； 在控制终端中输入Ctrl+\时会受到SIGQUIT信号；  ps：通常想让程序退出的话，Ctrl+C就可以了，如果想让程序退出同时打印栈转储信息，那就用Ctrl+\。
+默认的信号处理方式？
+接收到信号之后，肯定有默认的处理方式，这个在学习linux信号处理时肯定有了解过的，在go程序中可能只是默认处理方式有点不同，这个有需要的时候去了解就可以了。这里不展开了。
+值得一提的是信号SIGPROF，这个信号用于实现runtime.CPUProfile。
+自定义信号处理方式？
+自定义信号处理方式，在linux signal函数中可以指定信号及对应对应的处理函数，go中类似，它允许通过os.Notify指定一个或多个信号chan，里面可以注册感兴趣的信号，当收到这些信号时，就可以执行用户自定义的信号处理逻辑。
+SIGPIPE信号处理
+当程序write broken pipe时，会收到SIGPIPE信号，比如写网络连接失败，如果不做处理默认崩溃掉那就完蛋了。go程序中对这个做了优化处理。
+write broken pipe的行为与write的file descriptor的fd有关系：
+ 如果fd是stdout、stderr，那么程序收到SIGPIPE信号，默认行为是程序会退出； 如果是其他fd，程序收到SIGPIPE信号，默认行为是不采取任何动作，对应的write操作返回一个EPIPE错误；  ps：后者很重要，写网络连接失败是常有的事情，linux c程序如果不显示处理SIGPIPE信号，默认行为将是程序直接crash，go程序对此作了优化，让write返回error而非crash，对于go将构建高性能、稳定健壮的网络程序的初衷来说是有必要的。
+cgo程序信号处理？
+涉及到cgo就要分几种情况来讨论，这里会有点麻烦了，涉及到信号处理函数的重复注册、信号掩码设置、信号处理函数的栈等问题，在os/signal/doc.go里面有这方面的描述，这里不赘述。
+References #   https://medium.
+        <a href="/posts/gsignal-master-of-signals/">...</a>
+      
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-go-build-works/">how &#34;go build&#34; works</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/compiler-linker/">compiler, linker</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了go编译过程中的一系列步骤，这里的介绍不是从编译器编译经过几个步骤，而是从工具角度来说，重点做了什么工作：
+ 创建临时目录$WORK； 根据源码构建action graph，根节点是main package，对应的构建子目录是b001，其他依赖也有对应的节点，也有对应构建目录，目录编号通常是递增的； 构建过程中从叶子节点开始构建，然后构建父节点，持续下去直到根节点构建完成； 在构建过程中，每个编译单元对应的*.o或者*.a文件包括最后的可执行程序都会写入一个buildid，它包括actionid/contentid两部分构成，它用于创建索引缓存之前的编译输出，提升后续编译过程中的效率；  Source Analysis #  关于action及action graph，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go
+每个依赖对应的编译目录，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go#L318
+这些是些琐碎的细节信息，可以先忽略。
+References #   https://maori.geek.nz/how-go-build-works-750bb2ba6d8e  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-are-loops-translated-to-assembly/">how are loops translated to assembly</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/compiler/">compiler</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了for循环如何被转换成汇编的，主要是理解转换成的汇编的含义。本文还提及了go1.10之前生成for循环汇编指令时会生成一个指针，并且这个指针存在past-the-end的问题，会导致程序难以进入safepoint，不容易被抢占。
+在非协作式抢占的建议草案中也有提及这里的生成的临时指针past-the-end问题，该问题会影响到scheduler，for循环体中不容易被其他goroutine抢占，非协作式抢占设计实现中提及了此问题。
+TODO：我没有看太明白这里生成的临时指针past-the-end问题，究竟会导致什么样的不安全问题？
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-are-loops-translated-to-assembly-835b985309b3  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-are-random-numbers-generated/">how are random numbers generated</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/random/">random</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  go标准库提供了两个package来生成随机数：math/rand和crypto/rand。
+  math/rand：生成的是伪随机数，可以通过rand.Seed(int)指定种子，然后math/rand会根据种子生成一个sequence source，然后rand.Int()生成随机数，但是因为这里的sequence source是固定的，所以生成的随机数是可预测的。
+  crypto/rand：这种方式做了更多的数学运算，可以实现更好的随机性；
+  math/rand这种方式性能好一点，大约是crypto/rand性能的10倍+；但是crypto/rand生成的随机数的随机性要好的多。
+上述都是并发安全的实现，比如math/rand实现内部包含了一个mutex，如果不需要在并发环境中使用，也可以自定义一个随机数生成器，如通过：rand.New(rand.NewSource(1).(rand.Source64)，性能又可以获得较大提升。
+ps: rand.NewSource(seed int)返回的source是非goroutine并发安全的。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-are-random-numbers-generated-e58ee8696999  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-a-goroutine-start-and-exit/">how does a goroutine start and exit</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了goroutine是如何创建、退出的，创建runtime.newproc函数，有提到goroutine的复用问题，有提到goroutine退出时的goexit函数。
+说实话这篇文章介绍的非常浅，很多细节都没有涉及，可以看看右边我结合源码中关键函数逻辑的总结。
+Source Analysis #  goroutine创建：runtime.newproc(siz int32, fn *funcval)
+ go fn()，传递给fn的参数实际上是紧跟着存在fn压栈后的地址后面，在newproc1的栈帧里面，但是不出现在签名参数列表中，因为这些参数类型、数量不一样，也无法出现在签名参数列表中； newproc1创建g； getg().m.p.ptr()拿到当前p； runqput将当前g放入p的local queue中，如果满则放到global queue中； g等待被调度器调度执行；  大致创建执行goroutine的逻辑是这样的，下面的逻辑都是切到系统栈上去执行的。
+1 newproc1逻辑
+查看源码发现，goroutine初始创建时对函数参数大小是有限制的，如果参数占内存空间很大，比如超过初始栈帧大小2KB，那么goroutine创建会失败：&ldquo;fatal error: newproc: function arguments too large for new goroutine&rdquo;，比如，go func(a [1024]int) {}([1024]int{})。
+每个p内部都有一个空闲goroutine队列gFree，这个就是用来执行fn的goroutine，是可以复用的，不用的时候可以丢给调度器schedt.gFree供其他p复用。这里空闲的goroutines，一部分存在于p.gFree，如果gfput(p, gp)时发现p.gFree队列太长说明过剩了，就转移一部分到调度器schedt.gFree中供其他p复用。
+goroutine执行完毕后运行时并不急于将其销毁，而是会考虑goroutine的复用，gfput，前面提过了。希望go func()通过协程执行时，也不必每次创建新的goroutine，gfget，可以复用p.gFree中的goroutine，如果p.gFree空或者过少（32）且调度器schedt.gFree中有空闲，则转移一部分过来给p复用。但是goroutine的栈有可能会被销毁，如果复用到栈被销毁的goroutine就需要stackalloc重新为其分配新栈帧。
+如果没有空闲的g可供复用，那就只能malg从头新建一个goroutine了。
+goroutine创建成功、栈空间也ok了之后，就要把goroutine要执行的函数对应的函数参数给拷贝到这个栈空间里面来，通过memmove(spArg, argp, uintptr(narg))来完成。完成后调整newg的调度上下文相关的寄存器值，等调度器调度它时，还原其中的上下文信息，pc就指向其对应的函数地址了，对应的数据也会指向其对应的栈空间。
+然后，通过gostartcallfn→gostartcall(buf, fn, ctxt)，之前已经拷贝了函数fn的参数到goroutine栈空间了，这里面再继续在栈内设置fn返回地址、gobuf.sp+gobuf.pc信息。
+上述调整完成之后，将goroutine的状态从_Gdead调整为_Grunnable，等待调度器调度。新创建的时候其状态是_Gidle，一定会将其调整为_Gdead然后再进行上述准备工作，一切就绪后才调整为_Grunnable让其参与调度。
+2 runqput(p, gp, next) 这里的逻辑是，希望将gp放到p的local queue中，但是也有头插、尾插两种方式。
+ 如果next为true，可以认为是头插，其实是放到p.runnext中，比p.queue中的得到优先调度。如果之前p.runnext有值，还要该值对应的g放入p.queue中； 如果next为false，则尝试将其放置到p.queue中，这里也有快慢两种情况，快的情况就是，因为p.queue这个本地队列长度最大为256，如果有空余位置放入就返回，这是快的情况。慢的情况就是如果p.queue满了就要先转移1/2到调度器全局队列schedt.queue中，然后再放入，这个过程就慢一些。  放置过程中，如果p.runqueue满了怎么办，将其放置到调度器schedt.queue这个全局队列中。
+3 wakeup()逻辑
+这个函数内部执行startm(p, spinning)，来找一个m来执行goroutine，具体是怎么做的呢？
+  如果没有指定p，比如新建goroutine时，此时会尝试检查有没有空闲的p，没有的话就直接返回了，相当于当前一次没有执行成功，那么只能下次调度的时候再执行这个新建的goroutine了；
+        <a href="/posts/how-does-a-goroutine-start-and-exit/">...</a>
+      
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-a-program-recover/">how does a program recover</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/defer-panic-recover/">defer, panic, recover</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  defer对应newdefer panic对应gopanic recover对应gorecover
+defer细节：
+defer调用会创建_defer对象并添加到g._defer，_defer通过内部的_defer.link构成了一个LIFO的defer栈，函数return（runtime.deferreturn）或者panic（内部会遍历g._defer并执行）时，就按照栈的方式来执行注册的defer函数。
+ps：defer函数执行的时候是需要考虑栈帧分配的，这个可以再逻辑一下细节，也是go defer性能优化的一个方面，如避免defer引起的栈增长；
+panic细节：
+panic的时候，会创建_panic对象并添加到g._panic，_panic也和_defer类似通过_panic.link维护了一个链式结构，也是LIFO的形式，这意味着，如果一开始出现了panic1，g._panic被设置为panic1，假如在后续defer的时候，defer函数中又panic2，那么g._panic被设置为panic2且panic2.link==panic1。假如defer函数中执行了recover，也是先recover g._panic，然后再将g._panic更新为g._panic.link继续执行defer。
+如果某个defer执行过程中执行了recover，那么g._panic.recovered被设置为true，假如panic chain中还有panic，会调用mcall(recovery)，这个是为了恢复g上下文为recover
+recover细节：
+recover调用对应实现函数是gorecover，recover函数必须在defer函数的底层调用才能正常recover后面的panic。gorecover(argp)这里的参数argp是调用recover函数的caller的地址，会与g._panic.argp是defer func(){}这里函数调用func(){}的地址，如果argp和g._panic.argp不相同，表示recover不是在合适的位置调用的，也就不能修改g._panic.recovered=true，即不能recover对应的panic。
+recover函数使用的位置有讲究，就是这么来的。
+runtime.Goexit()
+这个函数的设计实现是复用了panic、defer处理的逻辑，但是因为这里的Goexit并不是真正的panic逻辑，所以其在_panic里面加了个新字段goexit=true，以与正常的panic处理逻辑区分开，我们也能看到在gopanic执行deferChain中有对此进行特殊判断，当遇到panic.goexit=true且panic.aborted=true时，允许直接切换上下文为Goexit处理逻辑（正常的recover逻辑会绕过Goexit）。
+ps：篇幅原因，还有其他一些边界情况这里没有展开细讲，感兴趣可以自己查看源码。TODO 这里的理解还需要再加强一下。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-a-program-recover-fbbbf27cc31e  
+    </p>
+  </article>
+  
+
+  
+<ul class="pagination">
+  <li class="page-item">
+    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/2/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/">1</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/2/">2</a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" href="/posts/page/3/">3</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/4/">4</a>
+  </li>
+  <li class="page-item disabled">
+    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/9/">9</a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/4/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/9/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+  </li>
+</ul>
+
+
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/posts/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/_index.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/ast/">ast</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan/">chan</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan-select-case/">chan, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/closure/">closure</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler/">compiler</a>
+          <span>24</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler-linker/">compiler, linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/concurrency/">concurrency</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/context/">context</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/debug/">debug</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer/">defer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic/">defer, panic</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic-recover/">defer, panic, recover</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/diagnostics/">diagnostics</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fuzzy-test/">fuzzy, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/garbage-collector/">garbage collector</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine/">goroutine</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-select-case/">goroutine, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/init/">init</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/instrumentation/">instrumentation</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/interface/">interface</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linker/">linker</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/locks/">locks</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map/">map</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map-race-detector/">map, race detector</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/mechanics/">mechanics</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/memory-management/">memory management</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/monitor/">monitor</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pointer/">pointer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pprof/">pprof</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/race-detector/">race detector</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/random/">random</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/string/">string</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/sync.pool/">sync.pool</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/syscall/">syscall</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/tdd-test/">tdd, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/test/">test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/timer/">timer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/trace/">trace</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/unsafe/">unsafe</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

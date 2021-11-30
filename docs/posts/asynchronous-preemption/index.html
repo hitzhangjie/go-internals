@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&rsquo;s Summarize #  这里的异步抢占，就是我们说的抢占式调度了，是通过SIGURG信号、信号处理、协程调度来共同实现的。
+首先，正如前面介绍的，go程序中有一个sysmon线程，它会定期检查所有的P，检查其是否运行时间超过了10ms，如果超过了则执行抢占逻辑，preemptone(p)，其内部其实是设置P上当前g的preempt标记位为true，然后再尝试去抢占p.m，preemptM(p.m)，这个preemptM内部会给m这个线程发送一个SIGURG信号。
+前面介绍gsignal时我们提过了，sighanlder这里会区分信号类型并做处理，这里的SIGURG信号就是go中选定的抢占式信号sigPreempt，然后执行抢占逻辑，这个逻辑也简单，就是保存当前g上下文，并切换到g0，g0选择下一个要调度的g并恢复其上下文执行。抢占就完成了。
+关于为什么抢占信号选择SIGURG，也不是凭空选的，主要是考虑了下面几点： It should be a signal that’s passed-through by debuggers by default.
+ It shouldn’t be used internally by libc in mixed Go/C binaries […]. It should be a signal that can happen spuriously without consequences. We need to deal with platforms without real-time signals […].  异步抢占，可以通过设置环境变量来关闭，GODEBUG=asyncpreemptoff=1.
+Source Analysis #  SIGURG，在信号处理函数runtime/signal_unix.go:sighandler(&hellip;)函数中又看到对sigPreempt的处理。
+SIGURG实现抢占式调度： 对应这个函数doSigPreempt，检查当前g是不是wantAsyncPreempt，ok的话检查是不是isAsyncSafePoint，ok的话，sigctxt.pushCall(funcPC(asyncPreempt), newpc)，这个函数调整PC并注入一个对asyncPreempt的调用。
+TODO wantAsyncPreempt对应的判断参数是谁去设置的，什么时候设置的？
+TODO isAsyncSafePoint，safepoint的含义？这个函数的注释以及代码中的if-else已经足够结实清楚什么是safepoint了，以及safepoint的意义了。
+看下asyncPreempt的逻辑，该函数是在汇编中实现的，首先保存寄存器的值，然后调用asyncPreempt2执行其他处理。
+g.preemptStop决定是挂起g还是重新调度g：
+ 如果被抢占的g的g.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="asynchronous preemption" />
+<meta property="og:description" content="Let&rsquo;s Summarize #  这里的异步抢占，就是我们说的抢占式调度了，是通过SIGURG信号、信号处理、协程调度来共同实现的。
+首先，正如前面介绍的，go程序中有一个sysmon线程，它会定期检查所有的P，检查其是否运行时间超过了10ms，如果超过了则执行抢占逻辑，preemptone(p)，其内部其实是设置P上当前g的preempt标记位为true，然后再尝试去抢占p.m，preemptM(p.m)，这个preemptM内部会给m这个线程发送一个SIGURG信号。
+前面介绍gsignal时我们提过了，sighanlder这里会区分信号类型并做处理，这里的SIGURG信号就是go中选定的抢占式信号sigPreempt，然后执行抢占逻辑，这个逻辑也简单，就是保存当前g上下文，并切换到g0，g0选择下一个要调度的g并恢复其上下文执行。抢占就完成了。
+关于为什么抢占信号选择SIGURG，也不是凭空选的，主要是考虑了下面几点： It should be a signal that’s passed-through by debuggers by default.
+ It shouldn’t be used internally by libc in mixed Go/C binaries […]. It should be a signal that can happen spuriously without consequences. We need to deal with platforms without real-time signals […].  异步抢占，可以通过设置环境变量来关闭，GODEBUG=asyncpreemptoff=1.
+Source Analysis #  SIGURG，在信号处理函数runtime/signal_unix.go:sighandler(&hellip;)函数中又看到对sigPreempt的处理。
+SIGURG实现抢占式调度： 对应这个函数doSigPreempt，检查当前g是不是wantAsyncPreempt，ok的话检查是不是isAsyncSafePoint，ok的话，sigctxt.pushCall(funcPC(asyncPreempt), newpc)，这个函数调整PC并注入一个对asyncPreempt的调用。
+TODO wantAsyncPreempt对应的判断参数是谁去设置的，什么时候设置的？
+TODO isAsyncSafePoint，safepoint的含义？这个函数的注释以及代码中的if-else已经足够结实清楚什么是safepoint了，以及safepoint的意义了。
+看下asyncPreempt的逻辑，该函数是在汇编中实现的，首先保存寄存器的值，然后调用asyncPreempt2执行其他处理。
+g.preemptStop决定是挂起g还是重新调度g：
+ 如果被抢占的g的g." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/asynchronous-preemption/" /><meta property="article:section" content="posts" />
+
+
+
+<title>asynchronous preemption | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>asynchronous preemption</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/asynchronous-preemption/">asynchronous preemption</a>
+  </h1>
+  
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+<h1 id="lets-summarize">
+  Let&rsquo;s Summarize
+  <a class="anchor" href="#lets-summarize">#</a>
+</h1>
+<p>这里的异步抢占，就是我们说的抢占式调度了，是通过SIGURG信号、信号处理、协程调度来共同实现的。</p>
+<p>首先，正如前面介绍的，go程序中有一个sysmon线程，它会定期检查所有的P，检查其是否运行时间超过了10ms，如果超过了则执行抢占逻辑，preemptone(p)，其内部其实是设置P上当前g的preempt标记位为true，然后再尝试去抢占p.m，preemptM(p.m)，这个preemptM内部会给m这个线程发送一个SIGURG信号。</p>
+<p>前面介绍gsignal时我们提过了，sighanlder这里会区分信号类型并做处理，这里的SIGURG信号就是go中选定的抢占式信号sigPreempt，然后执行抢占逻辑，这个逻辑也简单，就是保存当前g上下文，并切换到g0，g0选择下一个要调度的g并恢复其上下文执行。抢占就完成了。</p>
+<p>关于为什么抢占信号选择SIGURG，也不是凭空选的，主要是考虑了下面几点：
+It should be a signal that’s passed-through by debuggers by default.</p>
+<ul>
+<li>It shouldn’t be used internally by libc in mixed Go/C binaries […].</li>
+<li>It should be a signal that can happen spuriously without consequences.</li>
+<li>We need to deal with platforms without real-time signals […].</li>
+</ul>
+<p>异步抢占，可以通过设置环境变量来关闭，GODEBUG=asyncpreemptoff=1.</p>
+<h1 id="source-analysis">
+  Source Analysis
+  <a class="anchor" href="#source-analysis">#</a>
+</h1>
+<p>SIGURG，在信号处理函数runtime/signal_unix.go:sighandler(&hellip;)函数中又看到对sigPreempt的处理。</p>
+<p>SIGURG实现抢占式调度：
+对应这个函数doSigPreempt，检查当前g是不是wantAsyncPreempt，ok的话检查是不是isAsyncSafePoint，ok的话，sigctxt.pushCall(funcPC(asyncPreempt), newpc)，这个函数调整PC并注入一个对asyncPreempt的调用。</p>
+<p>TODO wantAsyncPreempt对应的判断参数是谁去设置的，什么时候设置的？</p>
+<p>TODO isAsyncSafePoint，safepoint的含义？这个函数的注释以及代码中的if-else已经足够结实清楚什么是safepoint了，以及safepoint的意义了。</p>
+<p>看下asyncPreempt的逻辑，该函数是在汇编中实现的，首先保存寄存器的值，然后调用asyncPreempt2执行其他处理。</p>
+<p>g.preemptStop决定是挂起g还是重新调度g：</p>
+<ul>
+<li>如果被抢占的g的g.preemptStop为true，则执行mcall(preemptPark)挂起该g，g的状态被改为preempted，后面什么时机会重新调度它吧。然后执行schedule调度其他goroutine执行；</li>
+<li>如果g.preemptStop为false，则mcall(gopreempt_m)将g从running改为runnable重新调度一次。</li>
+</ul>
+<p>大致的抢占式调度逻辑就是这样的。</p>
+<p>ps: func mcall(fn func(*g))，mcall switches from the g to the g0 stack and invokes fn(g),
+where g is the goroutine that made the call.</p>
+<h1 id="references">
+  References
+  <a class="anchor" href="#references">#</a>
+</h1>
+<ol>
+<li><a href="https://medium.com/a-journey-with-go/go-asynchronous-preemption-b5194227371c">https://medium.com/a-journey-with-go/go-asynchronous-preemption-b5194227371c</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/asynchronous%20preemption.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

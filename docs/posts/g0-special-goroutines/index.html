@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&rsquo;s Summarize #  goroutines是由go scheduler来调度的，go scheduler在某些goroutine出现阻塞的时候调度其他goroutines继续执行，以提高cpu的利用率。
+goroutines其实是运行在操作系统线程里面的，GOMAXPROCS限制了最多可以并发执行的线程数量（实际线程可能有阻塞的，线程总数会大于等于该环境变量值）。go scheduler负责将goroutines调度到操作系统线程上执行，在程序初始化阶段，会为每个持有P的线程M创建一个特殊的协程g0，这里的g0其实就是会干go scheduler的工作，g0会调度就绪的goroutines在关联的线程M上执行。
+g0的职责
+g0的职责并不仅仅是scheduler，它还有其他的用途。g0的协程栈（一开始就是8KB）比普通的协程的栈（一开始为2KB）要大很多，它适用于执行一些对栈容量要求比较大、又不希望栈扩容的情境下。
+列举下g0的职责：
+ goroutine创建，如go func(){}()是在g0中完成的，将其创建完放到P的队列中； defer function创建； GC操作，如STW、扫描协程栈、标记整理等操作； 栈增长，在函数序言prologue部分执行栈增长；  在其他的一些操作中（比如需要更大的内存分配的cgo操作），这个特殊协程g0使我们的程序更加高效的执行管理操作，而又不会带来过高的内存开销。
+Source Analysis #  TODO 结合源码来分析下go scheduler的详细过程，以及g0的详细用途
+References #   https://medium.com/a-journey-with-go/go-g0-special-goroutine-8c778c6704d8  ">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="g0, special goroutines" />
+<meta property="og:description" content="Let&rsquo;s Summarize #  goroutines是由go scheduler来调度的，go scheduler在某些goroutine出现阻塞的时候调度其他goroutines继续执行，以提高cpu的利用率。
+goroutines其实是运行在操作系统线程里面的，GOMAXPROCS限制了最多可以并发执行的线程数量（实际线程可能有阻塞的，线程总数会大于等于该环境变量值）。go scheduler负责将goroutines调度到操作系统线程上执行，在程序初始化阶段，会为每个持有P的线程M创建一个特殊的协程g0，这里的g0其实就是会干go scheduler的工作，g0会调度就绪的goroutines在关联的线程M上执行。
+g0的职责
+g0的职责并不仅仅是scheduler，它还有其他的用途。g0的协程栈（一开始就是8KB）比普通的协程的栈（一开始为2KB）要大很多，它适用于执行一些对栈容量要求比较大、又不希望栈扩容的情境下。
+列举下g0的职责：
+ goroutine创建，如go func(){}()是在g0中完成的，将其创建完放到P的队列中； defer function创建； GC操作，如STW、扫描协程栈、标记整理等操作； 栈增长，在函数序言prologue部分执行栈增长；  在其他的一些操作中（比如需要更大的内存分配的cgo操作），这个特殊协程g0使我们的程序更加高效的执行管理操作，而又不会带来过高的内存开销。
+Source Analysis #  TODO 结合源码来分析下go scheduler的详细过程，以及g0的详细用途
+References #   https://medium.com/a-journey-with-go/go-g0-special-goroutine-8c778c6704d8  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/g0-special-goroutines/" /><meta property="article:section" content="posts" />
+
+
+
+<title>g0, special goroutines | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>g0, special goroutines</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/g0-special-goroutines/">g0, special goroutines</a>
+  </h1>
+  
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine-select-case/">goroutine, select-case</a>
+  </div>
+  
+
+
+
+<h1 id="lets-summarize">
+  Let&rsquo;s Summarize
+  <a class="anchor" href="#lets-summarize">#</a>
+</h1>
+<p>goroutines是由go scheduler来调度的，go scheduler在某些goroutine出现阻塞的时候调度其他goroutines继续执行，以提高cpu的利用率。</p>
+<p>goroutines其实是运行在操作系统线程里面的，GOMAXPROCS限制了最多可以并发执行的线程数量（实际线程可能有阻塞的，线程总数会大于等于该环境变量值）。go scheduler负责将goroutines调度到操作系统线程上执行，在程序初始化阶段，会为每个持有P的线程M创建一个特殊的协程g0，这里的g0其实就是会干go scheduler的工作，g0会调度就绪的goroutines在关联的线程M上执行。</p>
+<p>g0的职责</p>
+<p>g0的职责并不仅仅是scheduler，它还有其他的用途。g0的协程栈（一开始就是8KB）比普通的协程的栈（一开始为2KB）要大很多，它适用于执行一些对栈容量要求比较大、又不希望栈扩容的情境下。</p>
+<p>列举下g0的职责：</p>
+<ul>
+<li>goroutine创建，如go func(){}()是在g0中完成的，将其创建完放到P的队列中；</li>
+<li>defer function创建；</li>
+<li>GC操作，如STW、扫描协程栈、标记整理等操作；</li>
+<li>栈增长，在函数序言prologue部分执行栈增长；</li>
+</ul>
+<p>在其他的一些操作中（比如需要更大的内存分配的cgo操作），这个特殊协程g0使我们的程序更加高效的执行管理操作，而又不会带来过高的内存开销。</p>
+<h1 id="source-analysis">
+  Source Analysis
+  <a class="anchor" href="#source-analysis">#</a>
+</h1>
+<p>TODO 结合源码来分析下go scheduler的详细过程，以及g0的详细用途</p>
+<h1 id="references">
+  References
+  <a class="anchor" href="#references">#</a>
+</h1>
+<ol>
+<li><a href="https://medium.com/a-journey-with-go/go-g0-special-goroutine-8c778c6704d8">https://medium.com/a-journey-with-go/go-g0-special-goroutine-8c778c6704d8</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/g0,%20special%20goroutines.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

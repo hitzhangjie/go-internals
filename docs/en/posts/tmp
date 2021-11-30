@@ -1,0 +1,14 @@
+aliases, simple and efficient.md
+builds & linker"s timeline.md
+built-in functions optimizations.md
+how "go build" works.md
+how are loops translated to assembly.md
+how to take advantage of symbols tables.md
+inline strategy & limitation.md
+introduction to the escape analysis.md
+introduction to the go compiler ssa backend.md
+introduction to the go compiler.md
+memory safety with bounds check.md
+overview of the compiler.md
+slice and memory management.md
+understanding compiler directives.md

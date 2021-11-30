@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&rsquo;s Summarize #  GM模型
+go1.1之前的调度模型是GM模型，有一个全局goroutine队列global queue，它的问题是：
+ 访问global queue中的g，需要通过一个全局锁，锁粒度大，锁竞争严重； global queue中的g被恢复执行后，不一定在原来的线程上恢复，也不一定在原来的核上执行，cache命中率低；  GMP模型
+go1.1开始，引入了新的调度器实现GMP模型，引入了一个局部的local queue，这个改进能够在P local queue有g时避免去锁定global queue，也就减少了锁定了整个scheduler的情况。
+goroutine调度粘性
+破坏了调度粘性
+因为引入了P，M会优先执行P下的local queue中的g，g调度到哪个m执行就有了一定的调度粘性（affinity），但是这个调度粘性也会在某几种情况下被打破，比如：
+  GMP是一个work-stealing调度器，m会在本地P local queue空时，尝试从其他地方获取一部分g来运行，比如从global queue，这里没有的话还会从netpoller中获取网络IO事件就绪的g，再没有就从其他P的local queue中获取一部分，这样相当于其他P的g没有在原来P关联的M上执行，打破了这里的调度粘性；
+  系统调用，当一个系统调用发生时（文件操作、http调用、数据库操作等），go会将当前正在运行的操作系统线程给挂起（不可中断等待状态），并且会创建一个新的操作系统线程M来处理这个P上的local queue中的g，后续执行系统调用的线程恢复后有可能会去处理其他P上的g，这也打破了这里的调度粘性；
+  保护调度粘性
+为了减少打破这里的调度粘性，这两个限制可以尽可能去避免，以优化性能。
+g、m之间的粘性，m、p之间的粘性，说白了都跟运行时依赖的缓存数据有关系，如果打破了粘性，缓存命中率下降，性能就会受影响，这个很好理解。所以go中也针对上述问题做了优化，比如一个陷入阻塞系统调用的m恢复执行后可以通过steal或者retake的方式来争取获取原来的P，也是一个办法吧，这部分了解就可以了。
+对于chan send/recv引起的goroutine阻塞恢复问题，如果goroutine恢复后排在P的local queue的末尾，如果前面有其他goroutine执行，那么大概率这个goroutine会被其他的P上的M偷走，那么当前这个g就要和之前的M、P脱离关系了，一些缓存数据就无法复用了，为了减少打破这里的粘性，赋予了chan阻塞恢复的g更大的调度优先级，比如不将其放到P的local queue，而是将其放到P的runnext中，这样下次就可以立即执行了。
+调度粘性的优势
+p上有mcache、gFree，m上有tls，m运行g申请小于32K的内存是从p.mcache中分配，维持g、m、p之间的关系有助于复用之前p上建立的mcache，也有助于m创建新的g时复用p上之前维护的空闲g列表。
+当然可能还有一些其他的原因，这里暂时先不展开了，想全了再展开。TODO
+see：https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/runtime2.go#L613
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-concurrency-scheduler-affinity-3b678f490488  ">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="concurrency &amp; scheduler affinity" />
+<meta property="og:description" content="Let&rsquo;s Summarize #  GM模型
+go1.1之前的调度模型是GM模型，有一个全局goroutine队列global queue，它的问题是：
+ 访问global queue中的g，需要通过一个全局锁，锁粒度大，锁竞争严重； global queue中的g被恢复执行后，不一定在原来的线程上恢复，也不一定在原来的核上执行，cache命中率低；  GMP模型
+go1.1开始，引入了新的调度器实现GMP模型，引入了一个局部的local queue，这个改进能够在P local queue有g时避免去锁定global queue，也就减少了锁定了整个scheduler的情况。
+goroutine调度粘性
+破坏了调度粘性
+因为引入了P，M会优先执行P下的local queue中的g，g调度到哪个m执行就有了一定的调度粘性（affinity），但是这个调度粘性也会在某几种情况下被打破，比如：
+  GMP是一个work-stealing调度器，m会在本地P local queue空时，尝试从其他地方获取一部分g来运行，比如从global queue，这里没有的话还会从netpoller中获取网络IO事件就绪的g，再没有就从其他P的local queue中获取一部分，这样相当于其他P的g没有在原来P关联的M上执行，打破了这里的调度粘性；
+  系统调用，当一个系统调用发生时（文件操作、http调用、数据库操作等），go会将当前正在运行的操作系统线程给挂起（不可中断等待状态），并且会创建一个新的操作系统线程M来处理这个P上的local queue中的g，后续执行系统调用的线程恢复后有可能会去处理其他P上的g，这也打破了这里的调度粘性；
+  保护调度粘性
+为了减少打破这里的调度粘性，这两个限制可以尽可能去避免，以优化性能。
+g、m之间的粘性，m、p之间的粘性，说白了都跟运行时依赖的缓存数据有关系，如果打破了粘性，缓存命中率下降，性能就会受影响，这个很好理解。所以go中也针对上述问题做了优化，比如一个陷入阻塞系统调用的m恢复执行后可以通过steal或者retake的方式来争取获取原来的P，也是一个办法吧，这部分了解就可以了。
+对于chan send/recv引起的goroutine阻塞恢复问题，如果goroutine恢复后排在P的local queue的末尾，如果前面有其他goroutine执行，那么大概率这个goroutine会被其他的P上的M偷走，那么当前这个g就要和之前的M、P脱离关系了，一些缓存数据就无法复用了，为了减少打破这里的粘性，赋予了chan阻塞恢复的g更大的调度优先级，比如不将其放到P的local queue，而是将其放到P的runnext中，这样下次就可以立即执行了。
+调度粘性的优势
+p上有mcache、gFree，m上有tls，m运行g申请小于32K的内存是从p.mcache中分配，维持g、m、p之间的关系有助于复用之前p上建立的mcache，也有助于m创建新的g时复用p上之前维护的空闲g列表。
+当然可能还有一些其他的原因，这里暂时先不展开了，想全了再展开。TODO
+see：https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/runtime2.go#L613
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-concurrency-scheduler-affinity-3b678f490488  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/concurrency-scheduler-affinity/" /><meta property="article:section" content="posts" />
+
+
+
+<title>concurrency &amp; scheduler affinity | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>concurrency &amp; scheduler affinity</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/concurrency-scheduler-affinity/">concurrency &amp; scheduler affinity</a>
+  </h1>
+  
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+<h1 id="lets-summarize">
+  Let&rsquo;s Summarize
+  <a class="anchor" href="#lets-summarize">#</a>
+</h1>
+<p>GM模型</p>
+<p>go1.1之前的调度模型是GM模型，有一个全局goroutine队列global queue，它的问题是：</p>
+<ul>
+<li>访问global queue中的g，需要通过一个全局锁，锁粒度大，锁竞争严重；</li>
+<li>global queue中的g被恢复执行后，不一定在原来的线程上恢复，也不一定在原来的核上执行，cache命中率低；</li>
+</ul>
+<p>GMP模型</p>
+<p>go1.1开始，引入了新的调度器实现GMP模型，引入了一个局部的local queue，这个改进能够在P local queue有g时避免去锁定global queue，也就减少了锁定了整个scheduler的情况。</p>
+<p>goroutine调度粘性</p>
+<p>破坏了调度粘性</p>
+<p>因为引入了P，M会优先执行P下的local queue中的g，g调度到哪个m执行就有了一定的调度粘性（affinity），但是这个调度粘性也会在某几种情况下被打破，比如：</p>
+<ul>
+<li>
+<p>GMP是一个work-stealing调度器，m会在本地P local queue空时，尝试从其他地方获取一部分g来运行，比如从global queue，这里没有的话还会从netpoller中获取网络IO事件就绪的g，再没有就从其他P的local queue中获取一部分，这样相当于其他P的g没有在原来P关联的M上执行，打破了这里的调度粘性；</p>
+</li>
+<li>
+<p>系统调用，当一个系统调用发生时（文件操作、http调用、数据库操作等），go会将当前正在运行的操作系统线程给挂起（不可中断等待状态），并且会创建一个新的操作系统线程M来处理这个P上的local queue中的g，后续执行系统调用的线程恢复后有可能会去处理其他P上的g，这也打破了这里的调度粘性；</p>
+</li>
+</ul>
+<p>保护调度粘性</p>
+<p>为了减少打破这里的调度粘性，这两个限制可以尽可能去避免，以优化性能。</p>
+<p>g、m之间的粘性，m、p之间的粘性，说白了都跟运行时依赖的缓存数据有关系，如果打破了粘性，缓存命中率下降，性能就会受影响，这个很好理解。所以go中也针对上述问题做了优化，比如一个陷入阻塞系统调用的m恢复执行后可以通过steal或者retake的方式来争取获取原来的P，也是一个办法吧，这部分了解就可以了。</p>
+<p>对于chan send/recv引起的goroutine阻塞恢复问题，如果goroutine恢复后排在P的local queue的末尾，如果前面有其他goroutine执行，那么大概率这个goroutine会被其他的P上的M偷走，那么当前这个g就要和之前的M、P脱离关系了，一些缓存数据就无法复用了，为了减少打破这里的粘性，赋予了chan阻塞恢复的g更大的调度优先级，比如不将其放到P的local queue，而是将其放到P的runnext中，这样下次就可以立即执行了。</p>
+<p>调度粘性的优势</p>
+<p>p上有mcache、gFree，m上有tls，m运行g申请小于32K的内存是从p.mcache中分配，维持g、m、p之间的关系有助于复用之前p上建立的mcache，也有助于m创建新的g时复用p上之前维护的空闲g列表。</p>
+<p>当然可能还有一些其他的原因，这里暂时先不展开了，想全了再展开。TODO</p>
+<p>see：https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/runtime2.go#L613</p>
+<h1 id="source-analysis">
+  Source Analysis
+  <a class="anchor" href="#source-analysis">#</a>
+</h1>
+<h1 id="references">
+  References
+  <a class="anchor" href="#references">#</a>
+</h1>
+<ol>
+<li><a href="https://medium.com/a-journey-with-go/go-concurrency-scheduler-affinity-3b678f490488">https://medium.com/a-journey-with-go/go-concurrency-scheduler-affinity-3b678f490488</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/concurrency%20&amp;%20scheduler%20affinity.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

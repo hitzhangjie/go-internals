@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/" />
+
+<title>Posts | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="alternate" hreflang="en" href="https://hitzhangjie.pro/en/posts/" title="Notes">
+
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<link rel="alternate" type="application/rss+xml" href="https://hitzhangjie.pro/posts/index.xml" title="Go设计实现内幕" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Posts</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/ast/">ast</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan/">chan</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan-select-case/">chan, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/closure/">closure</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler/">compiler</a>
+          <span>24</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler-linker/">compiler, linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/concurrency/">concurrency</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/context/">context</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/debug/">debug</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer/">defer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic/">defer, panic</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic-recover/">defer, panic, recover</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/diagnostics/">diagnostics</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fuzzy-test/">fuzzy, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/garbage-collector/">garbage collector</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine/">goroutine</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-select-case/">goroutine, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/init/">init</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/instrumentation/">instrumentation</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/interface/">interface</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linker/">linker</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/locks/">locks</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map/">map</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map-race-detector/">map, race detector</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/mechanics/">mechanics</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/memory-management/">memory management</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/monitor/">monitor</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pointer/">pointer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pprof/">pprof</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/race-detector/">race detector</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/random/">random</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/string/">string</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/sync.pool/">sync.pool</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/syscall/">syscall</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/tdd-test/">tdd, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/test/">test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/timer/">timer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/trace/">trace</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/unsafe/">unsafe</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-defer-statement-work/">how does defer statement work</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/defer-panic/">defer, panic</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了defer、panic、recover的使用及实现方式。
+g里面有_defer成员，它其实是一个LIFO的栈，每次调用defer的时候会通过runtime.deferfunc（内部通过newdefer）来创建一个新的defer对象并加到g._defer栈顶；
+g内部panic的时候gopanic会设置g._panic；
+调用recover的时候gorecover会检查当前g的_panic；
+文中还介绍了优化defer性能的CL，see https://go-review.googlesource.com/c/go/+/29656/。这个CL的核心思想是减少newdefer时导致的g被抢占、栈增长、defer函数参数内存拷贝问题。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-defer-statement-work-1a9492689b6e?source=---------48-----------------------  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-GC-mark-the-memory/">how does GC mark the memory</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/garbage-collector/">garbage collector</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了go的垃圾回收器是如何标记正在使用中的内存的，go中采用的是并发三色标记清除算法（concurrent tricolor mark and sweep），先结合字面含义解释几个事情。
+基本概念：
+ 并发，这里的并发指的是GC逻辑和我们的应用处理逻辑是并发进行的； 三色，为了区分哪些对象是可达对象（正在被引用的），哪些是不可达对象（没有被引用的），使用了黑色、白色来区分，因为这个标记过程是通过递归渐进式的扫描，过程也需要用到灰色。  mspan &amp; mspan on scan：
+GC扫描标记过程是比较耗时的，如果一个对象中没有任何指针字段，那么完全不需要扫描它，如何识别一个对象有没有指针呢？在内存分配的时候，就可以提前介入处理了。我们知道P下有mcache，mcache根据不同对象大小建立了很多不同大小的span，每个尺寸的span都有两类，一类是普通span，一类是span no scan。后者在GC扫描标记过程中是不需要去扫描的，就是说如果当前扫描到一个对象，发现其是在mspan no scan中分配的，则可以直接将其标记为黑色，结束当前这个对象的递归扫描；而如果是分配在普通mspan中的，那么就应该将其标记为灰色，并将其放入到workpool中，供mark workers取出并继续递归扫描其内部指针。
+write barriers：
+这里的写屏障可不是处理器提供的锁屏障哦，很多人一听名字一样以为是一个东西。处理器提供的write memory barriers，是一种内存同步原语，而这里的write barriers指的是编译器安插的一些指令，用来跟踪程序和GC并发执行期间对一些指针所做的更改，避免正在被引用的对象被错误地回收掉。
+大致GC过程：
+进程启动时，就会启动一些mark worker，用来执行一些标记工作。触发GC时，比如显示地执行runtime.GC()，首先会通过抢占式调度通知各个G停下来，M和P解除关系，P被抢占，M被放到空闲M列表，G放到全局queue，打开write barriers，就是一个开关，对指针进行操作时走到一个记录指针修改的分支记录一下。
+每个P准备一个mark worker，mark worker开始扫描G的栈上的一些变量，称为roots对象，然后递归地进行扫描。这里用到了前面的三色标记，刚开始所有对象都是白的，然后这些roots对象全部染成灰色的。然后重复执行下述过程：
+ pick 1个灰色的，将其染成黑色的； 然后将其内部指针指向的对象全部染为灰色的； 重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。  黑色的就是正在被引用的，白色的就是未被引用的。
+GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。
+这个扫描过程是借助了一个workpool+mark workers来实现的，实现也算比较优雅吧。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-GC-watch-your-application/">how does GC watch your application</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/garbage-collector/">garbage collector</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了Go垃圾回收器的设计目标，减少STW时间，一个GC周期不超过10ms，一个GC周期占用CPU不能超过25%。/// 这些目标是比较有挑战的，运行时加强对进程内存的监控和了解将有助于改善垃圾回收过程。/// go运行时监控heap使用情况GOGC，默认heap使用翻倍触发GC；如果2分钟之内没有触发GC会强制执行一次；mark assist，为了防止某些协程内存申请过快，内存申请时也会与下一次触发GC的heap大小做比较，如果已经达到了触发条件，将当前协程今天用于mark assist去标记内存，为什么这么干呢？就是为了保证垃圾回收内存速度尽量比内存分配速度快；再就是GC标记阶段不能申请超过1/4的P，比如示例中有8个P只有两个P下的mark协程为mark dedicated（不能被抢占），其他的下的mark协程都是GC idle（可以被其他协程抢占）。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-watch-your-application-dbef99be2c35  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-go-implement-closures/">how does go implement closures</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/closure/">closure</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了go中闭包是如何实现的，包括闭包中引用的外部变量何时采用值捕获（readonly且数据量较小），何时采用引用捕获（readwrite，or数据量偏大）。编译器对闭包进行处理时，会自动完成上述判断与代码的转换。
+Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2018-05-19-golang-function-closure%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-go-recycle-goroutines/">how does go recycle goroutines</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  go fn()创建一个goroutine去执行函数fn，这里的创建一个goroutine其实重要的是分配一个栈空间以及一个goroutine描述信息g，维护一下函数fn的指令地址等等信息。
+我们说创建一个g，其实涉及了栈内存空间的分配动作，涉及到对象分配的，我们都知道通过对象池可以优化内存分配问题，goroutine这里也不例外。
+当一个goroutine执行完成函数fn时，并不意味着这个goroutine就被彻底销毁了，它会被保存到P的gFree字段中，后续如果需要创建goroutine时就可以复用，当然了gFree中如果g比较多，也会被迁移到调度器的g空闲链表中，方便其他P复用。
+因为g是有栈空间的，而且栈空间会增大，当g执行fn完成时，可能栈空间不小了，比如超过了2KB，这种时候再保留这个栈空间池化就太浪费内存了，所以这种栈空间大的就会释放其栈空间，所以在调度器的g空闲链表可以分为两类：
+ 带栈空间的g空闲链表； 栈空间被销毁的g空闲链表；  这里的g被重复利用，只是为了提高g创建效率，和我们通过一些workerpool来限制goroutines数量的初衷是不重复的，workerpool一般并不是为了提高g创建效率，而是为了限制g数量，避免吃爆内存。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-go-recycle-goroutines-f047a79ab352  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-go-runtime-handles-syscall/">how does go runtime handles syscall</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/syscall/">syscall</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了linux系统调用的一种分类方式：阻塞型系统调用和非阻塞型系统调用。
+线程执行阻塞型系统调用时，一定会陷入不可中断等待状态，除了内核本身，没有任何外部事件可以将线程唤醒。go runtime需要感知对阻塞型系统调用的使用，避免线程被阻塞导致无线程调度goroutines。
+go对系统调用进行了包装，阻塞型系统调用对应的是Syscall，非阻塞型系统调用是RawSyscall，后者不会导致线程阻塞，没什么好讨论的，我们只讨论Syscall。
+Syscall内部会向运行时报告，当前线程即将进入一个阻塞型系统调用，然后运行时会执行一些对应的处理，如将M和P分离，挂起G，可能还会创建新的M来获得P来执行G。这里涉及到调度亲和性的一些细节，这里的总结就不过多展开了。
+本文中的叙述风格关于故事化，关于为什么要尝试让G在原来的M、M在原来的P上执行，注意一下调度亲和性，就比较容易理解。
+Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2021-06-06-how-go-handles-syscall/  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-does-go-stop-the-world/">how does go stop the world</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/garbage-collector/">garbage collector</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  STW指的是停止正在运行中的goroutines，一个GC cycle中包含了两次STW，第一次STW是为了打开write barriers，第二次STW是为了将write barriers记录下来的指针修改重新进行扫描标记，避免正被引用的对象被错误地回收掉。
+这里其实只是简单介绍了下STW发生后的一些执行逻辑，比如P被抢占，P、M解除关联，M被放入空闲M队列，G被放到global queue中……
+至于STW是如何实现的，以及上述过程中的具体实现，都没有详细展开，这里还是要结合源码来进一步学习一下。
+Source Analysis #  see runtime/mgc.go
+GOGC=off: means no gc
+References #   https://medium.com/a-journey-with-go/go-how-does-go-stop-the-world-1ffab8bc8846  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-goroutine-stack-size-evolve/">how goroutine stack size evolve</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/goroutine/">goroutine</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  介绍了goroutine的栈空间的演进，从segmented stack到continous stack，以及栈空间从4K→8K→2K的变化：
+ 栈管理最初是分段栈，存在hot split问题，即如果在一个循环内存在函数调用切需要栈增长，那么会频繁发生alloc/free的情况，影响性能，为了减轻hot split，所以从4K改为8K； 在实现了连续栈之后，newStkSize=oldStkSize*2，栈空间够用，可以解决hot split问题，又从8K改为了2K；  本文提供了一个简单的函数调用demo（通过局部数组大小控制栈空间分配）、禁用内联、打开runtime.stackDebug来观测栈空间变化。
+Source Analysis #    copystack：拷贝栈实现逻辑 https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/stack.go#L848
+  adjustpointer：创建新栈后，需要调整一下原来goroutine中的引用指针值（oldptr+delta) https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/stack.go#L529
+  References #   https://medium.com/a-journey-with-go/go-how-does-the-goroutine-stack-size-evolve-447fc02085e5  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-to-reduce-lock-contention-with-the-atomic-package/">how to reduce lock contention with the atomic package</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/locks/">locks</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  atomic、mutex、rwmutex，写多读少直接用mutex，读多写少用rwmutex，如果要考虑提升性能，可以考虑atomic。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to-reduce-lock-contention-with-the-atomic-package-ba3b2664b549  
+    </p>
+  </article>
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/posts/how-to-take-advantage-of-symbols-tables/">how to take advantage of symbols tables</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/compiler/">compiler</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  go在编译过程中会检查使用的标识符是否已经定义过，编译器通过符号表来记录已经定义的标识符。程序构建完成之后，其实就不再需要符号表了，为了程序尺寸可以考虑从binary中剥离符号表：
+ 可以通过其他二进制工具来从binary中剔除符号表； 也可以考虑在编译时指定选项-ldflags=&quot;-s&quot;在编译链接完成后剔除符号表；  我们可以通过nm或者go tool nm来查看binary中的符号表信息，也可以通过-ldflags=&quot;-X $pkg.$var=$value&quot;的方式来设置一些包级别的变量值。
+根据程序规模不同，符号表大小可能会导致binary尺寸增加，为了加速程序加载启动可以考虑删掉符号表。如果考虑到调试方便，则可以保留符号表。
+Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to-take-advantage-of-the-symbols-table-360dd52269e5  
+    </p>
+  </article>
+  
+
+  
+<ul class="pagination">
+  <li class="page-item">
+    <a href="/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/3/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/">1</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/2/">2</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/3/">3</a>
+  </li>
+  <li class="page-item active">
+    <a class="page-link" href="/posts/page/4/">4</a>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/5/">5</a>
+  </li>
+  <li class="page-item disabled">
+    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
+  </li>
+  <li class="page-item">
+    <a class="page-link" href="/posts/page/9/">9</a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/5/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+  </li>
+  <li class="page-item">
+    <a href="/posts/page/9/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+  </li>
+</ul>
+
+
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/posts/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/_index.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  <nav>
+  <ul>
+  
+    
+    <li class="book-section-flat">
+      <strong>Categories</strong>
+      <ul>
+      
+      </ul>
+    </li>
+    
+  
+    
+    <li class="book-section-flat">
+      <strong>Tags</strong>
+      <ul>
+      
+        <li class="flex justify-between">
+          <a href="/tags/ast/">ast</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan/">chan</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/chan-select-case/">chan, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/closure/">closure</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler/">compiler</a>
+          <span>24</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/compiler-linker/">compiler, linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/concurrency/">concurrency</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/context/">context</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/debug/">debug</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer/">defer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic/">defer, panic</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/defer-panic-recover/">defer, panic, recover</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/diagnostics/">diagnostics</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/fuzzy-test/">fuzzy, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/garbage-collector/">garbage collector</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine/">goroutine</a>
+          <span>11</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/goroutine-select-case/">goroutine, select-case</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/init/">init</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/instrumentation/">instrumentation</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/interface/">interface</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/linker/">linker</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/locks/">locks</a>
+          <span>3</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map/">map</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/map-race-detector/">map, race detector</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/mechanics/">mechanics</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/memory-management/">memory management</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/monitor/">monitor</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pointer/">pointer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/pprof/">pprof</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/race-detector/">race detector</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/random/">random</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/string/">string</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/sync.pool/">sync.pool</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/syscall/">syscall</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/tdd-test/">tdd, test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/test/">test</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/timer/">timer</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/trace/">trace</a>
+          <span>1</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/tags/unsafe/">unsafe</a>
+          <span>1</span>
+        </li>
+      
+      </ul>
+    </li>
+    
+  
+  </ul>
+</nav>
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

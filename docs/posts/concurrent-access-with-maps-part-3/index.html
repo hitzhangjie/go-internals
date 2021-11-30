@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Let&rsquo;s Summarize #  1 map
+map中的并发读写问题，go提供了如下方式进行检查：
+  data race detection：通过选项-race来检测是否存在data race，关于data race检测的问题，kavya joshi的分享里有介绍；
+  并发写操作检测：map对应的数据结构hmap中有个字段flags来记录当前的map操作，比如当前执行m[1]=1，是一个kv的赋值，对应的函数是mapassign_fast64，如果执行的是delete(m, 1)，对应的函数是mapdelete_fast64，这里的map修改操作对应的函数内部会将hmap.flags^=hashWriting，如果已经有一个写操作在执行，后面又有一个写操作执行，后面的写操作就有很大概率检测到flags的hashWriting位被设置了，此时就会抛出错误“concurrent map writes”错误；
+  关于map为什么不直接提供并发安全的版本，原因也简单。并发安全的版本是有同步开销的，但是很多时候并不需要并发安全的版本，如果默认实现是并发安全的，性能上就要大打折扣了。不考虑并发安全问题的话，map比sync.Map要快7~10倍。
+2 sync.Map
+sync.Map是并发安全的实现，它对某些场景下的并发读写做了性能方面的优化： goblogs: &ldquo;The Map type is optimized for two common use cases: (1) when the entry for a given key is only ever written once but read many times, as in caches that only grow, (2) when multiple goroutines read, write and overwrite entries for disjoint sets of keys.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="concurrent access with maps - part 3" />
+<meta property="og:description" content="Let&rsquo;s Summarize #  1 map
+map中的并发读写问题，go提供了如下方式进行检查：
+  data race detection：通过选项-race来检测是否存在data race，关于data race检测的问题，kavya joshi的分享里有介绍；
+  并发写操作检测：map对应的数据结构hmap中有个字段flags来记录当前的map操作，比如当前执行m[1]=1，是一个kv的赋值，对应的函数是mapassign_fast64，如果执行的是delete(m, 1)，对应的函数是mapdelete_fast64，这里的map修改操作对应的函数内部会将hmap.flags^=hashWriting，如果已经有一个写操作在执行，后面又有一个写操作执行，后面的写操作就有很大概率检测到flags的hashWriting位被设置了，此时就会抛出错误“concurrent map writes”错误；
+  关于map为什么不直接提供并发安全的版本，原因也简单。并发安全的版本是有同步开销的，但是很多时候并不需要并发安全的版本，如果默认实现是并发安全的，性能上就要大打折扣了。不考虑并发安全问题的话，map比sync.Map要快7~10倍。
+2 sync.Map
+sync.Map是并发安全的实现，它对某些场景下的并发读写做了性能方面的优化： goblogs: &ldquo;The Map type is optimized for two common use cases: (1) when the entry for a given key is only ever written once but read many times, as in caches that only grow, (2) when multiple goroutines read, write and overwrite entries for disjoint sets of keys." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hitzhangjie.pro/posts/concurrent-access-with-maps-part-3/" /><meta property="article:section" content="posts" />
+
+
+
+<title>concurrent access with maps - part 3 | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>concurrent access with maps - part 3</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+<article class="markdown">
+  <h1>
+    <a href="/posts/concurrent-access-with-maps-part-3/">concurrent access with maps - part 3</a>
+  </h1>
+  
+
+
+  
+
+  
+  <div>
+    
+      <a href="/tags/map-race-detector/">map, race detector</a>
+  </div>
+  
+
+
+
+<h1 id="lets-summarize">
+  Let&rsquo;s Summarize
+  <a class="anchor" href="#lets-summarize">#</a>
+</h1>
+<p>1 map</p>
+<p>map中的并发读写问题，go提供了如下方式进行检查：</p>
+<ul>
+<li>
+<p>data race detection：通过选项-race来检测是否存在data race，关于data race检测的问题，kavya joshi的分享里有介绍；</p>
+</li>
+<li>
+<p>并发写操作检测：map对应的数据结构hmap中有个字段flags来记录当前的map操作，比如当前执行m[1]=1，是一个kv的赋值，对应的函数是mapassign_fast64，如果执行的是delete(m, 1)，对应的函数是mapdelete_fast64，这里的map修改操作对应的函数内部会将hmap.flags^=hashWriting，如果已经有一个写操作在执行，后面又有一个写操作执行，后面的写操作就有很大概率检测到flags的hashWriting位被设置了，此时就会抛出错误“concurrent map writes”错误；</p>
+</li>
+</ul>
+<p>关于map为什么不直接提供并发安全的版本，原因也简单。并发安全的版本是有同步开销的，但是很多时候并不需要并发安全的版本，如果默认实现是并发安全的，性能上就要大打折扣了。不考虑并发安全问题的话，map比sync.Map要快7~10倍。</p>
+<p>2 sync.Map</p>
+<p>sync.Map是并发安全的实现，它对某些场景下的并发读写做了性能方面的优化：
+goblogs: &ldquo;The Map type is optimized for two common use cases: (1) when the entry for a given key is only ever written once but read many times, as in caches that only grow, (2) when multiple goroutines read, write and overwrite entries for disjoint sets of keys. In these two cases, use of a Map may significantly reduce lock contention compared to a Go map paired with a separate Mutex or RWMutex.&rdquo;</p>
+<p>意思就是说，sync.Map对于像缓存（caches）这种写一次（或次数很少）但是读取次数多的场景就很适用，或者存在多个goroutines并发读写，但是读写的keys集合是不相交的。</p>
+<p>3 shardedmap</p>
+<p>sync.Map对于需要频繁执行删除的场景、更广泛的写场景，没有对其进行足够的优化，这两个场景可以参考shardedmap实现。</p>
+<p>see:</p>
+<ul>
+<li><a href="https://github.com/orcaman/concurrent-map/blob/master/concurrent_map.go">https://github.com/orcaman/concurrent-map/blob/master/concurrent_map.go</a></li>
+<li><a href="https://golangexample.com/a-simple-and-efficient-thread-safe-sharded-hashmap-for-go/">https://golangexample.com/a-simple-and-efficient-thread-safe-sharded-hashmap-for-go/</a></li>
+</ul>
+<p>4 benchmark</p>
+<p>对map、sync.Map、concurrent_map（shardedmap）进行了benchmark，结果如下：</p>
+<p>BenchmarkDeleteEmptyMap-8 20000000 86.9 ns/op
+BenchmarkDeleteEmptySyncMap-8 300000000 5.16 ns/op
+BenchmarkDeleteEmptyCMap-8 50000000 34.8 ns/op</p>
+<p>BenchmarkDeleteMap-8 10000000 131 ns/op
+BenchmarkDeleteSyncMap-8 10000000 135 ns/op
+BenchmarkDeleteCMap-8 30000000 37.0 ns/op</p>
+<p>BenchmarkLoadEmptyMap-8 20000000 87.9 ns/op
+BenchmarkLoadEmptySyncMap-8 300000000 5.03 ns/op
+BenchmarkLoadEmptyCMap-8 100000000 17.1 ns/op</p>
+<p>BenchmarkLoadMap-8 20000000 111 ns/op
+BenchmarkLoadSyncMap-8 100000000 12.8 ns/op
+BenchmarkLoadCMap-8 100000000 22.5 ns/op</p>
+<p>BenchmarkSetMap-8 10000000 187 ns/op
+BenchmarkSetSyncMap-8 5000000 396 ns/op
+BenchmarkSetCMap-8 20000000 84.9 ns/op</p>
+<p>benchmark结果表明：</p>
+<ul>
+<li>map+rwmutex这种方式，锁粒度比加大，增删该查操作耗时相对来说都是比较明显的；</li>
+<li>sync.Map这种方式，写少读多的情况是非常合适的，效率比较明显，优于map、concurrent_map；</li>
+<li>concurrent_map，考虑了并发写比较频繁的情况，特别是删除，多shard执行删除操作时效率非常明显；</li>
+</ul>
+<p>举个应用选型的例子：连接池明明显属于读多写少的场景，建议用sync.Map代替（key为ip:port，value为connection），后面transport如果要实现双工模式的时候，需要维护req.seqno\req的映射关系，增删频繁，可以考虑用concurrent_map（key为req.seqno，value为req）。</p>
+<h1 id="source-analysis">
+  Source Analysis
+  <a class="anchor" href="#source-analysis">#</a>
+</h1>
+<h1 id="references">
+  References
+  <a class="anchor" href="#references">#</a>
+</h1>
+<ol>
+<li><a href="https://medium.com/a-journey-with-go/go-concurrency-access-with-maps-part-iii-8c0a0e4eb27e">https://medium.com/a-journey-with-go/go-concurrency-access-with-maps-part-iii-8c0a0e4eb27e</a></li>
+</ol>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/posts/concurrent%20access%20with%20maps%20-%20part%203.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lets-summarize">Let&rsquo;s Summarize</a></li>
+    <li><a href="#source-analysis">Source Analysis</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.82.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="小码农想变大师傅 #  我们准备做什么 Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut olivae sensit arma sorori deducit, inesset crudus, ego vetuere aliis, modo arsit? Utinam rapta fiducia valuere litora adicit cursu, ad facies  为什么要这么做 Ea furtique risere fratres edidit terrae magis. Colla tam mihi tenebat: miseram excita suadent es pecudes iam. Concilio quam velatus posset ait quod nunc! Fragosis suae dextra geruntur functus vulgata.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="介绍" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hitzhangjie.pro/" />
+
+<title>介绍 | Go设计实现内幕</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="alternate" hreflang="en" href="https://hitzhangjie.pro/en/" title="Introduction">
+
+<link rel="stylesheet" href="/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
+<script defer src="/zh.search.min.4a47667c0c4c4d38d4c2f1cb693c0ab48a1a196b65c1be71c0503332ee91b6fa.js" integrity="sha256-SkdmfAxMTTjUwvHLaTwKtIoaGWtlwb5xwFAzMu6Rtvo="></script>
+
+<script defer src="/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js" integrity="sha256-b2&#43;Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC&#43;NdcPIvZhzk="></script>
+<link rel="alternate" type="application/rss+xml" href="https://hitzhangjie.pro/index.xml" title="Go设计实现内幕" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/"><img src="/logo.png" alt="Logo" /><span>Go设计实现内幕</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/preface/" class="">前言</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/introduction/" class="">简介</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/" class="">Table of Contents</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/with-toc/" class="">With ToC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/table-of-contents/without-toc/" class="">Without ToC</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
+    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
+      <a  class="">Collapsed</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/" class="">3rd Level</a>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
+    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+      <a  class="">Compiler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
+    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+      <a  class="">Runtime</a>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/posts/" >
+        Posts
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://github.com/hitzhangjie/go-internals-v2" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+  <li>
+    <a href="https://hitzhangjie.pro" target="_blank" rel="noopener">
+        Blog
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>介绍</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#小码农想变大师傅">小码农想变大师傅</a>
+      <ul>
+        <li><a href="#go语言之我见">Go语言之我见</a></li>
+        <li><a href="#go语言的优势">Go语言的优势</a></li>
+        <li><a href="#go入门教程推荐">Go入门教程推荐</a></li>
+        <li><a href="#本书存在的意义">本书存在的意义</a></li>
+        <li><a href="#联系方式">联系方式</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="小码农想变大师傅">
+  小码农想变大师傅
+  <a class="anchor" href="#%e5%b0%8f%e7%a0%81%e5%86%9c%e6%83%b3%e5%8f%98%e5%a4%a7%e5%b8%88%e5%82%85">#</a>
+</h1>
+<div class="book-columns flex flex-wrap">
+  
+  <div class="flex-even markdown-inner">
+    <h2 id="我们准备做什么">我们准备做什么</h2>
+<p>Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut
+olivae sensit <strong>arma sorori</strong> deducit, inesset <strong>crudus</strong>, ego vetuere aliis,
+modo arsit? Utinam rapta fiducia valuere litora <em>adicit cursu</em>, ad facies
+  </div>
+  
+  <div class="flex-even markdown-inner">
+    <h2 id="为什么要这么做">为什么要这么做</h2>
+<p>Ea <em>furtique</em> risere fratres edidit terrae magis. Colla tam mihi tenebat:
+miseram excita suadent es pecudes iam. Concilio <em>quam</em> velatus posset ait quod
+nunc! Fragosis suae dextra geruntur functus vulgata.
+  </div>
+  
+  <div class="flex-even markdown-inner">
+    <h2 id="准备怎么落地">准备怎么落地</h2>
+
+  </div>
+  
+</div>
+
+<h2 id="go语言之我见">
+  Go语言之我见
+  <a class="anchor" href="#go%e8%af%ad%e8%a8%80%e4%b9%8b%e6%88%91%e8%a7%81">#</a>
+</h2>
+<p>Lorem <strong>markdownum</strong> emicat gestu. Cannis sol pressit ducta. <strong>Est</strong> Idaei,
+tremens ausim se tutaeque, illi ulnis hausit, sed, lumina cutem. Quae avis
+sequens!</p>
+<pre><code>var panel = ram_design;
+if (backup + system) {
+    file.readPoint = network_native;
+    sidebar_engine_device(cell_tftp_raster,
+            dual_login_paper.adf_vci.application_reader_design(
+            graphicsNvramCdma, lpi_footer_snmp, integer_model));
+}
+public_keyboard_docking += error.controller_gibibyte_plug.ip(4,
+        asciiPetaflops, software(supercomputer_compatible_status + 4));
+dynamic_disk.indexModeLaptop = bufferTftpReality;
+var export_vlog_sequence = trinitron_flowchart + supercomputer_cluster_rj(
+        -1, toolbar_powerpoint_query, -2 / multiprocessing_impression);
+</code></pre>
+<h2 id="go语言的优势">
+  Go语言的优势
+  <a class="anchor" href="#go%e8%af%ad%e8%a8%80%e7%9a%84%e4%bc%98%e5%8a%bf">#</a>
+</h2>
+<p>Idmoniae ripis, at aves, ali missa adest, ut <em>et autem</em>, et ab? Venit spes
+versus finis sermonibus patefecit murum nec est sine oculis. <em>Ille</em> inmota
+macies domoque caelestia cadit tantummodo scelus procul, corde!</p>
+<ol>
+<li>Dolentem capi parte rostro alvum habentem pudor</li>
+<li>Fulgentia sanguine paret</li>
+<li>E punior consurgit lentus</li>
+<li>Vox hasta eras micantes</li>
+</ol>
+<h2 id="go入门教程推荐">
+  Go入门教程推荐
+  <a class="anchor" href="#go%e5%85%a5%e9%97%a8%e6%95%99%e7%a8%8b%e6%8e%a8%e8%8d%90">#</a>
+</h2>
+<p>Nefandam et prisci palmas! Blandita cutis flectitur montis macies, te <em>nati</em>
+Latiis; turbaque inferias. Virginis tibi peracta avidusque facies caper nec, e
+at ademptae, mira.</p>
+<pre><code>direct *= font(inputScareware(sliHome), crossplatform.byte(
+        ppl_encryption.excel_e_rte(integratedModelModifier), timeVirtual,
+        floating_speakers.media_printer(us, yahoo, primaryPhp)));
+friendly_metal_flatbed(cd, isoPrimaryStorage(reader), dmaMirrored);
+if (parse_flash_cron.metalGif(1, adServiceDevice, utility)) {
+    adf -= operation_cdma_samba;
+    imapGif.switch += torrent;
+} else {
+    pmu.disk_captcha = digital_ppp_pci + recursionTransistor(5, dram);
+    ajax_service += grayscalePythonLock;
+    google_scroll_capacity = ftp + engine_dslam_sidebar / tape - 1;
+}
+drive_rw = zipTftp;
+var suffix = software_router_extension.dimm_ddr(-5,
+        kernel_digital_minisite);
+</code></pre>
+<p>Vocavit toto; alas <strong>mitis</strong> maestus in liquidarum ab legi finitimosque dominam
+tibi subitus; Orionis vertitur nota. Currere alti etiam seroque cernitis
+innumeris miraturus amplectique collo sustinet quemque! Litora ante turba?</p>
+<h2 id="本书存在的意义">
+  本书存在的意义
+  <a class="anchor" href="#%e6%9c%ac%e4%b9%a6%e5%ad%98%e5%9c%a8%e7%9a%84%e6%84%8f%e4%b9%89">#</a>
+</h2>
+<h2 id="联系方式">
+  联系方式
+  <a class="anchor" href="#%e8%81%94%e7%b3%bb%e6%96%b9%e5%bc%8f">#</a>
+</h2>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+  
+
+
+
+  
+    
+  
+    
+  
+
+
+  
+
+
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+  <ul>
+    <li class="flex align-center">
+      <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+      Chinese
+    </li> 
+  </ul>
+
+  <ul class="book-languages-list">
+    
+    <li class="active">
+      <a href="https://hitzhangjie.pro/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        Chinese
+      </a>
+    </li>
+    
+    <li class="">
+      <a href="https://hitzhangjie.pro/en/" class="flex align-center">
+        <img src="/svg/translate.svg" class="book-icon" alt="Languages" />
+        English
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+  <div>
+    <a class="flex align-center" href="https://github.com/hitzhangjie/go-internals/edit/master//content/_index.md" target="_blank" rel="noopener">
+      <img src="/svg/edit.svg" class="book-icon" alt="Edit" />
+      <span>编辑本页</span>
+    </a>
+  </div>
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#小码农想变大师傅">小码农想变大师傅</a>
+      <ul>
+        <li><a href="#go语言之我见">Go语言之我见</a></li>
+        <li><a href="#go语言的优势">Go语言的优势</a></li>
+        <li><a href="#go入门教程推荐">Go入门教程推荐</a></li>
+        <li><a href="#本书存在的意义">本书存在的意义</a></li>
+        <li><a href="#联系方式">联系方式</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
