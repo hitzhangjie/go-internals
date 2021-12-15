@@ -14,7 +14,7 @@
       <description>Let&amp;rsquo;s Summarize #  本文内容很多，我只关注了其对openDefer的解释，一个openDefer的defer，或者说一个open-coded defer指的是这样的defer，不是在for循环中被调用的defer。
 举个例子：
 func TestOpenAndNonOpenDefers(t *testing.T) { // f() is a more complicated function that is recover()&amp;ldquo;ed for { defer f() // &amp;lt;&amp;ndash; non open-coded defer } defer f() // &amp;lt;&amp;ndash; open-coded defer }
-Source Analysis #  References #   https://tpaschalis.github.io/defer-internals/  </description>
+Source Analysis #  References #    https://tpaschalis.github.io/defer-internals/  </description>
     </item>
     
   </channel>

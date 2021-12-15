@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go设计实现内幕</title>
+    <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/</link>
+    <description>Recent content on Go设计实现内幕</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>an insight into go garbage collector</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/</guid>
+      <description>Let&amp;rsquo;s Summarize #  goroutine栈内存是从mheap申请而来，栈空间小于32K的时候也是从P.mcache中分配的，减小锁竞争，当栈空间大于32K时就从mheap中分配了。/// stack split指的是stack growth和stack shrink这种情况。/// stack销毁开销更小，调整下栈指针寄存器即可。heap对象销毁则要依赖垃圾回收。/// 并发三色标记清除算法，黑色表示可达并且已经分析完了其内部指针的对象，灰色表示可达但是还没有分析完其内部指针，白色表示不可达对象。为了维持三色不变性需要通过write barrier来记录mutator对指针做的修改，新版本中已经是用的混合写屏障了，综合了dijkstra write barrier和yuasa write barrier，并且做了优化实现了bufferred write barrier，允许每个P维护一个buffer必要时flush以提GC性能。/// go GC追求更低的停顿时间，希望GC给goroutine执行引入的延迟更低！
+Source Analysis #  References #    https://golangpiter.com/system/attachments/files/000/001/718/original/GP_2019_-_An_Insight_Into_Go_Garbage_Collection.pdf?1572419303  </description>
+    </item>
+    
+    <item>
+      <title>finalizers</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/finalizers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/finalizers/</guid>
+      <description>Let&amp;rsquo;s Summarize #  runtime.SetFinalizer(p, fn)，运行时提供了这个函数来在p被GC时执行函数fn。
+只有一个专门的协程来执行所有的finalizers，所以finalizers的执行是串行执行的，如果某一个finalizer的逻辑比较重，或者耗时比较久，应该启动一个独立的协程来执行该逻辑。
+当一个对象obj被垃圾回收器识别为不再被引用时，其存在关联的finalizer的话，首先解除该关联关系，然后将该finalizer(obj)交给上面提的那个专门的协程去执行，至于什么时候执行完成，是没有保证的，可能程序退出时也不能保证已经执行完成了。
+在obj关联你的finalizer被执行时，finalizer(obj)又重新引用了该对象obj，不可达对象又变成可达了，这个时候GC不能将其回收，但是因为已经去掉了obj和finalizer的关联，下一轮GC时该对象obj将能够被回收。
+finalizer通常用来释放一些不再使用的内存资源、关闭文件等清理工作，因为其什么时候执行是不方便准确预测的，也只适合来做些类似不再使用的资源的清理工作。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-finalizers-786df8e17687  </description>
+    </item>
+    
+    <item>
+      <title>go GC: latency problem solved</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/</guid>
+      <description>Let&amp;rsquo;s Summarize #  这里只给了一些go 1.15对比1.14的benchmark数据，并没有介绍具体是如何做到的。
+Source Analysis #  References #    https://talks.golang.org/2015/go-gc.pdf?utm_medium=twitter&amp;utm_source=twitterfeed  </description>
+    </item>
+    
+    <item>
+      <title>go GC: prioritizing low latency and simplicity</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了当前软硬件大规模发展的趋势以及go GC需要优先解决的问题：低延迟和简单性（通过一个参数就可以控制，而非像JVM调参那样）。
+go团队的目标是设计一个面向未来十年的垃圾回收器，借鉴了十几年前发明的算法。go GC使用的是并发三色标记清除算法（concurrent, tri-color, mark-sweep collector），由Dijkstra在1978年提出。该算法与现在大多数企业级的GC实现不同，但是go团队认为该算法更适合于现代硬件的发展，也更有助于实现现代软件的GC低延迟目标。
+该GC算法中，每个对象只能是white、grey、black中的其中一种，heap可以看做是互相连接的对象构成的一个graph。GC算法流程是：
+ GC开始时，所有对象都是white； GC遍历所有的roots对象（比如全局变量、栈变量）将其标记为灰色； 然后GC选择一个grey对象，将其标记为black，并扫描（scan）该对象检查它内部的指向其他对象的指针。如果发现有指针指向其他white对象，将white对象标记为grey； 该过程重复执行，直到没有任何的灰色对象； 最后，剩下的白色对象即认为是不可达对象，可以被回收再利用；  GC过程和应用程序执行是并发进行的，应用程序也称为mutator，它会在GC运行期间修改一些指针的值。mutator必须遵循这样一条规则，就是不允许出现一个黑色对象指向一个白色对象，这样会导致对象被错误地回收。为了保证该规则成立，就需要引入写屏障（write barrier），它是编译阶段由编译器对mutator指针操作安插的一些特殊指令，用来跟踪对指针的修改，write barrier如果发现当前黑色对象的内部指针字段指向了外部的一个白色对象，则会将白色对象染色为grey，避免其被错误地GC掉，也保证其可以被继续扫描。
+有些GC相关的问题：
+ 什么时候启动GC？ 通过哪些指标来判断要启动GC？ GC应该如何与scheduler进行交互？ 如何暂停一个mutator线程足够长时间，以扫描器stack？ 如何表示white、grey和black三种颜色来实现高效地查找、扫描grey对象？ 如何知道roots对象在哪里？ 如何知道一个指向对象的指针的位置？ 如何最小化内存碎片？ 如何解决cache性能问题？ heap应该设置为多大？ 等等。  上述问题有些与内存分配有关，有些与可达对象分析有关，有些与goroutine调度有关，有些与性能有关，关于这些内容的讨论远远超出本文篇幅，可以自己参考相关的材料。
+为了解决GC性能问题，可以考虑为每一种优化加个参数来控制，开发人员可以自己调整这里的参数来达到想要的优化效果。但是这种做法时间久了之后会发现有非常多的参数，调优就会变得非常困难，比如JVM调优。go团队不想走这样的老路，力求简单高效。
+go通过GOGC这个环境变量来控制整个堆大小相对于现阶段可达对象大小的比例。GOGC默认值是100%，意味着当堆大小增长了当前可达对象大小的1倍时（2倍大小），就会触发GC；200%则意味着继续增长了当前可达对象的2倍时触发GC（3倍大小）。
+ 如果想降低GC花费的时间，就把这个值设置的大一点，因为这样不容易频繁触发GC； 如果愿意花费更多的GC时间来换取更少的内存占用，就把这个值设置的小一点，因为这样能够更加频繁地GC；  前面提到go团队要设计一个面向未来十年的垃圾回收器，未来十年机器内存容量可能会翻倍或者成倍增长，简单地将GOGC设置为一定倍率也可以很好地工作，也不用像JVM调优那样重新设置一堆地参数，调参大军好惨。go团队也可以倾听用户真正地诉求在运行时方面做更多的优化。
+Source Analysis #  References #    https://blog.golang.org/go15gc  </description>
+    </item>
+    
+    <item>
+      <title>how does GC mark the memory</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了go的垃圾回收器是如何标记正在使用中的内存的，go中采用的是并发三色标记清除算法（concurrent tricolor mark and sweep），先结合字面含义解释几个事情。
+基本概念：
+ 并发，这里的并发指的是GC逻辑和我们的应用处理逻辑是并发进行的； 三色，为了区分哪些对象是可达对象（正在被引用的），哪些是不可达对象（没有被引用的），使用了黑色、白色来区分，因为这个标记过程是通过递归渐进式的扫描，过程也需要用到灰色。  mspan &amp;amp; mspan on scan：
+GC扫描标记过程是比较耗时的，如果一个对象中没有任何指针字段，那么完全不需要扫描它，如何识别一个对象有没有指针呢？在内存分配的时候，就可以提前介入处理了。我们知道P下有mcache，mcache根据不同对象大小建立了很多不同大小的span，每个尺寸的span都有两类，一类是普通span，一类是span no scan。后者在GC扫描标记过程中是不需要去扫描的，就是说如果当前扫描到一个对象，发现其是在mspan no scan中分配的，则可以直接将其标记为黑色，结束当前这个对象的递归扫描；而如果是分配在普通mspan中的，那么就应该将其标记为灰色，并将其放入到workpool中，供mark workers取出并继续递归扫描其内部指针。
+write barriers：
+这里的写屏障可不是处理器提供的锁屏障哦，很多人一听名字一样以为是一个东西。处理器提供的write memory barriers，是一种内存同步原语，而这里的write barriers指的是编译器安插的一些指令，用来跟踪程序和GC并发执行期间对一些指针所做的更改，避免正在被引用的对象被错误地回收掉。
+大致GC过程：
+进程启动时，就会启动一些mark worker，用来执行一些标记工作。触发GC时，比如显示地执行runtime.GC()，首先会通过抢占式调度通知各个G停下来，M和P解除关系，P被抢占，M被放到空闲M列表，G放到全局queue，打开write barriers，就是一个开关，对指针进行操作时走到一个记录指针修改的分支记录一下。
+每个P准备一个mark worker，mark worker开始扫描G的栈上的一些变量，称为roots对象，然后递归地进行扫描。这里用到了前面的三色标记，刚开始所有对象都是白的，然后这些roots对象全部染成灰色的。然后重复执行下述过程：
+ pick 1个灰色的，将其染成黑色的； 然后将其内部指针指向的对象全部染为灰色的； 重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。  黑色的就是正在被引用的，白色的就是未被引用的。
+GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。
+这个扫描过程是借助了一个workpool+mark workers来实现的，实现也算比较优雅吧。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  </description>
+    </item>
+    
+    <item>
+      <title>how does GC watch your application</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了Go垃圾回收器的设计目标，减少STW时间，一个GC周期不超过10ms，一个GC周期占用CPU不能超过25%。/// 这些目标是比较有挑战的，运行时加强对进程内存的监控和了解将有助于改善垃圾回收过程。/// go运行时监控heap使用情况GOGC，默认heap使用翻倍触发GC；如果2分钟之内没有触发GC会强制执行一次；mark assist，为了防止某些协程内存申请过快，内存申请时也会与下一次触发GC的heap大小做比较，如果已经达到了触发条件，将当前协程今天用于mark assist去标记内存，为什么这么干呢？就是为了保证垃圾回收内存速度尽量比内存分配速度快；再就是GC标记阶段不能申请超过1/4的P，比如示例中有8个P只有两个P下的mark协程为mark dedicated（不能被抢占），其他的下的mark协程都是GC idle（可以被其他协程抢占）。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-watch-your-application-dbef99be2c35  </description>
+    </item>
+    
+    <item>
+      <title>how does go stop the world</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-go-stop-the-world/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-go-stop-the-world/</guid>
+      <description>Let&amp;rsquo;s Summarize #  STW指的是停止正在运行中的goroutines，一个GC cycle中包含了两次STW，第一次STW是为了打开write barriers，第二次STW是为了将write barriers记录下来的指针修改重新进行扫描标记，避免正被引用的对象被错误地回收掉。
+这里其实只是简单介绍了下STW发生后的一些执行逻辑，比如P被抢占，P、M解除关联，M被放入空闲M队列，G被放到global queue中……
+至于STW是如何实现的，以及上述过程中的具体实现，都没有详细展开，这里还是要结合源码来进一步学习一下。
+Source Analysis #  see runtime/mgc.go
+GOGC=off: means no gc
+References #    https://medium.com/a-journey-with-go/go-how-does-go-stop-the-world-1ffab8bc8846  </description>
+    </item>
+    
+    <item>
+      <title>keeping a variable alive</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/keeping-a-variable-alive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/keeping-a-variable-alive/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了finalizer的使用，介绍了如何通过runtime.KeepAlive(p）来避免p指向的对象被GC掉，其实该函数的实现没有什么特殊的，就是引用了一下p指向的对象而已，在这个函数调用之前的位置是不可能被GC掉的。那我们自己引用以下行不行比如用q := p, _ = q，可能不行，编译器优化有很多遍，比如deadcode移除、函数内联等，这样下来我们自己的写法，可能会因为编译器的一些优化给优化了，导致无效，建议还是使用go提供的方式来来阻止被优化掉。关于这个函数的具体实现，see：https://utcc.utoronto.ca/~cks/space/blog/programming/GoRuntimeKeepAliveNotes。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-keeping-a-variable-alive-c28e3633673a  </description>
+    </item>
+    
+    <item>
+      <title>memory management and allocation</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-allocation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-allocation/</guid>
+      <description>Let&amp;rsquo;s Summarize #  runtime.newobject 分配内存对象，runtime.mallocgc管理堆内存。/// go中堆内存分配分为两种情况，小对象和大对象。/// 小对象，小于32KB，分配时从当前P的mcache中申请，mcache中维护了很多大小不同的mspan（又分为scan和no scan），用完内存后回收也不是真的归还给操作系统，而是标记对应mspan没有使用，后面再讨论如何回收归还给操作系统的问题。如果mcache中内存不够用了，就从全局共享的mcentral来申请对应的空余mspan，如果mcentral中也没有空余的了，则通过mheap申请内存，mheap是向操作系统申请，一次申请一个arena（64位系统下申请64MB，其他4MB），并建立pages和mspan之间的映射关系，然后将其中的mspan交给mcentral使用。绝大多数情况可以通过P.mcache解决，并且是无锁操作，分配效率会比较高。mcache中的mspan大小从8B,16B,32B…到最大32K，一共有70个不同尺寸的class，每个class都对应一个链表，里面mspan大小相同，并且分为scan和no scan两个链表，简化了GC扫描任务。/// 大内存对象分配，超过32KB，直接在mheap中分配。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-memory-management-and-allocation-a7396d430f44  </description>
+    </item>
+    
+    <item>
+      <title>memory management and memory sweep</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/</guid>
+      <description>Let&amp;rsquo;s Summarize #  未被引用的内存对象被垃圾回收器回收后可以用于后续分配新对象，在GC过程中，sweep阶段就是将标记为未使用的内存空间进行清理，清理后得到的空闲内存可以用来分配新的内存对象。/// go在分配对象所需内存空间时，会进行内存清零操作，将对应bits清零以避免残留垃圾值。/// go如何得知哪些内存有使用哪些没有使用呢？go在每个span内部都维护了一个allocBits，gcmarkBits，这两个字段数据结构完全一样，前者记录当前mspan内哪些内存被分配了，后者GC过程中记录哪些内存被引用了，mark termination阶段把allocBits指向gcMarkBits就完成了内存的释放，妙不！
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-memory-management-and-memory-sweep-cc71b484de05  </description>
+    </item>
+    
+    <item>
+      <title>the garbage collection handbook</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-garbage-collection-handbook/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-garbage-collection-handbook/</guid>
+      <description>Let&amp;rsquo;s Summarize #  Source Analysis #  References #    http://gchandbook.org/  </description>
+    </item>
+    
+    <item>
+      <title>the rules of unsafe.Pointer and uintptr</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/</guid>
+      <description>Let&amp;rsquo;s Summarize #  unsafe.Pointer和uintptr可以互转，但是要注意转换时是否是有效的，有可能一个uintptr对应的对象已经被GC掉了，这个时候将其转换为指针其实是一个野指针。go编译器提供了一些patterns来识别什么时候unsafe.Pointer转为uintptr时不要让垃圾回收器GC掉指针对应的内存。
+通常可以用go vet来检查一些误用情况，如果存在误用，会提示错误：possible misuse of unsafe.Pointer，但是只是possible misuse，不是misuse。
+go vet也确实存在误报的情况，而且可能这个误报比率还有点高：https://github.com/golang/go/issues/41205.
+这里也有人提过这个问题，如何绕过go vet检查：https://github.com/golang/go/issues/44836#issuecomment-792419407，但是我不建议使用这种方式，系统调用返回的uintptr如果是非go heap管理的，可以完全不用care go vet的误报，没必要为了绕过go vet的误报而做这种看上去有损可读性的编码。
+Source Analysis #  References #    https://golang.org/pkg/unsafe/#Pointer  </description>
+    </item>
+    
+    <item>
+      <title>tracing garbage collection</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/tracing-garbage-collection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/tracing-garbage-collection/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了常见的垃圾回收算法及优缺点，也进行了分类。
+Source Analysis #  References #    https://en.wikipedia.org/wiki/Tracing_garbage_collection  </description>
+    </item>
+    
+  </channel>
+</rss>

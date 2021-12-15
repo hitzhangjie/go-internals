@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go设计实现内幕</title>
+    <link>https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/</link>
+    <description>Recent content on Go设计实现内幕</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>buffered and unbuffered channels</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/buffered-and-unbuffered-channels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/buffered-and-unbuffered-channels/</guid>
+      <description>Let&amp;rsquo;s Summarize #  src/runtime/chan.go中hchan，bufferedChan和unbufferedChan都是用这个数据类型来表示。
+1 unbuffered chan
+unbufferedChan：创建chan时没有指定capacity或者capacity=0，这样的chan是无缓冲的。chan sender执行chan send操作时会阻塞，直到chan reader读取了该数据。
+chan sender阻塞时，会申请一个sudog，记录chan sender对应的g，并记录chan sender要send的value，chan reader读取时直接通过memmove移动sudog中记录的数据到chan reader要read到的变量中，并resume sudog记录的g。
+2 buffered chan
+bufferedChan：创建chan时指定了capacity≥1：
+ chan sender执行send操作时，如果chan满了则会阻塞； chan reader执行read操作时，如果chan空了则会阻塞；  hchan中有记录当前chan中元素数量hchan.qcount，并通过hchan.dataqsiz记录capacity，通过一个环形队列hchan.buf来存储存储的元素数量，该环形队列通过hchan.sendx/hchan.recvx来记录下次chan send操作的写入位置和下次chan read操作时的读取位置。
+和unbufferedChan类似，如果chan sender、chan reader要阻塞时需要申请sudog并记录到sendq、recvq中。
+ 后续chan中有空位可写入时，再选择sendq中的某个sudog并memmove其send的value然后resume其执行； 或者chan中有数据可读取时，再选择recvq中的某个sudog并memmove hchan.buf[recvx]中数据到要读取到的变量然后resume其执行；  大致实现过程就是这样的。
+3 性能问题
+chan buffer的大小、有无，chan sender、receiver的数量，会影响到chan send、recv的性能，这个buffer大小不能凭空臆想，要结合经验、benchmark来指定一个合理的值。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-buffered-and-unbuffered-channels-29a107c00268  </description>
+    </item>
+    
+    <item>
+      <title>ordering in select statements</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/ordering-in-select-statements/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/ordering-in-select-statements/</guid>
+      <description>Let&amp;rsquo;s Summarize #  select中允许通过多个case分支对多个chan进行send、recv操作，如果同时有多个case分支满足时，应该选择激活哪一个分支呢？
+每次执行select-case操作时会先将多个case分支打乱顺序（shuffle)，然后再逐个检查哪个分支条件满足。注意，select-case不支持去重，比如有一个case分支是对chan ch1执行操作，有9个分支是对chan ch2执行操作，那么ch2相关的case分支执行到的概率约为90%，而不是50%。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-ordering-in-select-statements-fd0ff80fd8d6  </description>
+    </item>
+    
+  </channel>
+</rss>

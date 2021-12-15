@@ -2,7 +2,7 @@
 <html lang="zh" dir="ltr">
 
 <head>
-  <meta name="generator" content="Hugo 0.82.0" />
+  <meta name="generator" content="Hugo 0.88.1" />
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
@@ -16,8 +16,8 @@
 <link rel="icon" href="/go-internals-v2/favicon.png" type="image/x-icon">
 <link rel="alternate" hreflang="en" href="https://hitzhangjie.pro/go-internals-v2/en/posts/" title="Notes">
 
-<link rel="stylesheet" href="/go-internals-v2/book.min.5ac6c2989f0943405962be6800b442aef429ef26ade26545ecf0617a21d1197a.css" integrity="sha256-WsbCmJ8JQ0BZYr5oALRCrvQp7yat4mVF7PBheiHRGXo=">
-<script defer src="/go-internals-v2/zh.search.min.11c7f9052a0367999d4ad7c1d4a6e855fff004ebbb45683eed1b2e9995a0bd03.js" integrity="sha256-Ecf5BSoDZ5mdStfB1KboVf/wBOu7RWg&#43;7RsumZWgvQM="></script>
+<link rel="stylesheet" href="/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css" integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
+<script defer src="/go-internals-v2/zh.search.min.c6da1314bc27261438b77265f2793e7712eb13b62bd0ff24ac6187bc80a865ed.js" integrity="sha256-xtoTFLwnJhQ4t3Jl8nk&#43;dxLrE7Yr0P8krGGHvICoZe0="></script>
 
 <script defer src="/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js" integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 <link rel="alternate" type="application/rss+xml" href="https://hitzhangjie.pro/go-internals-v2/posts/index.xml" title="Go设计实现内幕" />
@@ -100,53 +100,9 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/" class="">Table of Contents</a>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/with-toc/" class="">With ToC</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/table-of-contents/without-toc/" class="">Without ToC</a>
-  
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-e95c4460caffb600f4fbaa5e481c2b3b" class="toggle"  />
-    <label for="section-e95c4460caffb600f4fbaa5e481c2b3b" class="flex justify-between">
-      <a  class="">Collapsed</a>
+    <input type="checkbox" id="section-5b4c35c78aaa50e4262cf5f000ff643f" class="toggle"  />
+    <label for="section-5b4c35c78aaa50e4262cf5f000ff643f" class="flex justify-between">
+      <a  class="">Toolchain</a>
     </label>
   
 
@@ -160,44 +116,8 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/" class="">3rd Level</a>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/collapsed/3rd-level/4th-level/" class="">4th Level</a>
-  
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-d4bb91610a9265767097cfd2097f9869" class="toggle"  />
-    <label for="section-d4bb91610a9265767097cfd2097f9869" class="flex justify-between">
+    <input type="checkbox" id="section-1478ad0225f3c1062830d9c09d8b93f3" class="toggle"  />
+    <label for="section-1478ad0225f3c1062830d9c09d8b93f3" class="flex justify-between">
       <a  class="">Compiler</a>
     </label>
   
@@ -212,7 +132,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/aliases-simple-and-efficient/" class="">aliases, simple and efficient</a>
   
 
         </li>
@@ -225,7 +145,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
   
 
         </li>
@@ -238,7 +158,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/built-in-functions-optimizations/" class="">built-in functions optimizations</a>
   
 
         </li>
@@ -251,7 +171,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-go-build-works/" class="">how &#34;go build&#34; works</a>
   
 
         </li>
@@ -264,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/" class="">how are loops translated to assembly</a>
   
 
         </li>
@@ -277,7 +197,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/" class="">how to take advantage of symbols tables</a>
   
 
         </li>
@@ -290,7 +210,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/inline-strategy-limitation/" class="">inline strategy &amp; limitation</a>
   
 
         </li>
@@ -303,7 +223,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/" class="">introduction to the escape analysis</a>
   
 
         </li>
@@ -316,7 +236,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler/" class="">introduction to the go compiler</a>
   
 
         </li>
@@ -329,7 +249,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/" class="">introduction to the go compiler ssa backend</a>
   
 
         </li>
@@ -342,7 +262,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/" class="">language semantics on escape analysis</a>
   
 
         </li>
@@ -355,7 +275,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/memory-safety-with-bounds-check/" class="">memory safety with bounds check</a>
   
 
         </li>
@@ -368,7 +288,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/slice-and-memory-management/" class="">slice and memory management</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/overview-of-the-compiler/" class="">overview of the compiler</a>
   
 
         </li>
@@ -381,7 +301,20 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="https://hitzhangjie.pro/go-internals-v2/docs/compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/understanding-compiler-directives/" class="">understanding compiler directives</a>
   
 
         </li>
@@ -399,14 +332,1760 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-f31e09d220fe3252a0eb99bdea817893" class="toggle"  />
-    <label for="section-f31e09d220fe3252a0eb99bdea817893" class="flex justify-between">
+    <input type="checkbox" id="section-7e4c79944057f12c630cadb7f66ae71d" class="toggle"  />
+    <label for="section-7e4c79944057f12c630cadb7f66ae71d" class="flex justify-between">
+      <a  class="">Linker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/build-a-better-linker/" class="">build a better linker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/builds-linkers-timeline/" class="">builds &amp; linker&#34;s timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/how-go-build-works/" class="">how &#34;go build&#34; works</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/object-file-relocations/" class="">object file &amp; relocations</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-92155f78ab2fea96864dc8e5f605cf23" class="toggle"  />
+    <label for="section-92155f78ab2fea96864dc8e5f605cf23" class="flex justify-between">
+      <a  class="">Ast</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/AST/visualize-your-go-code/" class="">visualize your go code</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/instrumentation-in-go/" class="">instrumentation in go</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-2cf4e97d00d6e0846a455aed8f898520" class="toggle"  />
+    <label for="section-2cf4e97d00d6e0846a455aed8f898520" class="flex justify-between">
+      <a  class="">Memory</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-93dba9f40586c2c35d783752f434d3fe" class="toggle"  />
+    <label for="section-93dba9f40586c2c35d783752f434d3fe" class="flex justify-between">
+      <a  class="">Memory Allocation</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/demystifying-memory-management-in-modern-programming-languages/" class="">demystifying memory management in modern programming languages</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-allocation/" class="">memory management and allocation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-memory-sweep/" class="">memory management and memory sweep</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/slice-and-memory-management/" class="">slice and memory management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/visualizing-memory-management-in-go/" class="">visualizing memory management in go</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7a4c22522235f51a39ce7f70ed7225e" class="toggle"  />
+    <label for="section-c7a4c22522235f51a39ce7f70ed7225e" class="flex justify-between">
+      <a  class="">Garbage Collection</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/" class="">an insight into go garbage collector</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/finalizers/" class="">finalizers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/" class="">go GC: latency problem solved</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/" class="">go GC: prioritizing low latency and simplicity</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/" class="">how does GC mark the memory</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/" class="">how does GC watch your application</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-go-stop-the-world/" class="">how does go stop the world</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/keeping-a-variable-alive/" class="">keeping a variable alive</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-allocation/" class="">memory management and allocation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/" class="">memory management and memory sweep</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-garbage-collection-handbook/" class="">the garbage collection handbook</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/" class="">the rules of unsafe.Pointer and uintptr</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/tracing-garbage-collection/" class="">tracing garbage collection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-52225bc65f7b2a78999589b1479ab0c3" class="toggle"  />
+    <label for="section-52225bc65f7b2a78999589b1479ab0c3" class="flex justify-between">
+      <a  class="">Goroutine</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/asynchronous-preemption/" class="">asynchronous preemption</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/concurrency-scheduler-affinity/" class="">concurrency &amp; scheduler affinity</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/g0-special-goroutines/" class="">g0, special goroutines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-and-preemption/" class="">goroutine and preemption</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-os-thread-and-cpu-management/" class="">goroutine, os thread, and cpu management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/gsignal-master-of-signals/" class="">gsignal, master of signals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-a-goroutine-start-and-exit/" class="">how does a goroutine start and exit</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-go-recycle-goroutines/" class="">how does go recycle goroutines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-goroutine-stack-size-evolve/" class="">how goroutine stack size evolve</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/improve-the-usage-of-your-goroutines-with-GODEBUG/" class="">improve the usage of your goroutines with GODEBUG</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/observing-stack-grow-and-shrink/" class="">observing stack grow and shrink</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/what-does-a-goroutine-switch-actually-involve/" class="">what does a goroutine switch actually involve</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/work-stealing-in-go-scheduler/" class="">work-stealing in go scheduler</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a2be7ce40c3397f39a45b51fb1bd0600" class="toggle"  />
+    <label for="section-a2be7ce40c3397f39a45b51fb1bd0600" class="flex justify-between">
       <a  class="">Runtime</a>
     </label>
   
 
           
   <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-4810c4fdfb963934fc4c26e92f50b72b" class="toggle"  />
+    <label for="section-4810c4fdfb963934fc4c26e92f50b72b" class="flex justify-between">
+      <a  class="">Scheduler</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/concurrency-scheduler-affinity/" class="">concurrency &amp; scheduler affinity</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/GOMAXPROCS-live-updates/" class="">GOMAXPROCS &amp; live updates</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/scheduling-in-go-part-i-os-scheduler/" class="">scheduling in go: part i - os scheduler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/scheduling-in-go-part-ii-go-scheduler/" class="">scheduling in go: part ii - go scheduler</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/scheduling-in-go-part-iii-concurrency/" class="">scheduling in go: part iii - concurrency</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Scheduler/work-stealing-in-go-scheduler/" class="">work-stealing in go scheduler</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-590b675b25c4d5a96e7001d22d4328b0" class="toggle"  />
+    <label for="section-590b675b25c4d5a96e7001d22d4328b0" class="flex justify-between">
+      <a  class="">Monitor</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Runtime/Monitor/monitor-pattern/" class="">monitor pattern</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-93d588918944a298d3f4270e6df9e968" class="toggle"  />
+    <label for="section-93d588918944a298d3f4270e6df9e968" class="flex justify-between">
+      <a  class="">Synchronization</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e4f56fa00191ca8306d1438c969bef3e" class="toggle"  />
+    <label for="section-e4f56fa00191ca8306d1438c969bef3e" class="flex justify-between">
+      <a  class="">Locks</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/how-to-reduce-lock-contention-with-the-atomic-package/" class="">how to reduce lock contention with the atomic package</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/locks-sync.Mutex-internals/" class="">locks: sync.Mutex internals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/mutex-and-starvation/" class="">mutex and starvation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d90698102847b301cf3137d159da1529" class="toggle"  />
+    <label for="section-d90698102847b301cf3137d159da1529" class="flex justify-between">
+      <a  class="">Race Detection</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/a-race-detector-unfurled/" class="">a race detector unfurled</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/race-detector-with-thread-sanitizer/" class="">race detector with thread sanitizer</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8c09d3d57dd5ee0090220d9bf96ec092" class="toggle"  />
+    <label for="section-8c09d3d57dd5ee0090220d9bf96ec092" class="flex justify-between">
+      <a  class="">Diagnostics</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/diagnostics-methods/" class="">Diagnostics Methods</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-1c55d6e534f174d1a9d86e1f0d27011e" class="toggle"  />
+    <label for="section-1c55d6e534f174d1a9d86e1f0d27011e" class="flex justify-between">
+      <a  class="">Debugging</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Debugging/debugging-with-delve-coredumps/" class="">debugging with delve &amp; coredumps</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-25c014c40c4708b8f9b278eab857403a" class="toggle"  />
+    <label for="section-25c014c40c4708b8f9b278eab857403a" class="flex justify-between">
+      <a  class="">PProf</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/language-semantics-on-memory-profiling/" class="">language semantics on memory profiling</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/samples-collection-with-pprof/" class="">samples collection with pprof</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-ef57056641f9c66c69d93a6c9fc4c689" class="toggle"  />
+    <label for="section-ef57056641f9c66c69d93a6c9fc4c689" class="flex justify-between">
+      <a  class="">Tracing</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Tracing/discovery-of-the-trace-package/" class="">discovery of the trace package</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-51db080d4a3f95e2e371c478fda59b4e" class="toggle"  />
+    <label for="section-51db080d4a3f95e2e371c478fda59b4e" class="flex justify-between">
+      <a  class="">Testing</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Testing/learn-go-with-tests/" class="">learn-go-with-tests</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Testing/practical-fuzzing-with-go/" class="">practical fuzzing with go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Testing/unknown-parts-of-the-test-package/" class="">unknown parts of the test package</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-129195bb7d4d59f2206f00e863a8ebdb" class="toggle"  />
+    <label for="section-129195bb7d4d59f2206f00e863a8ebdb" class="flex justify-between">
+      <a  class="">Builtins</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-651c7afe116c240343430442fd77600a" class="toggle"  />
+    <label for="section-651c7afe116c240343430442fd77600a" class="flex justify-between">
+      <a  class="">Chan</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/buffered-and-unbuffered-channels/" class="">buffered and unbuffered channels</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/ordering-in-select-statements/" class="">ordering in select statements</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-8e712e14ba6fe05a22de8ae756efc620" class="toggle"  />
+    <label for="section-8e712e14ba6fe05a22de8ae756efc620" class="flex justify-between">
+      <a  class="">Map</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/concurrent-access-with-maps-part-3/" class="">concurrent access with maps - part 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-1/" class="">map design by code - part 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-2/" class="">map design by code - part 2</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-631a92c08b04d863b1a494f36d547be5" class="toggle"  />
+    <label for="section-631a92c08b04d863b1a494f36d547be5" class="flex justify-between">
+      <a  class="">Unsafe</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/unsafe/what-is-the-unsafe-package/" class="">what is the unsafe package</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a30ce872f66ddfa47ddd53e71fd3fd9b" class="toggle"  />
+    <label for="section-a30ce872f66ddfa47ddd53e71fd3fd9b" class="flex justify-between">
+      <a  class="">Closure</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/closure/how-does-go-implement-closures/" class="">how does go implement closures</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-09774e50ad4b214a713fa8f577f26533" class="toggle"  />
+    <label for="section-09774e50ad4b214a713fa8f577f26533" class="flex justify-between">
+      <a  class="">Context</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/context/context-and-cancellation-by-propagation/" class="">context and cancellation by propagation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e85e2a8e1719b54415998cfeaa4c64c5" class="toggle"  />
+    <label for="section-e85e2a8e1719b54415998cfeaa4c64c5" class="flex justify-between">
+      <a  class="">Defer</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/how-does-defer-statement-work/" class="">how does defer statement work</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-48164f93f23fb4774ca384e9dc84f94d" class="toggle"  />
+    <label for="section-48164f93f23fb4774ca384e9dc84f94d" class="flex justify-between">
+      <a  class="">Init</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/init/init-functions/" class="">init functions</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-982535b748a0cf94fc4e363a4220c45e" class="toggle"  />
+    <label for="section-982535b748a0cf94fc4e363a4220c45e" class="flex justify-between">
+      <a  class="">Interface</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/interface/understand-the-empty-interface/" class="">understand the empty interface</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-95d1523b99d14914e1c43fbb32ebdfa3" class="toggle"  />
+    <label for="section-95d1523b99d14914e1c43fbb32ebdfa3" class="flex justify-between">
+      <a  class="">Panic&amp;Recover</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/panicrecover/how-does-a-program-recover/" class="">how does a program recover</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-41006be660761bf1634dc3afef87d119" class="toggle"  />
+    <label for="section-41006be660761bf1634dc3afef87d119" class="flex justify-between">
+      <a  class="">Pointer</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/design-philosophy-on-data-and-semantics/" class="">design philosophy on data and semantics</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/language-mechanics-on-stacks-and-pointers/" class="">language mechanics on stacks and pointers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/should-i-use-pointer-instead-of-a-copy-of-struct/" class="">should i use pointer instead of a copy of struct</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-518237b5864e05a88795053dc0aadf7a" class="toggle"  />
+    <label for="section-518237b5864e05a88795053dc0aadf7a" class="flex justify-between">
+      <a  class="">Pool</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pool/understand-the-design-of-sync.pool/" class="">understand the design of sync.pool</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-02c17940ee18fd0e28da376b638e2d61" class="toggle"  />
+    <label for="section-02c17940ee18fd0e28da376b638e2d61" class="flex justify-between">
+      <a  class="">Random</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/random/how-are-random-numbers-generated/" class="">how are random numbers generated</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-9eb4f02a7524818c4c71d8579f485a0a" class="toggle"  />
+    <label for="section-9eb4f02a7524818c4c71d8579f485a0a" class="flex justify-between">
+      <a  class="">String</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/string/string-conversion-optimization/" class="">string &amp; conversion optimization</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-5fd51849c5efc7c80caa0bfef5a0f76f" class="toggle"  />
+    <label for="section-5fd51849c5efc7c80caa0bfef5a0f76f" class="flex justify-between">
+      <a  class="">Syscall</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/syscall/how-does-go-runtime-handles-syscall/" class="">how does go runtime handles syscall</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-dc98d3d867181a4b7f4594d457e17777" class="toggle"  />
+    <label for="section-dc98d3d867181a4b7f4594d457e17777" class="flex justify-between">
+      <a  class="">Timer</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Builtins/timer/timers-life-cycle/" class="">timers&#34; life cycle</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-54ff0ab7dec4280864e76f3fd0b3d0c8" class="toggle"  />
+    <label for="section-54ff0ab7dec4280864e76f3fd0b3d0c8" class="flex justify-between">
+      <a  class="">Patterns</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Patterns/rethinking-classical-concurrency-patterns/" class="">rethinking classical concurrency patterns</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-9e07a1bfbe561ed3f6806c311a77856d" class="toggle"  />
+    <label for="section-9e07a1bfbe561ed3f6806c311a77856d" class="flex justify-between">
+      <a  class="">Infrastructure</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/what-is-a-goproxy/" class="">what is a goproxy</a>
+  
+
+        </li>
+      
     
   </ul>
 
@@ -508,47 +2187,47 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/ast/">ast</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/chan/">chan</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/chan-select-case/">chan, select-case</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/closure/">closure</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/compiler/">compiler</a>
-          <span>24</span>
+          <span>25</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/compiler-linker/">compiler, linker</a>
-          <span>4</span>
+          <span>6</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/concurrency/">concurrency</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/context/">context</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/debug/">debug</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
@@ -558,157 +2237,162 @@ https://github.com/alex-shpak/hugo-book
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/defer-panic/">defer, panic</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/defer-panic-recover/">defer, panic, recover</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/diagnostics/">diagnostics</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/fuzzy-test/">fuzzy, test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/garbage-collector/">garbage collector</a>
-          <span>11</span>
+          <span>23</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/goproxy/">goproxy</a>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/goroutine/">goroutine</a>
-          <span>11</span>
+          <span>23</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/goroutine-select-case/">goroutine, select-case</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/gpm-scheduler/">gpm scheduler</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/init/">init</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/instrumentation/">instrumentation</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/interface/">interface</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/linker/">linker</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/locks/">locks</a>
           <span>3</span>
         </li>
       
         <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/map/">map</a>
+          <a href="/go-internals-v2/tags/goroutine-select-case/">goroutine, select-case</a>
           <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>8</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/init/">init</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/instrumentation/">instrumentation</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/interface/">interface</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/linker/">linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/locks/">locks</a>
+          <span>6</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/map/">map</a>
+          <span>4</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/map-race-detector/">map, race detector</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/mechanics/">mechanics</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/memory-management/">memory management</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/monitor/">monitor</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/pointer/">pointer</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/pprof/">pprof</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/race-detector/">race detector</a>
           <span>2</span>
         </li>
       
         <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/mechanics/">mechanics</a>
+          <span>8</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/memory-management/">memory management</a>
+          <span>9</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/monitor/">monitor</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/pointer/">pointer</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/pprof/">pprof</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/race-detector/">race detector</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
           <a href="/go-internals-v2/tags/random/">random</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/string/">string</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/sync.pool/">sync.pool</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/syscall/">syscall</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/tdd-test/">tdd, test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/test/">test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/timer/">timer</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/trace/">trace</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/unsafe/">unsafe</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
       </ul>
@@ -726,6 +2410,42 @@ https://github.com/alex-shpak/hugo-book
 
       
       
+  
+  <article class="markdown book-post">
+    <h2>
+      <a href="/go-internals-v2/posts/how-does-a-program-recover/">how does a program recover</a>
+    </h2>
+    
+
+
+  
+
+  
+  <div>
+    
+      <a href="/go-internals-v2/tags/defer-panic-recover/">defer, panic, recover</a>
+  </div>
+  
+
+
+
+
+    <p>Let&rsquo;s Summarize #  defer对应newdefer panic对应gopanic recover对应gorecover
+defer细节：
+defer调用会创建_defer对象并添加到g._defer，_defer通过内部的_defer.link构成了一个LIFO的defer栈，函数return（runtime.deferreturn）或者panic（内部会遍历g._defer并执行）时，就按照栈的方式来执行注册的defer函数。
+ps：defer函数执行的时候是需要考虑栈帧分配的，这个可以再逻辑一下细节，也是go defer性能优化的一个方面，如避免defer引起的栈增长；
+panic细节：
+panic的时候，会创建_panic对象并添加到g._panic，_panic也和_defer类似通过_panic.link维护了一个链式结构，也是LIFO的形式，这意味着，如果一开始出现了panic1，g._panic被设置为panic1，假如在后续defer的时候，defer函数中又panic2，那么g._panic被设置为panic2且panic2.link==panic1。假如defer函数中执行了recover，也是先recover g._panic，然后再将g._panic更新为g._panic.link继续执行defer。
+如果某个defer执行过程中执行了recover，那么g._panic.recovered被设置为true，假如panic chain中还有panic，会调用mcall(recovery)，这个是为了恢复g上下文为recover
+recover细节：
+recover调用对应实现函数是gorecover，recover函数必须在defer函数的底层调用才能正常recover后面的panic。gorecover(argp)这里的参数argp是调用recover函数的caller的地址，会与g._panic.argp是defer func(){}这里函数调用func(){}的地址，如果argp和g._panic.argp不相同，表示recover不是在合适的位置调用的，也就不能修改g._panic.recovered=true，即不能recover对应的panic。
+recover函数使用的位置有讲究，就是这么来的。
+runtime.Goexit()
+这个函数的设计实现是复用了panic、defer处理的逻辑，但是因为这里的Goexit并不是真正的panic逻辑，所以其在_panic里面加了个新字段goexit=true，以与正常的panic处理逻辑区分开，我们也能看到在gopanic执行deferChain中有对此进行特殊判断，当遇到panic.goexit=true且panic.aborted=true时，允许直接切换上下文为Goexit处理逻辑（正常的recover逻辑会绕过Goexit）。
+ps：篇幅原因，还有其他一些边界情况这里没有展开细讲，感兴趣可以自己查看源码。TODO 这里的理解还需要再加强一下。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-a-program-recover-fbbbf27cc31e  
+    </p>
+  </article>
   
   <article class="markdown book-post">
     <h2>
@@ -751,7 +2471,7 @@ g里面有_defer成员，它其实是一个LIFO的栈，每次调用defer的时�
 g内部panic的时候gopanic会设置g._panic；
 调用recover的时候gorecover会检查当前g的_panic；
 文中还介绍了优化defer性能的CL，see https://go-review.googlesource.com/c/go/+/29656/。这个CL的核心思想是减少newdefer时导致的g被抢占、栈增长、defer函数参数内存拷贝问题。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-defer-statement-work-1a9492689b6e?source=---------48-----------------------  
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-defer-statement-work-1a9492689b6e?source=---------48-----------------------  
     </p>
   </article>
   
@@ -786,7 +2506,7 @@ write barriers：
  pick 1个灰色的，将其染成黑色的； 然后将其内部指针指向的对象全部染为灰色的； 重复执行这个过程，最后只有两种颜色的对象：黑色的，白色的。  黑色的就是正在被引用的，白色的就是未被引用的。
 GC过程中第一次STW是为了打开write barrier，然后就开始mark，这样标记完一遍之后，其实不彻底，会造成某些被引用的对象被错误地回收。解决办法就是将write barriers记录下来的被修改的指针，重新递归扫描标记一遍，就OK了。
 这个扫描过程是借助了一个workpool+mark workers来实现的，实现也算比较优雅吧。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-mark-the-memory-72cfc12c6976  
     </p>
   </article>
   
@@ -810,7 +2530,7 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-do
 
 
     <p>Let&rsquo;s Summarize #  介绍了Go垃圾回收器的设计目标，减少STW时间，一个GC周期不超过10ms，一个GC周期占用CPU不能超过25%。/// 这些目标是比较有挑战的，运行时加强对进程内存的监控和了解将有助于改善垃圾回收过程。/// go运行时监控heap使用情况GOGC，默认heap使用翻倍触发GC；如果2分钟之内没有触发GC会强制执行一次；mark assist，为了防止某些协程内存申请过快，内存申请时也会与下一次触发GC的heap大小做比较，如果已经达到了触发条件，将当前协程今天用于mark assist去标记内存，为什么这么干呢？就是为了保证垃圾回收内存速度尽量比内存分配速度快；再就是GC标记阶段不能申请超过1/4的P，比如示例中有8个P只有两个P下的mark协程为mark dedicated（不能被抢占），其他的下的mark协程都是GC idle（可以被其他协程抢占）。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-watch-your-application-dbef99be2c35  
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-the-garbage-collector-watch-your-application-dbef99be2c35  
     </p>
   </article>
   
@@ -834,7 +2554,7 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-do
 
 
     <p>Let&rsquo;s Summarize #  介绍了go中闭包是如何实现的，包括闭包中引用的外部变量何时采用值捕获（readonly且数据量较小），何时采用引用捕获（readwrite，or数据量偏大）。编译器对闭包进行处理时，会自动完成上述判断与代码的转换。
-Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2018-05-19-golang-function-closure%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/  
+Source Analysis #  References #    https://www.hitzhangjie.pro/blog/2018-05-19-golang-function-closure%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/  
     </p>
   </article>
   
@@ -862,7 +2582,7 @@ Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2018-05-19-go
 当一个goroutine执行完成函数fn时，并不意味着这个goroutine就被彻底销毁了，它会被保存到P的gFree字段中，后续如果需要创建goroutine时就可以复用，当然了gFree中如果g比较多，也会被迁移到调度器的g空闲链表中，方便其他P复用。
 因为g是有栈空间的，而且栈空间会增大，当g执行fn完成时，可能栈空间不小了，比如超过了2KB，这种时候再保留这个栈空间池化就太浪费内存了，所以这种栈空间大的就会释放其栈空间，所以在调度器的g空闲链表可以分为两类：
  带栈空间的g空闲链表； 栈空间被销毁的g空闲链表；  这里的g被重复利用，只是为了提高g创建效率，和我们通过一些workerpool来限制goroutines数量的初衷是不重复的，workerpool一般并不是为了提高g创建效率，而是为了限制g数量，避免吃爆内存。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-does-go-recycle-goroutines-f047a79ab352  
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-does-go-recycle-goroutines-f047a79ab352  
     </p>
   </article>
   
@@ -890,7 +2610,7 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-do
 go对系统调用进行了包装，阻塞型系统调用对应的是Syscall，非阻塞型系统调用是RawSyscall，后者不会导致线程阻塞，没什么好讨论的，我们只讨论Syscall。
 Syscall内部会向运行时报告，当前线程即将进入一个阻塞型系统调用，然后运行时会执行一些对应的处理，如将M和P分离，挂起G，可能还会创建新的M来获得P来执行G。这里涉及到调度亲和性的一些细节，这里的总结就不过多展开了。
 本文中的叙述风格关于故事化，关于为什么要尝试让G在原来的M、M在原来的P上执行，注意一下调度亲和性，就比较容易理解。
-Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2021-06-06-how-go-handles-syscall/  
+Source Analysis #  References #    https://www.hitzhangjie.pro/blog/2021-06-06-how-go-handles-syscall/  
     </p>
   </article>
   
@@ -918,7 +2638,7 @@ Source Analysis #  References #   https://www.hitzhangjie.pro/blog/2021-06-06-ho
 至于STW是如何实现的，以及上述过程中的具体实现，都没有详细展开，这里还是要结合源码来进一步学习一下。
 Source Analysis #  see runtime/mgc.go
 GOGC=off: means no gc
-References #   https://medium.com/a-journey-with-go/go-how-does-go-stop-the-world-1ffab8bc8846  
+References #    https://medium.com/a-journey-with-go/go-how-does-go-stop-the-world-1ffab8bc8846  
     </p>
   </article>
   
@@ -945,7 +2665,7 @@ References #   https://medium.com/a-journey-with-go/go-how-does-go-stop-the-worl
  栈管理最初是分段栈，存在hot split问题，即如果在一个循环内存在函数调用切需要栈增长，那么会频繁发生alloc/free的情况，影响性能，为了减轻hot split，所以从4K改为8K； 在实现了连续栈之后，newStkSize=oldStkSize*2，栈空间够用，可以解决hot split问题，又从8K改为了2K；  本文提供了一个简单的函数调用demo（通过局部数组大小控制栈空间分配）、禁用内联、打开runtime.stackDebug来观测栈空间变化。
 Source Analysis #    copystack：拷贝栈实现逻辑 https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/stack.go#L848
   adjustpointer：创建新栈后，需要调整一下原来goroutine中的引用指针值（oldptr+delta) https://sourcegraph.com/github.com/golang/go/-/blob/src/runtime/stack.go#L529
-  References #   https://medium.com/a-journey-with-go/go-how-does-the-goroutine-stack-size-evolve-447fc02085e5  
+  References #    https://medium.com/a-journey-with-go/go-how-does-the-goroutine-stack-size-evolve-447fc02085e5  
     </p>
   </article>
   
@@ -969,75 +2689,41 @@ Source Analysis #    copystack：拷贝栈实现逻辑 https://sourcegraph.com/g
 
 
     <p>Let&rsquo;s Summarize #  atomic、mutex、rwmutex，写多读少直接用mutex，读多写少用rwmutex，如果要考虑提升性能，可以考虑atomic。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to-reduce-lock-contention-with-the-atomic-package-ba3b2664b549  
-    </p>
-  </article>
-  
-  <article class="markdown book-post">
-    <h2>
-      <a href="/go-internals-v2/posts/how-to-take-advantage-of-symbols-tables/">how to take advantage of symbols tables</a>
-    </h2>
-    
-
-
-  
-
-  
-  <div>
-    
-      <a href="/go-internals-v2/tags/compiler/">compiler</a>
-  </div>
-  
-
-
-
-
-    <p>Let&rsquo;s Summarize #  go在编译过程中会检查使用的标识符是否已经定义过，编译器通过符号表来记录已经定义的标识符。程序构建完成之后，其实就不再需要符号表了，为了程序尺寸可以考虑从binary中剥离符号表：
- 可以通过其他二进制工具来从binary中剔除符号表； 也可以考虑在编译时指定选项-ldflags=&quot;-s&quot;在编译链接完成后剔除符号表；  我们可以通过nm或者go tool nm来查看binary中的符号表信息，也可以通过-ldflags=&quot;-X $pkg.$var=$value&quot;的方式来设置一些包级别的变量值。
-根据程序规模不同，符号表大小可能会导致binary尺寸增加，为了加速程序加载启动可以考虑删掉符号表。如果考虑到调试方便，则可以保留符号表。
-Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to-take-advantage-of-the-symbols-table-360dd52269e5  
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-to-reduce-lock-contention-with-the-atomic-package-ba3b2664b549  
     </p>
   </article>
   
 
   
-<ul class="pagination">
-  <li class="page-item">
-    <a href="/go-internals-v2/posts/" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/go-internals-v2/posts/page/3/" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/go-internals-v2/posts/">1</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/go-internals-v2/posts/page/2/">2</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/go-internals-v2/posts/page/3/">3</a>
-  </li>
-  <li class="page-item active">
-    <a class="page-link" href="/go-internals-v2/posts/page/4/">4</a>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/go-internals-v2/posts/page/5/">5</a>
-  </li>
-  <li class="page-item disabled">
-    <span aria-hidden="true">&nbsp;&hellip;&nbsp;</span>
-  </li>
-  <li class="page-item">
-    <a class="page-link" href="/go-internals-v2/posts/page/9/">9</a>
-  </li>
-  <li class="page-item">
-    <a href="/go-internals-v2/posts/page/5/" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
-  </li>
-  <li class="page-item">
-    <a href="/go-internals-v2/posts/page/9/" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
-  </li>
-</ul>
-
-
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/3/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item active">
+        <a href="#" aria-current="page" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/5/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/go-internals-v2/posts/page/9/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
  
       
 
@@ -1134,47 +2820,47 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/ast/">ast</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/chan/">chan</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/chan-select-case/">chan, select-case</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/closure/">closure</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/compiler/">compiler</a>
-          <span>24</span>
+          <span>25</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/compiler-linker/">compiler, linker</a>
-          <span>4</span>
+          <span>6</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/concurrency/">concurrency</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/context/">context</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/debug/">debug</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
@@ -1184,157 +2870,162 @@ Source Analysis #  References #   https://medium.com/a-journey-with-go/go-how-to
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/defer-panic/">defer, panic</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/defer-panic-recover/">defer, panic, recover</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/diagnostics/">diagnostics</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/fuzzy-test/">fuzzy, test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/garbage-collector/">garbage collector</a>
-          <span>11</span>
+          <span>23</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/goproxy/">goproxy</a>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/goroutine/">goroutine</a>
-          <span>11</span>
+          <span>23</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/goroutine-gpm-scheduler/">goroutine, gpm scheduler</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/goroutine-select-case/">goroutine, select-case</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/gpm-scheduler/">gpm scheduler</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/init/">init</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/instrumentation/">instrumentation</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/interface/">interface</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/linker/">linker</a>
-          <span>2</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/locks/">locks</a>
           <span>3</span>
         </li>
       
         <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/map/">map</a>
+          <a href="/go-internals-v2/tags/goroutine-select-case/">goroutine, select-case</a>
           <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/gpm-scheduler/">gpm scheduler</a>
+          <span>8</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/init/">init</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/instrumentation/">instrumentation</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/interface/">interface</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/linker/">linker</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/locks/">locks</a>
+          <span>6</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/map/">map</a>
+          <span>4</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/map-race-detector/">map, race detector</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/mechanics/">mechanics</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/memory-management/">memory management</a>
-          <span>4</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/monitor/">monitor</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/pointer/">pointer</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/pprof/">pprof</a>
-          <span>1</span>
-        </li>
-      
-        <li class="flex justify-between">
-          <a href="/go-internals-v2/tags/race-detector/">race detector</a>
           <span>2</span>
         </li>
       
         <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/mechanics/">mechanics</a>
+          <span>8</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/memory-management/">memory management</a>
+          <span>9</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/monitor/">monitor</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/pointer/">pointer</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/pprof/">pprof</a>
+          <span>2</span>
+        </li>
+      
+        <li class="flex justify-between">
+          <a href="/go-internals-v2/tags/race-detector/">race detector</a>
+          <span>4</span>
+        </li>
+      
+        <li class="flex justify-between">
           <a href="/go-internals-v2/tags/random/">random</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/string/">string</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/sync.pool/">sync.pool</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/syscall/">syscall</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/tdd-test/">tdd, test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/test/">test</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/timer/">timer</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/trace/">trace</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
         <li class="flex justify-between">
           <a href="/go-internals-v2/tags/unsafe/">unsafe</a>
-          <span>1</span>
+          <span>2</span>
         </li>
       
       </ul>

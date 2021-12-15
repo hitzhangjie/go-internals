@@ -141,6 +141,15 @@
     </item>
     
     <item>
+      <title>goproxy</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/tags/goproxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/tags/goproxy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>goroutine</title>
       <link>https://hitzhangjie.pro/go-internals-v2/tags/goroutine/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

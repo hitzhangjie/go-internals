@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go设计实现内幕</title>
+    <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/</link>
+    <description>Recent content on Go设计实现内幕</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>aliases, simple and efficient</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/aliases-simple-and-efficient/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/aliases-simple-and-efficient/</guid>
+      <description>Let&amp;rsquo;s Summarize #  go提供了定义类型别名的能力，type A = B，这样就将A定义为了类型B的别名，后面可以使用A来代替类型B。有什么好处呢：
+ 做一些重构类的工作，假如之前代码中有个类型Type1被大量使用，现在重新实现了一个类型Type2希望能替换掉Type1，可以在使用Type1的地方通过type Type1 = Type2来创建一个别名已完成重构（当然也可以不用这种方式）； 提高可读性，比如有些函数的参数可能是一个函数，如filepath.Walk(path, func(fp string, inf os.FileInfo, err error) error)，现在还好，如果参数更多些就很难看了，如果定义type WalkFunc = func(fp string, inf os.FileInfo, err error) error，然后filepath.Walk(path, WalkFunc)`可读性就大大提升了；  运行时会对type alias做何处理呢？比如type A = B，如果给一个emptyInterface赋值了一个变量A：
+ 那么类型断言它应该是A还是B呢？都必须断言成功！ 那么反射获取其类型应该是谁呢？应该是B！ 到底是如何处理的呢？编译器会在编译时，将对尝试需要类型A的地方使用类型B的信息，处理起来就简单了。  Source Analysis #  References #    https://medium.com/a-journey-with-go/go-aliases-simple-and-efficient-8506d93b079e  </description>
+    </item>
+    
+    <item>
+      <title>builds &amp; linker&#34;s timeline</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/builds-linkers-timeline/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/builds-linkers-timeline/</guid>
+      <description>Let&amp;rsquo;s Summarize #  go build涉及到的工作步骤包括：
+ 创建临时工作目录； 编译各个package及其依赖； 链接器连接成可执行程序； 将可执行程序移动到当前目录，并删除临时工作目录；  go build -x会显示整个编译过程中执行的命令，在编译链接过程中，由于编译可能会涉及到应用编译缓存，链接器链接部分的耗时则会变得很突出，如何优化链接器提升其效率就变得很重要。
+linker的目的是为了构建一个可执行程序，其步骤包括：
+ 加载已经编译好的各个package及其依赖，并收集其中的符号信息； 移除deadcode，如所有未使用的函数，这个过程无法在编译阶段完成，因为编译阶段是各个package独立编译的，不知道它们之间的依赖关系，只有链接器知道； DWARF调试信息生成，并将其压缩存储到二进制程序中； 组织好pc-value表，function表，符号表，方便内部使用； 重定位，编译阶段因为是独立编译各package，引用的其他package中的函数的具体位置是不知道的，只有在最后这个阶段链接器能知道，要靠链接器把函数调用出替换为准确的函数地址。 最后一个可执行程序就生成了。  linker也分为internal linker和external linker，涉及到cgo调用、生成共享库等的时候会使用external linker，其他情况会默认使用internal linker。
+可以给linker传递选项来减轻链接阶段的耗时，如go build -ldflags=&amp;quot;-w&amp;quot; or go tool link -w 来禁用调试信息生成，internal linker还支持对生成的调试信息进行压缩，如go build -ldflags=&amp;quot;dwarfcompress=true&amp;quot;。
+go之前提供的linker实现不能说完美吧，所以也有构建更好的linker的想法，详情可见：http://golang.org/s/better-linker。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-builds-linkers-timeline-b312084ddf7d  </description>
+    </item>
+    
+    <item>
+      <title>built-in functions optimizations</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/built-in-functions-optimizations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/built-in-functions-optimizations/</guid>
+      <description>Let&amp;rsquo;s Summarize #    len、cap函数 slice对应的len、cap操作，其实是没有对应的函数体实现的。编译器会跟踪对slice的操作，从而能够直接获取到其len、cap。如果是slice作为参数，编译器会直接根据内存中sliceheader的字段len、cap字段来获取；
+  unsafe.Sizeof\Alignof\Offsetof 这几个函数也没有对应的函数体实现，Sizeof返回的是描述符的大小，如sliceheader的大小而非占用的所有内存大小，所以编译器是可以直接知道大小的，包括其对齐方式、内部字段的偏移量；
+  Source Analysis #  系统内置函数有不少都是编译器层面实现的，builtin.go中只是添加一些godoc注释，方便开发者使用： https://sourcegraph.com/github.com/golang/go@f24eac47710b0170fd45611ab1867e87701e0a95/-/blob/src/builtin/builtin.go#L6。
+真正的实现要看编译器里面的操作，下面以cap为例进行说明。编译器会将源代码进行词法分析、语法分析、语义分析，最终生成AST，AST中每个节点Node代表了源码中的某种程序构造，比如cap(x)这里的cap函数对应的是节点类型OpSliceCap，编译器处理的时候会将其转换为OpCopy cap，cap取自SliceMake ptr len cap中的cap，还有len、copy等函数都是按照类似的方式来实现的。
+References #    https://medium.com/a-journey-with-go/go-built-in-functions-optimizations-70c5abb3a680  </description>
+    </item>
+    
+    <item>
+      <title>how &#34;go build&#34; works</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-go-build-works/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-go-build-works/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了go编译过程中的一系列步骤，这里的介绍不是从编译器编译经过几个步骤，而是从工具角度来说，重点做了什么工作：
+ 创建临时目录$WORK； 根据源码构建action graph，根节点是main package，对应的构建子目录是b001，其他依赖也有对应的节点，也有对应构建目录，目录编号通常是递增的； 构建过程中从叶子节点开始构建，然后构建父节点，持续下去直到根节点构建完成； 在构建过程中，每个编译单元对应的*.o或者*.a文件包括最后的可执行程序都会写入一个buildid，它包括actionid/contentid两部分构成，它用于创建索引缓存之前的编译输出，提升后续编译过程中的效率；  Source Analysis #  关于action及action graph，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go
+每个依赖对应的编译目录，可以参考：https://github.com/golang/go/blob/master/src/cmd/go/internal/work/action.go#L318
+这些是些琐碎的细节信息，可以先忽略。
+References #    https://maori.geek.nz/how-go-build-works-750bb2ba6d8e  </description>
+    </item>
+    
+    <item>
+      <title>how are loops translated to assembly</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了for循环如何被转换成汇编的，主要是理解转换成的汇编的含义。本文还提及了go1.10之前生成for循环汇编指令时会生成一个指针，并且这个指针存在past-the-end的问题，会导致程序难以进入safepoint，不容易被抢占。
+在非协作式抢占的建议草案中也有提及这里的生成的临时指针past-the-end问题，该问题会影响到scheduler，for循环体中不容易被其他goroutine抢占，非协作式抢占设计实现中提及了此问题。
+TODO：我没有看太明白这里生成的临时指针past-the-end问题，究竟会导致什么样的不安全问题？
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-are-loops-translated-to-assembly-835b985309b3  </description>
+    </item>
+    
+    <item>
+      <title>how to take advantage of symbols tables</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/</guid>
+      <description>Let&amp;rsquo;s Summarize #  go在编译过程中会检查使用的标识符是否已经定义过，编译器通过符号表来记录已经定义的标识符。程序构建完成之后，其实就不再需要符号表了，为了程序尺寸可以考虑从binary中剥离符号表：
+ 可以通过其他二进制工具来从binary中剔除符号表； 也可以考虑在编译时指定选项-ldflags=&amp;quot;-s&amp;quot;在编译链接完成后剔除符号表；  我们可以通过nm或者go tool nm来查看binary中的符号表信息，也可以通过-ldflags=&amp;quot;-X $pkg.$var=$value&amp;quot;的方式来设置一些包级别的变量值。
+根据程序规模不同，符号表大小可能会导致binary尺寸增加，为了加速程序加载启动可以考虑删掉符号表。如果考虑到调试方便，则可以保留符号表。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-how-to-take-advantage-of-the-symbols-table-360dd52269e5  </description>
+    </item>
+    
+    <item>
+      <title>inline strategy &amp; limitation</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/inline-strategy-limitation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/inline-strategy-limitation/</guid>
+      <description>Let&amp;rsquo;s Summarize #  inline就是将一些短小简单的函数给展开，消除栈帧构建销毁的开销，多简单算简单呢？
+ 函数对应的AST语法树节点数不能超过预算，预算是80个； 不能有复杂的程序构造，如for-loop、closure、defer、recover、select等； 函数前不能有noinline directive，禁止内联肯定不能内联； 函数前不能有uintptrescapes，因为内联会导致逃逸信息丢失； 其他规则； 详见：https://github.com/golang/go/wiki/CompilerOptimizations#function-inlining。  可以通过编译选项-gcflags=&amp;quot;-m&amp;quot;来查看编译过程中对哪些函数进行了内联，如果使用编译选项-gcflags=&amp;quot;-m -m&amp;quot;可以看到更详细的信息，如每个函数是否内联的原因：ORANGE不能处理，或者过于复杂、开销过大等等。
+内联可能也会给开发者带来一些问题，较早的go版本可能会对内部包含panic的函数做内联，但是最终panic、recover时打印的stacktrace显示的panic位置不准确，对开发者很不友好。应该是go1.13及后续版本中做了优化，内部维护了一个表pc to file及lineno，stacktrace中可以还原出精确的panic位置。我测试go1.16中带panic的简单函数也是可以内联的，并且stacktrace报出的位置也很准确。
+函数创建过程中涉及到栈帧创建、寄存器保存恢复、栈帧销毁等工作，和内联后直接执行指令相比，是有开销的，做了部分性能测试发现内联后比内联前有6%的性能提升。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-inlining-strategy-limitation-6b6d7fc3b1be  </description>
+    </item>
+    
+    <item>
+      <title>introduction to the escape analysis</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/</guid>
+      <description>Let&amp;rsquo;s Summarize #  escape analysis不只是go中才有的概念，java se 6u23及更新版本均也支持逃逸分析，see：
+  https://en.wikipedia.org/wiki/Escape_analysis  go查看逃逸分析结果，可以通过给编译器传递选项-m，如源文件为main.go，可执行：
+ go build -gcflags=&amp;quot;-m&amp;quot; main.go go tool compile -m main.go  go里面有几种情况会发生逃逸：
+ 一个函数内部new(obj)并返回指针，或者声明变量并返回指针，该指针在该函数外被继续使用，会发生逃逸； 一个for循环体内new(obj)创建对象并赋值给外部指针，或者用其他方式声明如var a int然后取地址赋值，会发生逃逸； 一个闭包内通过new(obj)创建对象并赋值给外部指针，或者用其他方式声明如var a int然后取地址赋值，会发生逃逸；  ps：在一个普通的{}构成的块作用域内new(obj)或者对声明变量取地址赋值给外部指针，都是不会发生逃逸的，因为在同一个栈帧内，并不存在outlive the stack frame的情况，根本不需要讨论逃逸的问题。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-introduction-to-the-escape-analysis-f7610174e890  </description>
+    </item>
+    
+    <item>
+      <title>introduction to the go compiler</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler/</guid>
+      <description>Let&amp;rsquo;s Summarize #  go编译器工作过程主要分为这么几个阶段：
+ 解析阶段：对每个源文件进行词法分析、语法分析，并构建对应的语法树； 类型检查和语法树转换：进行类型检查，如名字解析、类型推断、函数定义是否结束、是否存在但定义未使用的问题。然后还会转换为抽象语法树AST，这个过程中还会根据类型信息做一系列调整优化，如函数内联、deadcode移除等；  以上两个阶段经常成为编译器的frontend，那后端backend指的是哪几个阶段呢？
+ generic SSA：AST被转换成SSA（静态单赋值）形式，它是一种中间代码表示，在它基础上可以方便做优化，并转换为机器指令。这个阶段有些rewrite规则，编译器会使用一些高度优化的指令来替换掉一些特殊的内置函数，如cap、len、copy等（前面提过这些函数是没有函数体实现的），了解更多see https://en.wikipedia.org/wiki/Intrinsic_function。这个阶段还会有些节点的形式被做进一步转换，如copy、range别转换成为mov、for-loop等。然后会做有多遍与机器无关的操作和重写，如deadcode移除、nilcheck等等； 生成机器指令：编译器中机器相关的优化从ssa lower pass就开始了，会不断的做出一些更加接近机器低级细节的优化，直到达到机器低级特性之后，最终代码优化就开始了。比如deadcode移除，将value移到最近访问的地方，移除无用的局部变量和不必要的寄存器分配。还有会对栈帧中的变量计算好偏移量，访问更快，并计算GC safepoint处哪些栈上的指针可以保持liveness。ssa生成阶段，go函数被转换为一系列的obj.Prog指令，然后再由汇编器生成目标文件，其中包含了反射数据、导出数据、调试信息。  Source Analysis #  References #    https://github.com/golang/go/blob/release-branch.go1.13/src/cmd/compile/README.md  </description>
+    </item>
+    
+    <item>
+      <title>introduction to the go compiler ssa backend</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了ssa的关键概念，value、memory、block、function、compiler pass，介绍了查看从源代码到ssa各阶段优化再到最终生成的机器指令的查看方法：GOSSAFUNC=${func} go build *.go，会生成一个ssa.html文件，打开即可查看
+Source Analysis #  References #    https://github.com/golang/go/blob/release-branch.go1.13/src/cmd/compile/internal/ssa/README.md  </description>
+    </item>
+    
+    <item>
+      <title>language semantics on escape analysis</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/</guid>
+      <description>Let&amp;rsquo;s Summarize #  Anytime a value is shared outside the scope of a function’s stack frame, it will be placed (or allocated) on the heap.
+The construction of a value doesn’t determine where it lives. Only how a value is shared will determine what the compiler will do with that value. Anytime you share a value up the call stack, it is going to escape. There are other reasons for a value to escape which you will explore in the next post.</description>
+    </item>
+    
+    <item>
+      <title>memory safety with bounds check</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/memory-safety-with-bounds-check/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/memory-safety-with-bounds-check/</guid>
+      <description>Let&amp;rsquo;s Summarize #  为了阻止访问越界类问题，go中引入了bounds check，我们可以通过选项-gcflags=&amp;quot;-B&amp;quot;关闭bounds check，来查看下访问越界会发生什么？要么访问到一些垃圾值，要么触发段错误崩溃。
+简单地说就是，编译器会在涉及slice位置访问的时候（如nums[100])的时候安插一些指令，用来比较索引位置100和cap(nums)的关系，如果索引位置不合法，则直接跳到panicIndex函数panic。
+当然编译器更聪明一点，在ssa多轮passes中均有优化处理，如bce、prove等，会做一些优化，避免无脑地安插边界检查指令，感兴趣可以继续深究下。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-memory-safety-with-bounds-check-1397bef748b5  </description>
+    </item>
+    
+    <item>
+      <title>overview of the compiler</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/overview-of-the-compiler/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/overview-of-the-compiler/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了go编译器的大致工作过程，frontend、backend，以及各自包含的哪些阶段，介绍了各个阶段的大致工作效果，比如词法分析输出的数据，以及ssa阶段不同pass做了哪些优化等，最后生成*.o文件，也提及了通过go tool link来最终生成一个可执行文件。
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-overview-of-the-compiler-4e5a153ca889?source=---------8-----------------------  </description>
+    </item>
+    
+    <item>
+      <title>slice and memory management</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/slice-and-memory-management/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/slice-and-memory-management/</guid>
+      <description>Let&amp;rsquo;s Summarize #  slice其结构用slice header来表示，包含data、len、cap 3个字段，这个很多文章提过了，现在提下slice操作中对内存操作方面的一点优化：
+ Copy：如果要删除slice nums中索引位置x中的元素，可以通过copy([x:],[x+1:])，然后x=[x:len(x)-1]来完成，也可以通过x = append(x[:x],[x+1:])来完成，这里会涉及到个别索引位置overlap的问题，编译器会转换成使用runtime.memmove来处理，这个函数会解决overlap的情况，比如从头拷贝会覆盖的话就用从后面拷贝来解决，实现稍复杂； Reset：有时一个slice被复用，复用之前希望清空它，可以写一个for循环把对应元素全部清0，我们可以这么写，编译器1.5之后会识别此类代码并将其转换为runtime.memclr*函数，这个效率比较高，应该是类似于memset之类的吧。 Allocate &amp;amp; Copy：其实新创建完一个slice时都会清0也是用的memclr*函数。如果是新创建完(make)之后立即跟着一个copy语句怎么办，那么清零就有点多余了，编译器也会识别这种情况，这种就不清零了。  go编译器一直在演进，让这门语言变得更加&amp;quot;聪明&amp;quot;！
+Source Analysis #  References #    https://medium.com/a-journey-with-go/go-slice-and-memory-management-670498bb52be?source=---------4-----------------------  </description>
+    </item>
+    
+    <item>
+      <title>understanding compiler directives</title>
+      <link>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/understanding-compiler-directives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/understanding-compiler-directives/</guid>
+      <description>Let&amp;rsquo;s Summarize #  介绍了常见的编译器指令，一般遵循//go:$directive的形式
+ noescape，用在函数签名前（非函数定义，实现非go语言），表示不会将指针用作参数，参数不会发生逃逸； uintptrescape，用在函数定义前，有些指针已经转成了uintptr做参数，但是需要做逃逸分析； noinline，用在函数定义前，表示禁止内联优化； norace，禁止做race detector做并发读写分析； nosplit，禁止做栈越界检查； linkname，指定编译器使用importpath.name作为当前localname的符号名，或者省略importpath.name只将localname导出给外部使用；  Source Analysis #  References #    https://golang.org/cmd/compile/  </description>
+    </item>
+    
+  </channel>
+</rss>
