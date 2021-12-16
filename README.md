@@ -14,4 +14,4 @@ If you want to add more articles:
 - content/posts/: if you don't know how to organize the articles, put it here
 - content/docs/: if you know clearly which topic this article belongs to, put it into relevant directory hierarchy. don't forget to run `toc > SUMMARY.md` to update the catelogue.
 
-ps: you can find the utility `toc` here, [hitzhangjie/toc](https://github.com/hitzhangjie/toc].
+ps: you can find the utility `toc` here, [hitzhangjie/toc](https://github.com/hitzhangjie/toc).
