@@ -8,7 +8,7 @@ theme: hugo-book
 disablePathToLower: true
 enableGitInfo: false
 defaultContentLanguage: zh
-publishDir: docs
+publishDir: public
 
 # Needed for mermaid/katex shortcodes
 markup:
@@ -54,7 +54,7 @@ params:
 
   # (Optional, default none) Set the path to a logo for the book. If the logo is
   # /static/logo.png then the path would be logo.png
-  BookLogo: /logo.png
+  BookLogo: logo.png
 
   # (Optional, default none) Set leaf bundle to render as side menu
   # When not specified file structure and weights will be used
