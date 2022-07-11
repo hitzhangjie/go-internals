@@ -9,81 +9,85 @@ title: "前言"
 {{< columns >}}
 ## 我们准备做什么
 
-Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut
-olivae sensit **arma sorori** deducit, inesset **crudus**, ego vetuere aliis,
-modo arsit? Utinam rapta fiducia valuere litora _adicit cursu_, ad facies
+如今，go语言被广泛地应用，相关的分享、书籍也越来越多，从基础到实现细节，《go programming language》、《go语言101》、《go语言设计实现》等。对于高质量的知识分享，“feed me more”可能是很多技术人的同感。当有了一定的沉淀后，是可以靠自己钻研来解惑或答疑的，但能不能系统性地沉淀、由点及面来帮助更多的开发者呢？比如goroutine如何应用、为什么协程好用呢、协程有哪些实现思路、go为何采用现在的方案？融会贯通、给大脑做减法，这就是我们的初衷。
 
 <--->
 
 ## 为什么要这么做
 
-Ea _furtique_ risere fratres edidit terrae magis. Colla tam mihi tenebat:
-miseram excita suadent es pecudes iam. Concilio _quam_ velatus posset ait quod
-nunc! Fragosis suae dextra geruntur functus vulgata.
+钻研计算机技术，需要大量的沉淀积累，学习工作中深刻理解了一点“了解的越多，认识到不懂的也越多”。当尝试了解一个不熟悉的领域时，无异于“跨界”，即便是`go test -race`这种常见操作，如果不了解并发冲突检测的实现细节，其实也不能算是真的了解的，要理解这些，我们还需要了解点分布式原理的知识（如向量时钟及应用），还有并发冲突检测的框架（如Thread Sanitizer）。当我们能简明扼要地解答一个复杂问题时，就算是真理解了，这样也可以帮助更多人。
 
 <--->
 
 ## 准备怎么落地
 
+“一只穿云箭，千军万马来相见”，开源让我感受到了协作分享的力量。我认同凭自身努力深入钻研的过程，但个体时间终究有限，借助高质量的协同能让我们走的更快更远。所以不准备从零到一来写本电子书，日常学习工作中也收集了一些质量很高的文章（当然也有自己写的），这些有价值的信息就这么散落在各个角落，非常有必要将其“串”起来。另外出版书籍更新慢、知识覆盖受限，很多书推敲起来内容会略显单薄，协作、有经验甚至“跨界”的协作者能参与进来，有助于知识由点及面。
+
 {{< /columns >}}
 
-## Go语言之我见
+## 和Go语言的相识
 
-Lorem **markdownum** emicat gestu. Cannis sol pressit ducta. **Est** Idaei,
-tremens ausim se tutaeque, illi ulnis hausit, sed, lumina cutem. Quae avis
-sequens!
+go语言并不是我接触的第一门编程语言，当我第一次了解这门语言还是在2016年，和c语言比较起来其“怪异”的语法让我很不习惯，工作之后，使用的服务框架对协程支持的局限性让我重新开始接触go语言，那个时候我还是倾向于c/c++/java开发的，对go甚至有种抵触。我宁可去钻研libmill、libdill、boost coroutine、kilim、qusar等，也不想去琢磨go？原因仅仅是觉得它的语法有点怪异 😂
 
-    var panel = ram_design;
-    if (backup + system) {
-        file.readPoint = network_native;
-        sidebar_engine_device(cell_tftp_raster,
-                dual_login_paper.adf_vci.application_reader_design(
-                graphicsNvramCdma, lpi_footer_snmp, integer_model));
-    }
-    public_keyboard_docking += error.controller_gibibyte_plug.ip(4,
-            asciiPetaflops, software(supercomputer_compatible_status + 4));
-    dynamic_disk.indexModeLaptop = bufferTftpReality;
-    var export_vlog_sequence = trinitron_flowchart + supercomputer_cluster_rj(
-            -1, toolbar_powerpoint_query, -2 / multiprocessing_impression);
+这个过程持续了一段时间，直到踩的坑越来越多，直到再也不想听“口耳相传”的经验：
 
-## Go语言的优势
+- 服务框架spp有3大件，proxy收包、worker处理、ctrl检查检查，我在worker里加了点可能导致阻塞的系统调用（非网络io），嘿，因为worker阻塞失去心跳被ctrl杀掉了。
+- 服务框架spp协程栈固定大小128k，有个小伙伴在协程处理逻辑内创建了个比较大的局部变量，导致超出协程栈上限，嘿，段错误崩溃了。
+- 服务框架jungle配合kilim字节码织入实现协程，偶尔忘记加@Pausable导致出问题，出了问题排查起来还费劲，嘿，每次被高工指导。
+- 服务框架jungle使用的kilim字节码织入，只支持jdk 1.7字节码，嘿，jdk没法升级了。
+- 这些框架中的微线程实现、字节码织入方案，基本上只是处理了网络io（connect、send、receive、read、write）之类的操作，但是可能导致阻塞的操作远远不止网络io啊，比如锁lock、unlock…嘿，难道用到啥都要hook下？
+- ……
 
-Idmoniae ripis, at aves, ali missa adest, ut _et autem_, et ab? Venit spes
-versus finis sermonibus patefecit murum nec est sine oculis. _Ille_ inmota
-macies domoque caelestia cadit tantummodo scelus procul, corde!
+在我看了spp框架、jungle框架以及字节码织入方案等的局限性之后，我不想再折腾这些了，我开始花更多时间去了解go，这就是我和go语言美好关系的开始。工作中遇到的开发效率的问题、依赖管理的问题、编译构建的问题、代码风格的问题等，最终导致我们团队下定决心转go语言。
 
-1. Dolentem capi parte rostro alvum habentem pudor
-2. Fulgentia sanguine paret
-3. E punior consurgit lentus
-4. Vox hasta eras micantes
+
+## 我眼中的Go语言
+
+在评价go语言之前，想先提下对c语言的评价，曾经有人这样评价c语言：“任何比c语言更低级的语言，都不足以抽象一个完整的计算机系统；任何比c语言更高级的语言，都可以用c语言来实现”。结合我学习过的编程语言来看，汇编、c、c++、java、swift、、go、rust、python、php、javascript，仔细琢磨下我认为这样的评价实至名归。
+
+学习软件工程时，我们系统性学习了过程式、面向对象等的认识、建模的不同思想，结合在编程语言层面的支持，开始时经验肤浅的我像很多开发者一样，天真的认为缺少某些oo支持的语言是难以架构大型软件的，直到我读了linux内核代码，我才认识到自己的认知多么肤浅。原来，在大佬的世界里，编程思想一直存在，语言只是实现思想的工具而已（linux内核中有非常多oo思想的实践，也有很多对c++ smartpointer的模拟，等等）。
+
+时至今日，再看go语言我已经客观地多，它确实是一门工程化不错的语言：
+
+- 和c\c++比，它有较好的依赖管理，基本开箱即用的标准库，经得起推敲的代码风格规范，较完整的编译构建、测试、代码分析、性能分析工具，还有更简便易用的并发控制（chan、sync.*、goroutine），其符合大家认知的happens-before关系建立，即便有可能认识不够到位、代码出错的概率也大大下降。
+
+- 和java比，它不强制面向对象的招式，却也有面向对象思想的支持，组合优于继承，interface的类型断言、转换，以及后续范型支持（尽管现在go1.18版本还有待完善）。另外，同为自动内存管理的语言，和java jvm调优的数不尽的参数比起来，go的GC pacer仅依靠一个变量设置GOGC，如何在一堆参数中获得一个全局最优解的组合，java可能比go调优时控制粒度更细，但是很明显go可以在内存不是什么硬伤的情况下调优更简单。
+
+- 和rust比，rust的描述性非常强，编译器能力也非常强，如果能忍受编译器的毒打，并深刻理解rust的设计思想之后，rust确实也是不错的，编译器说对那将来跑起来也会对。和服务跑起来后再排查一些难跟踪的错误，rust的优势就会让人觉得很值。但是我们并不是什么开发小白、我们可能要维护的对象也没那么复杂，不否定rust的价值，但是rust和go相比，目前go的能力是我们团队更希望拥有的。
+
+  ps：腾讯内部trpc微服务框架实例数，go版本的有2w+，rust版本的只有个位数。
+
+在合适的场景下go非常有价值，如果非要将其用到一些它不擅长的地方，就需要注意了：
+
+- 嵌入式开发领域，go有GC机制，可能要做类似tinygo的编译器调整、特性裁剪；
+- 超大规模长连接管理，go的默认实现是goroutine per connection模型，连接数多了goroutine数也上来了，goroutine stack、为连接分配的resizable buffer、连接上事件的polling都会成为不可忽略的问题。业界比较好的方案是两级reactor的实现思路，类似地go版本实现gnet；
+- 密集计算的问题，go比较大的优势在于goroutine并发处理，但是goroutine切换有固定的切换时机（网络IO等等），密集计算场景下goroutine切换不符合“预期”，并发处理效率跟不上，可能需要考虑多进程+taskset绑核处理；
+- 其他问题；
+
+在不合适的场景下就需要多考虑、多钻研透一些，需要综合投入产出比慎重考虑，这种情况下其他语言是否更有优势就很值得考虑了。
+
+我的工作领域主要在后台微服务，go就是一门（至少）在工程化方面做的很好的语言。
 
 ## Go入门教程推荐
 
-Nefandam et prisci palmas! Blandita cutis flectitur montis macies, te _nati_
-Latiis; turbaque inferias. Virginis tibi peracta avidusque facies caper nec, e
-at ademptae, mira.
+本书的定位明显是更加倾向于语言设计思想、实现细节类的一些方面，对于一些希望掌握一些语言基础情况的初学者，可能并不是很符合的目标读者 :)，当然我相信也能在本书中找到相关的知识点，也有可能更帮助更透彻地理解想检索想掌握的问题。
 
-    direct *= font(inputScareware(sliHome), crossplatform.byte(
-            ppl_encryption.excel_e_rte(integratedModelModifier), timeVirtual,
-            floating_speakers.media_printer(us, yahoo, primaryPhp)));
-    friendly_metal_flatbed(cd, isoPrimaryStorage(reader), dmaMirrored);
-    if (parse_flash_cron.metalGif(1, adServiceDevice, utility)) {
-        adf -= operation_cdma_samba;
-        imapGif.switch += torrent;
-    } else {
-        pmu.disk_captcha = digital_ppp_pci + recursionTransistor(5, dram);
-        ajax_service += grayscalePythonLock;
-        google_scroll_capacity = ftp + engine_dslam_sidebar / tape - 1;
-    }
-    drive_rw = zipTftp;
-    var suffix = software_router_extension.dimm_ddr(-5,
-            kernel_digital_minisite);
+这里，不妨也列举基本我认为写的不错的go语言的书籍，仅供参考：
 
-Vocavit toto; alas **mitis** maestus in liquidarum ab legi finitimosque dominam
-tibi subitus; Orionis vertitur nota. Currere alti etiam seroque cernitis
-innumeris miraturus amplectique collo sustinet quemque! Litora ante turba?
+- [go programming language](https://books.google.com.hk/books/about/The_Go_Programming_Language.html?id=SJHvCgAAQBAJ&printsec=frontcover&source=kp_read_button&hl=en&redir_esc=y#v=onepage&q&f=false)，这是我学习go时完整阅读的第一本书，内容讲解比较全面，对于初学者系统性认识这门语言我认为还是比较重要的。
+- [go 101](https://go101.org/article/101.html)，现在也有中文版的资料，这里的内容讲了很多实现细节的东西，到什么程度呢，不会到源码的程度，属于对源码之上的认识、总结性的。
+- [go语言设计实现](https://draveness.me/golang/)，这本书中的内容就更加倾向于实现细节了，内容也覆盖也比较周全，算是go相关书籍中不可多得好书，如果不是因为我对这些细节也有研究，我一定会买一本来收藏的好书，书中的配图、文笔都非常不错。
 
 ## 本书存在的意义
 
+已经有这么多好书了，为什么我还要写这本电子书？定位不同，我不想单单解释go是怎么做的，我想解释为什么go决定这样做，案上有哪些变体。
+
+甚至，我的定位不是想让读者成为一名go语言的高手，而是想让读者在认识这些语言特性时有更加全方位的认识，它现在是什么样的，它以前是什么样的，为什么要变成这样，其他语言是怎么做的，为什么go要这样做？
+
+当我们认识并理解了go及其他语言的方案之后，兴许我们会机会给大脑减负，我们不需要记住那么多的细节，因为它们的思想是相通的。
+
 ## 联系方式
 
+您可以通过邮件方式和我交流，邮件标题请注明“go语言交流”（方便邮件rules归类）。
+
+我的邮箱：hit.zhangjie@gmail.com
