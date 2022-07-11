@@ -13,7 +13,7 @@ create a `mermaid.json` file in your `assets` folder!
 
 {{< columns >}}
 ```tpl
-{{</* mermaid [class="text-center"]*/>}}
+{{</* mermaid */>}}
 sequenceDiagram
     Alice->>Bob: Hello Bob, how are you?
     alt is sick

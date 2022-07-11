@@ -1,1 +1,0 @@
-navigator.serviceWorker&&navigator.serviceWorker.register("/go-internals-v2/sw.js",{scope:"/go-internals-v2/"})
