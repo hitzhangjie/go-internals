@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>trace on Go设计实现内幕</title><link>https://hitzhangjie.pro/go-internals-v2/tags/trace/</link><description>Recent content in trace on Go设计实现内幕</description><generator>Hugo -- gohugo.io</generator><atom:link href="https://hitzhangjie.pro/go-internals-v2/tags/trace/index.xml" rel="self" type="application/rss+xml"/><item><title>discovery of the trace package</title><link>https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Tracing/discovery-of-the-trace-package/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Tracing/discovery-of-the-trace-package/</guid><description>Let&amp;rsquo;s Summarize # 如何激活trace？
+go test -trace，通过选项-trace来激活trace功能，我们可以通过trace package提供的方法来增强默认的trace能力，下面简单总结下。
+go test -trace，或者代码中通过trace.Start()/defer trace.Stop来输出trace数据到文件都可以。然后通过go tool trace trace文件，即可进行可视化展示。
+trace工作过程？
+这里的trace过程大致是：首先Stop the World，然后收集各个goroutines的栈帧信息，收集各个goroutines的snapshots信息，最好再Start the World。这里收集的这些信息会存储到一个bufferlist中。然后go runtime会启动一个专门的goroutine来异步地将bufferlist中的数据写入到trace数据文件中。如果bufferlist没数据的话，这个专门的协程就会被parked。
+然后介绍了go tool trace 可视化信息的一些解释，比如GC各个阶段的解释、调度阶段的start、stop、syscall、unblock的解释。
+用户自定义trace？
+主要有两个层次：
+task层次 taskCtx, task := trace.NewTask(ctx, &amp;ldquo;task name&amp;rdquo;) 结束的时候需要task.End()结束自定义trace。
+region层次 trace.NewRegion(taskCtx, &amp;ldquo;region name&amp;rdquo;) 结束的时候需要region.End()标记当前阶段的结束。
+这里的trace过程很直观，如果有用过opentracing的话会容易理解这里的用法。
+用户自定义的trace，在输出到trace数据文件后，也是可通过go tool trace来进行可视化展示的，在选项卡“user-defined tasks”中。
+Source Analysis # References # https://medium.com/a-journey-with-go/go-discovery-of-the-trace-package-e5a821743c3c</description></item><item><title>discovery of the trace package</title><link>https://hitzhangjie.pro/go-internals-v2/posts/discovery-of-the-trace-package/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hitzhangjie.pro/go-internals-v2/posts/discovery-of-the-trace-package/</guid><description>Let&amp;rsquo;s Summarize # 如何激活trace？
+go test -trace，通过选项-trace来激活trace功能，我们可以通过trace package提供的方法来增强默认的trace能力，下面简单总结下。
+go test -trace，或者代码中通过trace.Start()/defer trace.Stop来输出trace数据到文件都可以。然后通过go tool trace trace文件，即可进行可视化展示。
+trace工作过程？
+这里的trace过程大致是：首先Stop the World，然后收集各个goroutines的栈帧信息，收集各个goroutines的snapshots信息，最好再Start the World。这里收集的这些信息会存储到一个bufferlist中。然后go runtime会启动一个专门的goroutine来异步地将bufferlist中的数据写入到trace数据文件中。如果bufferlist没数据的话，这个专门的协程就会被parked。
+然后介绍了go tool trace 可视化信息的一些解释，比如GC各个阶段的解释、调度阶段的start、stop、syscall、unblock的解释。
+用户自定义trace？
+主要有两个层次：
+task层次 taskCtx, task := trace.NewTask(ctx, &amp;ldquo;task name&amp;rdquo;) 结束的时候需要task.End()结束自定义trace。
+region层次 trace.NewRegion(taskCtx, &amp;ldquo;region name&amp;rdquo;) 结束的时候需要region.End()标记当前阶段的结束。
+这里的trace过程很直观，如果有用过opentracing的话会容易理解这里的用法。
+用户自定义的trace，在输出到trace数据文件后，也是可通过go tool trace来进行可视化展示的，在选项卡“user-defined tasks”中。
+Source Analysis # References # https://medium.com/a-journey-with-go/go-discovery-of-the-trace-package-e5a821743c3c</description></item></channel></rss>
