@@ -3,16 +3,38 @@
 <meta name=generator content="Hugo 0.91.2">
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="前言 #  我们准备做什么 Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut olivae sensit arma sorori deducit, inesset crudus, ego vetuere aliis, modo arsit? Utinam rapta fiducia valuere litora adicit cursu, ad facies  为什么要这么做 Ea furtique risere fratres edidit terrae magis. Colla tam mihi tenebat: miseram excita suadent es pecudes iam. Concilio quam velatus posset ait quod nunc! Fragosis suae dextra geruntur functus vulgata.">
+<meta name=description content="前言 #  我们准备做什么 如今，go语言被广泛地应用，相关的分享、书籍也越来越多，从基础到实现细节，《go programming language》、《go语言101》、《go语言设计实现》等。对于高质量的知识分享，“feed me more”可能是很多技术人的同感。当有了一定的沉淀后，是可以靠自己钻研来解惑或答疑的，但能不能系统性地沉淀、由点及面来帮助更多的开发者呢？比如goroutine如何应用、为什么协程好用呢、协程有哪些实现思路、go为何采用现在的方案？融会贯通、给大脑做减法，这就是我们的初衷。  为什么要这么做 钻研计算机技术，需要大量的沉淀积累，学习工作中深刻理解了一点“了解的越多，认识到不懂的也越多”。当尝试了解一个不熟悉的领域时，无异于“跨界”，即便是go test -race这种常见操作，如果不了解并发冲突检测的实现细节，其实也不能算是真的了解的，要理解这些，我们还需要了解点分布式原理的知识（如向量时钟及应用），还有并发冲突检测的框架（如Thread Sanitizer）。当我们能简明扼要地解答一个复杂问题时，就算是真理解了，这样也可以帮助更多人。  准备怎么落地 “一只穿云箭，千军万马来相见”，开源让我感受到了协作分享的力量。我认同凭自身努力深入钻研的过程，但个体时间终究有限，借助高质量的协同能让我们走的更快更远。所以不准备从零到一来写本电子书，日常学习工作中也收集了一些质量很高的文章（当然也有自己写的），这些有价值的信息就这么散落在各个角落，非常有必要将其“串”起来。另外出版书籍更新慢、知识覆盖受限，很多书推敲起来内容会略显单薄，协作、有经验甚至“跨界”的协作者能参与进来，有助于知识由点及面。   和Go语言的相识 #  go语言并不是我接触的第一门编程语言，当我第一次了解这门语言还是在2016年，和c语言比较起来其“怪异”的语法让我很不习惯，工作之后，使用的服务框架对协程支持的局限性让我重新开始接触go语言，那个时候我还是倾向于c/c++/java开发的，对go甚至有种抵触。我宁可去钻研libmill、libdill、boost coroutine、kilim、qusar等，也不想去琢磨go？原因仅仅是觉得它的语法有点怪异 😂
+这个过程持续了一段时间，直到踩的坑越来越多，直到再也不想听“口耳相传”的经验：
+ 服务框架spp有3大件，proxy收包、worker处理、ctrl检查检查，我在worker里加了点可能导致阻塞的系统调用（非网络io），嘿，因为worker阻塞失去心跳被ctrl杀掉了。 服务框架spp协程栈固定大小128k，有个小伙伴在协程处理逻辑内创建了个比较大的局部变量，导致超出协程栈上限，嘿，段错误崩溃了。 服务框架jungle配合kilim字节码织入实现协程，偶尔忘记加@Pausable导致出问题，出了问题排查起来还费劲，嘿，每次被高工指导。 服务框架jungle使用的kilim字节码织入，只支持jdk 1.7字节码，嘿，jdk没法升级了。 这些框架中的微线程实现、字节码织入方案，基本上只是处理了网络io（connect、send、receive、read、write）之类的操作，但是可能导致阻塞的操作远远不止网络io啊，比如锁lock、unlock…嘿，难道用到啥都要hook下？ ……  在我看了spp框架、jungle框架以及字节码织入方案等的局限性之后，我不想再折腾这些了，我开始花更多时间去了解go，这就是我和go语言美好关系的开始。工作中遇到的开发效率的问题、依赖管理的问题、编译构建的问题、代码风格的问题等，最终导致我们团队下定决心转go语言。
+我眼中的Go语言 #  在评价go语言之前，想先提下对c语言的评价，曾经有人这样评价c语言：“任何比c语言更低级的语言，都不足以抽象一个完整的计算机系统；任何比c语言更高级的语言，都可以用c语言来实现”。结合我学习过的编程语言来看，汇编、c、c++、java、swift、、go、rust、python、php、javascript，仔细琢磨下我认为这样的评价实至名归。
+学习软件工程时，我们系统性学习了过程式、面向对象等的认识、建模的不同思想，结合在编程语言层面的支持，开始时经验肤浅的我像很多开发者一样，天真的认为缺少某些oo支持的语言是难以架构大型软件的，直到我读了linux内核代码，我才认识到自己的认知多么肤浅。原来，在大佬的世界里，编程思想一直存在，语言只是实现思想的工具而已（linux内核中有非常多oo思想的实践，也有很多对c++ smartpointer的模拟，等等）。
+时至今日，再看go语言我已经客观地多，它确实是一门工程化不错的语言：
+  和c\c++比，它有较好的依赖管理，基本开箱即用的标准库，经得起推敲的代码风格规范，较完整的编译构建、测试、代码分析、性能分析工具，还有更简便易用的并发控制（chan、sync.*、goroutine），其符合大家认知的happens-before关系建立，即便有可能认识不够到位、代码出错的概率也大大下降。
+  和java比，它不强制面向对象的招式，却也有面向对象思想的支持，组合优于继承，interface的类型断言、转换，以及后续范型支持（尽管现在go1.18版本还有待完善）。另外，同为自动内存管理的语言，和java jvm调优的数不尽的参数比起来，go的GC pacer仅依靠一个变量设置GOGC，如何在一堆参数中获得一个全局最优解的组合，java可能比go调优时控制粒度更细，但是很明显go可以在内存不是什么硬伤的情况下调优更简单。
+  和rust比，rust的描述性非常强，编译器能力也非常强，如果能忍受编译器的毒打，并深刻理解rust的设计思想之后，rust确实也是不错的，编译器说对那将来跑起来也会对。和服务跑起来后再排查一些难跟踪的错误，rust的优势就会让人觉得很值。但是我们并不是什么开发小白、我们可能要维护的对象也没那么复杂，不否定rust的价值，但是rust和go相比，目前go的能力是我们团队更希望拥有的。
+ps：腾讯内部trpc微服务框架实例数，go版本的有2w+，rust版本的只有个位数。
+  在合适的场景下go非常有价值，如果非要将其用到一些它不擅长的地方，就需要注意了：
+ 嵌入式开发领域，go有GC机制，可能要做类似tinygo的编译器调整、特性裁剪； 超大规模长连接管理，go的默认实现是goroutine per connection模型，连接数多了goroutine数也上来了，goroutine stack、为连接分配的resizable buffer、连接上事件的polling都会成为不可忽略的问题。业界比较好的方案是两级reactor的实现思路，类似地go版本实现gnet； 密集计算的问题，go比较大的优势在于goroutine并发处理，但是goroutine切换有固定的切换时机（网络IO等等），密集计算场景下goroutine切换不符合“预期”，并发处理效率跟不上，可能需要考虑多进程+taskset绑核处理； 其他问题；  在不合适的场景下就需要多考虑、多钻研透一些，需要综合投入产出比慎重考虑，这种情况下其他语言是否更有优势就很值得考虑了。">
 <meta name=theme-color content="#FFFFFF"><meta property="og:title" content="前言">
-<meta property="og:description" content="前言 #  我们准备做什么 Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut olivae sensit arma sorori deducit, inesset crudus, ego vetuere aliis, modo arsit? Utinam rapta fiducia valuere litora adicit cursu, ad facies  为什么要这么做 Ea furtique risere fratres edidit terrae magis. Colla tam mihi tenebat: miseram excita suadent es pecudes iam. Concilio quam velatus posset ait quod nunc! Fragosis suae dextra geruntur functus vulgata.">
+<meta property="og:description" content="前言 #  我们准备做什么 如今，go语言被广泛地应用，相关的分享、书籍也越来越多，从基础到实现细节，《go programming language》、《go语言101》、《go语言设计实现》等。对于高质量的知识分享，“feed me more”可能是很多技术人的同感。当有了一定的沉淀后，是可以靠自己钻研来解惑或答疑的，但能不能系统性地沉淀、由点及面来帮助更多的开发者呢？比如goroutine如何应用、为什么协程好用呢、协程有哪些实现思路、go为何采用现在的方案？融会贯通、给大脑做减法，这就是我们的初衷。  为什么要这么做 钻研计算机技术，需要大量的沉淀积累，学习工作中深刻理解了一点“了解的越多，认识到不懂的也越多”。当尝试了解一个不熟悉的领域时，无异于“跨界”，即便是go test -race这种常见操作，如果不了解并发冲突检测的实现细节，其实也不能算是真的了解的，要理解这些，我们还需要了解点分布式原理的知识（如向量时钟及应用），还有并发冲突检测的框架（如Thread Sanitizer）。当我们能简明扼要地解答一个复杂问题时，就算是真理解了，这样也可以帮助更多人。  准备怎么落地 “一只穿云箭，千军万马来相见”，开源让我感受到了协作分享的力量。我认同凭自身努力深入钻研的过程，但个体时间终究有限，借助高质量的协同能让我们走的更快更远。所以不准备从零到一来写本电子书，日常学习工作中也收集了一些质量很高的文章（当然也有自己写的），这些有价值的信息就这么散落在各个角落，非常有必要将其“串”起来。另外出版书籍更新慢、知识覆盖受限，很多书推敲起来内容会略显单薄，协作、有经验甚至“跨界”的协作者能参与进来，有助于知识由点及面。   和Go语言的相识 #  go语言并不是我接触的第一门编程语言，当我第一次了解这门语言还是在2016年，和c语言比较起来其“怪异”的语法让我很不习惯，工作之后，使用的服务框架对协程支持的局限性让我重新开始接触go语言，那个时候我还是倾向于c/c++/java开发的，对go甚至有种抵触。我宁可去钻研libmill、libdill、boost coroutine、kilim、qusar等，也不想去琢磨go？原因仅仅是觉得它的语法有点怪异 😂
+这个过程持续了一段时间，直到踩的坑越来越多，直到再也不想听“口耳相传”的经验：
+ 服务框架spp有3大件，proxy收包、worker处理、ctrl检查检查，我在worker里加了点可能导致阻塞的系统调用（非网络io），嘿，因为worker阻塞失去心跳被ctrl杀掉了。 服务框架spp协程栈固定大小128k，有个小伙伴在协程处理逻辑内创建了个比较大的局部变量，导致超出协程栈上限，嘿，段错误崩溃了。 服务框架jungle配合kilim字节码织入实现协程，偶尔忘记加@Pausable导致出问题，出了问题排查起来还费劲，嘿，每次被高工指导。 服务框架jungle使用的kilim字节码织入，只支持jdk 1.7字节码，嘿，jdk没法升级了。 这些框架中的微线程实现、字节码织入方案，基本上只是处理了网络io（connect、send、receive、read、write）之类的操作，但是可能导致阻塞的操作远远不止网络io啊，比如锁lock、unlock…嘿，难道用到啥都要hook下？ ……  在我看了spp框架、jungle框架以及字节码织入方案等的局限性之后，我不想再折腾这些了，我开始花更多时间去了解go，这就是我和go语言美好关系的开始。工作中遇到的开发效率的问题、依赖管理的问题、编译构建的问题、代码风格的问题等，最终导致我们团队下定决心转go语言。
+我眼中的Go语言 #  在评价go语言之前，想先提下对c语言的评价，曾经有人这样评价c语言：“任何比c语言更低级的语言，都不足以抽象一个完整的计算机系统；任何比c语言更高级的语言，都可以用c语言来实现”。结合我学习过的编程语言来看，汇编、c、c++、java、swift、、go、rust、python、php、javascript，仔细琢磨下我认为这样的评价实至名归。
+学习软件工程时，我们系统性学习了过程式、面向对象等的认识、建模的不同思想，结合在编程语言层面的支持，开始时经验肤浅的我像很多开发者一样，天真的认为缺少某些oo支持的语言是难以架构大型软件的，直到我读了linux内核代码，我才认识到自己的认知多么肤浅。原来，在大佬的世界里，编程思想一直存在，语言只是实现思想的工具而已（linux内核中有非常多oo思想的实践，也有很多对c++ smartpointer的模拟，等等）。
+时至今日，再看go语言我已经客观地多，它确实是一门工程化不错的语言：
+  和c\c++比，它有较好的依赖管理，基本开箱即用的标准库，经得起推敲的代码风格规范，较完整的编译构建、测试、代码分析、性能分析工具，还有更简便易用的并发控制（chan、sync.*、goroutine），其符合大家认知的happens-before关系建立，即便有可能认识不够到位、代码出错的概率也大大下降。
+  和java比，它不强制面向对象的招式，却也有面向对象思想的支持，组合优于继承，interface的类型断言、转换，以及后续范型支持（尽管现在go1.18版本还有待完善）。另外，同为自动内存管理的语言，和java jvm调优的数不尽的参数比起来，go的GC pacer仅依靠一个变量设置GOGC，如何在一堆参数中获得一个全局最优解的组合，java可能比go调优时控制粒度更细，但是很明显go可以在内存不是什么硬伤的情况下调优更简单。
+  和rust比，rust的描述性非常强，编译器能力也非常强，如果能忍受编译器的毒打，并深刻理解rust的设计思想之后，rust确实也是不错的，编译器说对那将来跑起来也会对。和服务跑起来后再排查一些难跟踪的错误，rust的优势就会让人觉得很值。但是我们并不是什么开发小白、我们可能要维护的对象也没那么复杂，不否定rust的价值，但是rust和go相比，目前go的能力是我们团队更希望拥有的。
+ps：腾讯内部trpc微服务框架实例数，go版本的有2w+，rust版本的只有个位数。
+  在合适的场景下go非常有价值，如果非要将其用到一些它不擅长的地方，就需要注意了：
+ 嵌入式开发领域，go有GC机制，可能要做类似tinygo的编译器调整、特性裁剪； 超大规模长连接管理，go的默认实现是goroutine per connection模型，连接数多了goroutine数也上来了，goroutine stack、为连接分配的resizable buffer、连接上事件的polling都会成为不可忽略的问题。业界比较好的方案是两级reactor的实现思路，类似地go版本实现gnet； 密集计算的问题，go比较大的优势在于goroutine并发处理，但是goroutine切换有固定的切换时机（网络IO等等），密集计算场景下goroutine切换不符合“预期”，并发处理效率跟不上，可能需要考虑多进程+taskset绑核处理； 其他问题；  在不合适的场景下就需要多考虑、多钻研透一些，需要综合投入产出比慎重考虑，这种情况下其他语言是否更有优势就很值得考虑了。">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/docs/preface/"><meta property="article:section" content="docs">
 <title>前言 | Go设计实现内幕</title>
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.12e297a4052d0267e50141d27765986113f7953afe15c62679ed26e87ea387b0.js integrity="sha256-EuKXpAUtAmflAUHSd2WYYRP3lTr+FcYmee0m6H6jh7A="></script>
+<script defer src=/go-internals-v2/zh.search.min.24470903d268e5bf8964305b37be3c1c0a7486a9c64f38f2c9523e06213b8b6a.js integrity="sha256-JEcJA9Jo5b+JZDBbN748HAp0hqnGTzjyyVI+BiE7i2o="></script>
 <script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 </head>
 <body dir=ltr>
@@ -658,8 +680,8 @@ Blog
 <ul>
 <li><a href=#前言>前言</a>
 <ul>
-<li><a href=#go语言之我见>Go语言之我见</a></li>
-<li><a href=#go语言的优势>Go语言的优势</a></li>
+<li><a href=#和go语言的相识>和Go语言的相识</a></li>
+<li><a href=#我眼中的go语言>我眼中的Go语言</a></li>
 <li><a href=#go入门教程推荐>Go入门教程推荐</a></li>
 <li><a href=#本书存在的意义>本书存在的意义</a></li>
 <li><a href=#联系方式>联系方式</a></li>
@@ -676,87 +698,87 @@ Blog
 <div class="book-columns flex flex-wrap">
 <div class="flex-even markdown-inner">
 <h2 id=我们准备做什么>我们准备做什么</h2>
-<p>Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut
-olivae sensit <strong>arma sorori</strong> deducit, inesset <strong>crudus</strong>, ego vetuere aliis,
-modo arsit? Utinam rapta fiducia valuere litora <em>adicit cursu</em>, ad facies
+<p>如今，go语言被广泛地应用，相关的分享、书籍也越来越多，从基础到实现细节，《go programming language》、《go语言101》、《go语言设计实现》等。对于高质量的知识分享，“feed me more”可能是很多技术人的同感。当有了一定的沉淀后，是可以靠自己钻研来解惑或答疑的，但能不能系统性地沉淀、由点及面来帮助更多的开发者呢？比如goroutine如何应用、为什么协程好用呢、协程有哪些实现思路、go为何采用现在的方案？融会贯通、给大脑做减法，这就是我们的初衷。
 </div>
 <div class="flex-even markdown-inner">
 <h2 id=为什么要这么做>为什么要这么做</h2>
-<p>Ea <em>furtique</em> risere fratres edidit terrae magis. Colla tam mihi tenebat:
-miseram excita suadent es pecudes iam. Concilio <em>quam</em> velatus posset ait quod
-nunc! Fragosis suae dextra geruntur functus vulgata.
+<p>钻研计算机技术，需要大量的沉淀积累，学习工作中深刻理解了一点“了解的越多，认识到不懂的也越多”。当尝试了解一个不熟悉的领域时，无异于“跨界”，即便是<code>go test -race</code>这种常见操作，如果不了解并发冲突检测的实现细节，其实也不能算是真的了解的，要理解这些，我们还需要了解点分布式原理的知识（如向量时钟及应用），还有并发冲突检测的框架（如Thread Sanitizer）。当我们能简明扼要地解答一个复杂问题时，就算是真理解了，这样也可以帮助更多人。
 </div>
 <div class="flex-even markdown-inner">
 <h2 id=准备怎么落地>准备怎么落地</h2>
+<p>“一只穿云箭，千军万马来相见”，开源让我感受到了协作分享的力量。我认同凭自身努力深入钻研的过程，但个体时间终究有限，借助高质量的协同能让我们走的更快更远。所以不准备从零到一来写本电子书，日常学习工作中也收集了一些质量很高的文章（当然也有自己写的），这些有价值的信息就这么散落在各个角落，非常有必要将其“串”起来。另外出版书籍更新慢、知识覆盖受限，很多书推敲起来内容会略显单薄，协作、有经验甚至“跨界”的协作者能参与进来，有助于知识由点及面。
 </div>
 </div>
-<h2 id=go语言之我见>
-Go语言之我见
-<a class=anchor href=#go%e8%af%ad%e8%a8%80%e4%b9%8b%e6%88%91%e8%a7%81>#</a>
+<h2 id=和go语言的相识>
+和Go语言的相识
+<a class=anchor href=#%e5%92%8cgo%e8%af%ad%e8%a8%80%e7%9a%84%e7%9b%b8%e8%af%86>#</a>
 </h2>
-<p>Lorem <strong>markdownum</strong> emicat gestu. Cannis sol pressit ducta. <strong>Est</strong> Idaei,
-tremens ausim se tutaeque, illi ulnis hausit, sed, lumina cutem. Quae avis
-sequens!</p>
-<pre><code>var panel = ram_design;
-if (backup + system) {
-    file.readPoint = network_native;
-    sidebar_engine_device(cell_tftp_raster,
-            dual_login_paper.adf_vci.application_reader_design(
-            graphicsNvramCdma, lpi_footer_snmp, integer_model));
-}
-public_keyboard_docking += error.controller_gibibyte_plug.ip(4,
-        asciiPetaflops, software(supercomputer_compatible_status + 4));
-dynamic_disk.indexModeLaptop = bufferTftpReality;
-var export_vlog_sequence = trinitron_flowchart + supercomputer_cluster_rj(
-        -1, toolbar_powerpoint_query, -2 / multiprocessing_impression);
-</code></pre>
-<h2 id=go语言的优势>
-Go语言的优势
-<a class=anchor href=#go%e8%af%ad%e8%a8%80%e7%9a%84%e4%bc%98%e5%8a%bf>#</a>
+<p>go语言并不是我接触的第一门编程语言，当我第一次了解这门语言还是在2016年，和c语言比较起来其“怪异”的语法让我很不习惯，工作之后，使用的服务框架对协程支持的局限性让我重新开始接触go语言，那个时候我还是倾向于c/c++/java开发的，对go甚至有种抵触。我宁可去钻研libmill、libdill、boost coroutine、kilim、qusar等，也不想去琢磨go？原因仅仅是觉得它的语法有点怪异 😂</p>
+<p>这个过程持续了一段时间，直到踩的坑越来越多，直到再也不想听“口耳相传”的经验：</p>
+<ul>
+<li>服务框架spp有3大件，proxy收包、worker处理、ctrl检查检查，我在worker里加了点可能导致阻塞的系统调用（非网络io），嘿，因为worker阻塞失去心跳被ctrl杀掉了。</li>
+<li>服务框架spp协程栈固定大小128k，有个小伙伴在协程处理逻辑内创建了个比较大的局部变量，导致超出协程栈上限，嘿，段错误崩溃了。</li>
+<li>服务框架jungle配合kilim字节码织入实现协程，偶尔忘记加@Pausable导致出问题，出了问题排查起来还费劲，嘿，每次被高工指导。</li>
+<li>服务框架jungle使用的kilim字节码织入，只支持jdk 1.7字节码，嘿，jdk没法升级了。</li>
+<li>这些框架中的微线程实现、字节码织入方案，基本上只是处理了网络io（connect、send、receive、read、write）之类的操作，但是可能导致阻塞的操作远远不止网络io啊，比如锁lock、unlock…嘿，难道用到啥都要hook下？</li>
+<li>……</li>
+</ul>
+<p>在我看了spp框架、jungle框架以及字节码织入方案等的局限性之后，我不想再折腾这些了，我开始花更多时间去了解go，这就是我和go语言美好关系的开始。工作中遇到的开发效率的问题、依赖管理的问题、编译构建的问题、代码风格的问题等，最终导致我们团队下定决心转go语言。</p>
+<h2 id=我眼中的go语言>
+我眼中的Go语言
+<a class=anchor href=#%e6%88%91%e7%9c%bc%e4%b8%ad%e7%9a%84go%e8%af%ad%e8%a8%80>#</a>
 </h2>
-<p>Idmoniae ripis, at aves, ali missa adest, ut <em>et autem</em>, et ab? Venit spes
-versus finis sermonibus patefecit murum nec est sine oculis. <em>Ille</em> inmota
-macies domoque caelestia cadit tantummodo scelus procul, corde!</p>
-<ol>
-<li>Dolentem capi parte rostro alvum habentem pudor</li>
-<li>Fulgentia sanguine paret</li>
-<li>E punior consurgit lentus</li>
-<li>Vox hasta eras micantes</li>
-</ol>
+<p>在评价go语言之前，想先提下对c语言的评价，曾经有人这样评价c语言：“任何比c语言更低级的语言，都不足以抽象一个完整的计算机系统；任何比c语言更高级的语言，都可以用c语言来实现”。结合我学习过的编程语言来看，汇编、c、c++、java、swift、、go、rust、python、php、javascript，仔细琢磨下我认为这样的评价实至名归。</p>
+<p>学习软件工程时，我们系统性学习了过程式、面向对象等的认识、建模的不同思想，结合在编程语言层面的支持，开始时经验肤浅的我像很多开发者一样，天真的认为缺少某些oo支持的语言是难以架构大型软件的，直到我读了linux内核代码，我才认识到自己的认知多么肤浅。原来，在大佬的世界里，编程思想一直存在，语言只是实现思想的工具而已（linux内核中有非常多oo思想的实践，也有很多对c++ smartpointer的模拟，等等）。</p>
+<p>时至今日，再看go语言我已经客观地多，它确实是一门工程化不错的语言：</p>
+<ul>
+<li>
+<p>和c\c++比，它有较好的依赖管理，基本开箱即用的标准库，经得起推敲的代码风格规范，较完整的编译构建、测试、代码分析、性能分析工具，还有更简便易用的并发控制（chan、sync.*、goroutine），其符合大家认知的happens-before关系建立，即便有可能认识不够到位、代码出错的概率也大大下降。</p>
+</li>
+<li>
+<p>和java比，它不强制面向对象的招式，却也有面向对象思想的支持，组合优于继承，interface的类型断言、转换，以及后续范型支持（尽管现在go1.18版本还有待完善）。另外，同为自动内存管理的语言，和java jvm调优的数不尽的参数比起来，go的GC pacer仅依靠一个变量设置GOGC，如何在一堆参数中获得一个全局最优解的组合，java可能比go调优时控制粒度更细，但是很明显go可以在内存不是什么硬伤的情况下调优更简单。</p>
+</li>
+<li>
+<p>和rust比，rust的描述性非常强，编译器能力也非常强，如果能忍受编译器的毒打，并深刻理解rust的设计思想之后，rust确实也是不错的，编译器说对那将来跑起来也会对。和服务跑起来后再排查一些难跟踪的错误，rust的优势就会让人觉得很值。但是我们并不是什么开发小白、我们可能要维护的对象也没那么复杂，不否定rust的价值，但是rust和go相比，目前go的能力是我们团队更希望拥有的。</p>
+<p>ps：腾讯内部trpc微服务框架实例数，go版本的有2w+，rust版本的只有个位数。</p>
+</li>
+</ul>
+<p>在合适的场景下go非常有价值，如果非要将其用到一些它不擅长的地方，就需要注意了：</p>
+<ul>
+<li>嵌入式开发领域，go有GC机制，可能要做类似tinygo的编译器调整、特性裁剪；</li>
+<li>超大规模长连接管理，go的默认实现是goroutine per connection模型，连接数多了goroutine数也上来了，goroutine stack、为连接分配的resizable buffer、连接上事件的polling都会成为不可忽略的问题。业界比较好的方案是两级reactor的实现思路，类似地go版本实现gnet；</li>
+<li>密集计算的问题，go比较大的优势在于goroutine并发处理，但是goroutine切换有固定的切换时机（网络IO等等），密集计算场景下goroutine切换不符合“预期”，并发处理效率跟不上，可能需要考虑多进程+taskset绑核处理；</li>
+<li>其他问题；</li>
+</ul>
+<p>在不合适的场景下就需要多考虑、多钻研透一些，需要综合投入产出比慎重考虑，这种情况下其他语言是否更有优势就很值得考虑了。</p>
+<p>我的工作领域主要在后台微服务，go就是一门（至少）在工程化方面做的很好的语言。</p>
 <h2 id=go入门教程推荐>
 Go入门教程推荐
 <a class=anchor href=#go%e5%85%a5%e9%97%a8%e6%95%99%e7%a8%8b%e6%8e%a8%e8%8d%90>#</a>
 </h2>
-<p>Nefandam et prisci palmas! Blandita cutis flectitur montis macies, te <em>nati</em>
-Latiis; turbaque inferias. Virginis tibi peracta avidusque facies caper nec, e
-at ademptae, mira.</p>
-<pre><code>direct *= font(inputScareware(sliHome), crossplatform.byte(
-        ppl_encryption.excel_e_rte(integratedModelModifier), timeVirtual,
-        floating_speakers.media_printer(us, yahoo, primaryPhp)));
-friendly_metal_flatbed(cd, isoPrimaryStorage(reader), dmaMirrored);
-if (parse_flash_cron.metalGif(1, adServiceDevice, utility)) {
-    adf -= operation_cdma_samba;
-    imapGif.switch += torrent;
-} else {
-    pmu.disk_captcha = digital_ppp_pci + recursionTransistor(5, dram);
-    ajax_service += grayscalePythonLock;
-    google_scroll_capacity = ftp + engine_dslam_sidebar / tape - 1;
-}
-drive_rw = zipTftp;
-var suffix = software_router_extension.dimm_ddr(-5,
-        kernel_digital_minisite);
-</code></pre>
-<p>Vocavit toto; alas <strong>mitis</strong> maestus in liquidarum ab legi finitimosque dominam
-tibi subitus; Orionis vertitur nota. Currere alti etiam seroque cernitis
-innumeris miraturus amplectique collo sustinet quemque! Litora ante turba?</p>
+<p>本书的定位明显是更加倾向于语言设计思想、实现细节类的一些方面，对于一些希望掌握一些语言基础情况的初学者，可能并不是很符合的目标读者 :)，当然我相信也能在本书中找到相关的知识点，也有可能更帮助更透彻地理解想检索想掌握的问题。</p>
+<p>这里，不妨也列举基本我认为写的不错的go语言的书籍，仅供参考：</p>
+<ul>
+<li>
+<a href="https://books.google.com.hk/books/about/The_Go_Programming_Language.html?id=SJHvCgAAQBAJ&printsec=frontcover&source=kp_read_button&hl=en&redir_esc=y#v=onepage&q&f=false">go programming language</a>，这是我学习go时完整阅读的第一本书，内容讲解比较全面，对于初学者系统性认识这门语言我认为还是比较重要的。</li>
+<li>
+<a href=https://go101.org/article/101.html>go 101</a>，现在也有中文版的资料，这里的内容讲了很多实现细节的东西，到什么程度呢，不会到源码的程度，属于对源码之上的认识、总结性的。</li>
+<li>
+<a href=https://draveness.me/golang/>go语言设计实现</a>，这本书中的内容就更加倾向于实现细节了，内容也覆盖也比较周全，算是go相关书籍中不可多得好书，如果不是因为我对这些细节也有研究，我一定会买一本来收藏的好书，书中的配图、文笔都非常不错。</li>
+</ul>
 <h2 id=本书存在的意义>
 本书存在的意义
 <a class=anchor href=#%e6%9c%ac%e4%b9%a6%e5%ad%98%e5%9c%a8%e7%9a%84%e6%84%8f%e4%b9%89>#</a>
 </h2>
+<p>已经有这么多好书了，为什么我还要写这本电子书？定位不同，我不想单单解释go是怎么做的，我想解释为什么go决定这样做，案上有哪些变体。</p>
+<p>甚至，我的定位不是想让读者成为一名go语言的高手，而是想让读者在认识这些语言特性时有更加全方位的认识，它现在是什么样的，它以前是什么样的，为什么要变成这样，其他语言是怎么做的，为什么go要这样做？</p>
+<p>当我们认识并理解了go及其他语言的方案之后，兴许我们会机会给大脑减负，我们不需要记住那么多的细节，因为它们的思想是相通的。</p>
 <h2 id=联系方式>
 联系方式
 <a class=anchor href=#%e8%81%94%e7%b3%bb%e6%96%b9%e5%bc%8f>#</a>
 </h2>
+<p>您可以通过邮件方式和我交流，邮件标题请注明“go语言交流”（方便邮件rules归类）。</p>
+<p>我的邮箱：hit.zhangjie@gmail.com</p>
 </article>
 <footer class=book-footer>
 <div class="flex flex-wrap justify-between">
@@ -800,8 +822,8 @@ English
 <ul>
 <li><a href=#前言>前言</a>
 <ul>
-<li><a href=#go语言之我见>Go语言之我见</a></li>
-<li><a href=#go语言的优势>Go语言的优势</a></li>
+<li><a href=#和go语言的相识>和Go语言的相识</a></li>
+<li><a href=#我眼中的go语言>我眼中的Go语言</a></li>
 <li><a href=#go入门教程推荐>Go入门教程推荐</a></li>
 <li><a href=#本书存在的意义>本书存在的意义</a></li>
 <li><a href=#联系方式>联系方式</a></li>
