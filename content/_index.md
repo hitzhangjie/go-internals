@@ -5,83 +5,31 @@ type: docs
 
 # 小码农想变大师傅
 
+“**一万小时定律**”大家应该都不陌生，如果我们想成为一个领域内的专家，需要花费大量的时间精力去积累相关的知识和技能。如何更有效地学习才能加速这个过程呢？我的理解就是会借力、会学习、会总结，进而融会贯通。很希望能有个类似 [learn-everything.xyz](https://learn-everything.xyz) 的站点能帮助我们快速构建出一条最佳的学习路径。
+
+总有这么一个时刻，我们想获得的知识需要更高浓度的淬炼、浓缩，已经不是道听途说可解决的了。这个阶段我戏称为“**小码农准备变大师傅**”的阶段，对点亮我们的技能树起到至关重要的作用。
+
+
 {{< columns >}}
 ## 我们准备做什么
 
-Est in vagis et Pittheus tu arge accipiter regia iram vocatur nurus. Omnes ut
-olivae sensit **arma sorori** deducit, inesset **crudus**, ego vetuere aliis,
-modo arsit? Utinam rapta fiducia valuere litora _adicit cursu_, ad facies
+我们将对go语言设计实现中的设计思想、实现方案、方案变体、实现细节、分析优化进行较为全面地探索，内容不限于go语言的关键特性（如协程、内存分配器、垃圾回收、work-stealing调度器、基于信号的抢占调度）、标准库、优秀的第三方实现。
 
 <--->
 
 ## 为什么要这么做
 
-Ea _furtique_ risere fratres edidit terrae magis. Colla tam mihi tenebat:
-miseram excita suadent es pecudes iam. Concilio _quam_ velatus posset ait quod
-nunc! Fragosis suae dextra geruntur functus vulgata.
+钻研技术如果想更精进一步，有时需投入大量的精力。我理解我们应该多做些“授人以鱼不如授人以渔”的事情，及时地在别人迷茫时点亮一把引路的明灯，让大家知道应该往哪个方向去前进。另外，我比较热衷于背后的思想并求证，融会贯通后可以给大脑做减法。
 
 <--->
 
 ## 准备怎么落地
 
+有很多go相关的分享，似乎没有必要把已经总结的很到位的知识点重新总结一遍。我可能更倾向于给出合适的参考链接及内容概述。但是为了避免网络访问、阅读权限的问题，我会考虑把原文进一步地提炼后分享，并融入自己的理解，然后建立和其他知识点的联系。
+
 {{< /columns >}}
 
-## Go语言之我见
+# 贡献指引
 
-Lorem **markdownum** emicat gestu. Cannis sol pressit ducta. **Est** Idaei,
-tremens ausim se tutaeque, illi ulnis hausit, sed, lumina cutem. Quae avis
-sequens!
+您可以点击左侧的[Github](https://github.com/hitzhangjie/go-internals-v2)跳转到该电子书对应的github repository，技术文档在目录 [content/docs](https://github.com/hitzhangjie/go-internals-v2/tree/master/content/docs) 下进行组织，您可以在其下添加新的文档并发起PR即可。
 
-    var panel = ram_design;
-    if (backup + system) {
-        file.readPoint = network_native;
-        sidebar_engine_device(cell_tftp_raster,
-                dual_login_paper.adf_vci.application_reader_design(
-                graphicsNvramCdma, lpi_footer_snmp, integer_model));
-    }
-    public_keyboard_docking += error.controller_gibibyte_plug.ip(4,
-            asciiPetaflops, software(supercomputer_compatible_status + 4));
-    dynamic_disk.indexModeLaptop = bufferTftpReality;
-    var export_vlog_sequence = trinitron_flowchart + supercomputer_cluster_rj(
-            -1, toolbar_powerpoint_query, -2 / multiprocessing_impression);
-
-## Go语言的优势
-
-Idmoniae ripis, at aves, ali missa adest, ut _et autem_, et ab? Venit spes
-versus finis sermonibus patefecit murum nec est sine oculis. _Ille_ inmota
-macies domoque caelestia cadit tantummodo scelus procul, corde!
-
-1. Dolentem capi parte rostro alvum habentem pudor
-2. Fulgentia sanguine paret
-3. E punior consurgit lentus
-4. Vox hasta eras micantes
-
-## Go入门教程推荐
-
-Nefandam et prisci palmas! Blandita cutis flectitur montis macies, te _nati_
-Latiis; turbaque inferias. Virginis tibi peracta avidusque facies caper nec, e
-at ademptae, mira.
-
-    direct *= font(inputScareware(sliHome), crossplatform.byte(
-            ppl_encryption.excel_e_rte(integratedModelModifier), timeVirtual,
-            floating_speakers.media_printer(us, yahoo, primaryPhp)));
-    friendly_metal_flatbed(cd, isoPrimaryStorage(reader), dmaMirrored);
-    if (parse_flash_cron.metalGif(1, adServiceDevice, utility)) {
-        adf -= operation_cdma_samba;
-        imapGif.switch += torrent;
-    } else {
-        pmu.disk_captcha = digital_ppp_pci + recursionTransistor(5, dram);
-        ajax_service += grayscalePythonLock;
-        google_scroll_capacity = ftp + engine_dslam_sidebar / tape - 1;
-    }
-    drive_rw = zipTftp;
-    var suffix = software_router_extension.dimm_ddr(-5,
-            kernel_digital_minisite);
-
-Vocavit toto; alas **mitis** maestus in liquidarum ab legi finitimosque dominam
-tibi subitus; Orionis vertitur nota. Currere alti etiam seroque cernitis
-innumeris miraturus amplectique collo sustinet quemque! Litora ante turba?
-
-## 本书存在的意义
-
-## 联系方式
