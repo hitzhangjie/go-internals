@@ -3,16 +3,16 @@
 <meta name=generator content="Hugo 0.91.2">
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="Summary #   headless: true bookhidden: true #    SUMMARY  preface  introduction  Toolchain  [instrumentation in go](Toolchain/instrumentation in go.md)  Compiler  [aliases, simple and efficient](Toolchain/Compiler/aliases, simple and efficient.md) [builds & linker&#34;s timeline](Toolchain/Compiler/builds & linker&#34;s timeline.md) [built-in functions optimizations](Toolchain/Compiler/built-in functions optimizations.md) [how &ldquo;go build&rdquo; works](Toolchain/Compiler/how &ldquo;go build&rdquo; works.md) [how are loops translated to assembly](Toolchain/Compiler/how are loops translated to assembly.md) [how to take advantage of symbols tables](Toolchain/Compiler/how to take advantage of symbols tables.">
+<meta name=description content="Summary #   headless: true bookhidden: true #    SUMMARY  preface  introduction [setup environment](setup environment.md)  Specification  Toolchain  [instrumentation in go](Toolchain/instrumentation in go.md)  Compiler  [aliases, simple and efficient](Toolchain/Compiler/aliases, simple and efficient.md) [builds & linker&#34;s timeline](Toolchain/Compiler/builds & linker&#34;s timeline.md) [built-in functions optimizations](Toolchain/Compiler/built-in functions optimizations.md) [how &ldquo;go build&rdquo; works](Toolchain/Compiler/how &ldquo;go build&rdquo; works.md) [how are loops translated to assembly](Toolchain/Compiler/how are loops translated to assembly.md) [how to take advantage of symbols tables](Toolchain/Compiler/how to take advantage of symbols tables.">
 <meta name=theme-color content="#FFFFFF"><meta property="og:title" content>
-<meta property="og:description" content="Summary #   headless: true bookhidden: true #    SUMMARY  preface  introduction  Toolchain  [instrumentation in go](Toolchain/instrumentation in go.md)  Compiler  [aliases, simple and efficient](Toolchain/Compiler/aliases, simple and efficient.md) [builds & linker&#34;s timeline](Toolchain/Compiler/builds & linker&#34;s timeline.md) [built-in functions optimizations](Toolchain/Compiler/built-in functions optimizations.md) [how &ldquo;go build&rdquo; works](Toolchain/Compiler/how &ldquo;go build&rdquo; works.md) [how are loops translated to assembly](Toolchain/Compiler/how are loops translated to assembly.md) [how to take advantage of symbols tables](Toolchain/Compiler/how to take advantage of symbols tables.">
+<meta property="og:description" content="Summary #   headless: true bookhidden: true #    SUMMARY  preface  introduction [setup environment](setup environment.md)  Specification  Toolchain  [instrumentation in go](Toolchain/instrumentation in go.md)  Compiler  [aliases, simple and efficient](Toolchain/Compiler/aliases, simple and efficient.md) [builds & linker&#34;s timeline](Toolchain/Compiler/builds & linker&#34;s timeline.md) [built-in functions optimizations](Toolchain/Compiler/built-in functions optimizations.md) [how &ldquo;go build&rdquo; works](Toolchain/Compiler/how &ldquo;go build&rdquo; works.md) [how are loops translated to assembly](Toolchain/Compiler/how are loops translated to assembly.md) [how to take advantage of symbols tables](Toolchain/Compiler/how to take advantage of symbols tables.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/docs/SUMMARY/"><meta property="article:section" content="docs">
 <title>Summary | Go设计实现内幕</title>
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.43e2b41ff5839e10e46bf3a6cc733079ffd3397bc2bd00b899588b3d1ca6eb3e.js integrity="sha256-Q+K0H/WDnhDka/OmzHMwef/TOXvCvQC4mViLPRym6z4="></script>
+<script defer src=/go-internals-v2/zh.search.min.031ce1b3505748875ae99e00ac656f5513feed0a775ce5bd5dda347e6fb2ca39.js integrity="sha256-Axzhs1BXSIda6Z4ArGVvVRP+7Qp3XOW9Xdo0fm+yyjk="></script>
 <script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 </head>
 <body dir=ltr>
@@ -37,6 +37,17 @@
 </li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/introduction/>简介</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/setup-environment/>准备</a>
+</li>
+<li>
+<input type=checkbox id=section-a0d8d71f426b3018d3ea2b0d39cb80dd class=toggle>
+<label for=section-a0d8d71f426b3018d3ea2b0d39cb80dd class="flex justify-between">
+<a>Specification</a>
+</label>
+<ul>
+</ul>
 </li>
 <li>
 <input type=checkbox id=section-5b4c35c78aaa50e4262cf5f000ff643f class=toggle>
@@ -114,6 +125,17 @@
 </li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/object-file-relocations/>object file & relocations</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ff16c11cae45273096ca6b9016ad8f91 class=toggle>
+<label for=section-ff16c11cae45273096ca6b9016ad8f91 class="flex justify-between">
+<a>Abi</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/ABI/go-register-ABI/>go register ABI</a>
 </li>
 </ul>
 </li>
@@ -301,6 +323,9 @@
 </li>
 </ul>
 </li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/a-whirlwind-tour-of-Gos-runtime-environment-variables/>a whirlwind tour of Go’s runtime environment variables</a>
+</li>
 </ul>
 </li>
 <li>
@@ -396,6 +421,9 @@
 </label>
 <ul>
 <li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/Benchmarking-in-Golang-Improving-function-performance/>Benchmarking in Golang: Improving function performance</a>
+</li>
+<li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a>
 </li>
 <li>
@@ -466,6 +494,17 @@
 </ul>
 </li>
 <li>
+<input type=checkbox id=section-89e63630549fc7d7179c5ff90b10c96f class=toggle>
+<label for=section-89e63630549fc7d7179c5ff90b10c96f class="flex justify-between">
+<a>Constants</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
+</li>
+</ul>
+</li>
+<li>
 <input type=checkbox id=section-09774e50ad4b214a713fa8f577f26533 class=toggle>
 <label for=section-09774e50ad4b214a713fa8f577f26533 class="flex justify-between">
 <a>Context</a>
@@ -482,6 +521,9 @@
 <a>Defer</a>
 </label>
 <ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/defer-internals/>defer internals</a>
+</li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/how-does-defer-statement-work/>how does defer statement work</a>
 </li>
@@ -614,6 +656,34 @@
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/what-is-a-goproxy/>what is a goproxy</a>
 </li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/playing-with-go-module-proxy/>playing with go module proxy</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ce52ab5a3ea7b9d335993e1906973892 class=toggle>
+<label for=section-ce52ab5a3ea7b9d335993e1906973892 class="flex justify-between">
+<a>Plugins</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Plugins/go-plugin-system/>go plugin system</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-f126f3c1abfdb1f388f4aa1d63bf636e class=toggle>
+<label for=section-f126f3c1abfdb1f388f4aa1d63bf636e class="flex justify-between">
+<a>Types</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
+</li>
 </ul>
 </li>
 <li>
@@ -683,6 +753,9 @@ bookhidden: true
 <a href=/go-internals-v2/docs/preface/>preface</a></li>
 <li>
 <a href=/go-internals-v2/docs/introduction/>introduction</a></li>
+<li>[setup environment](setup environment.md)</li>
+<li>
+<a href=/go-internals-v2/docs/Specification/>Specification</a></li>
 <li>
 <a href=/go-internals-v2/docs/Toolchain/>Toolchain</a>
 <ul>
@@ -714,6 +787,12 @@ bookhidden: true
 <li>[builds & linker"s timeline](Toolchain/Linker/builds & linker"s timeline.md)</li>
 <li>[how &ldquo;go build&rdquo; works](Toolchain/Linker/how &ldquo;go build&rdquo; works.md)</li>
 <li>[object file & relocations](Toolchain/Linker/object file & relocations.md)</li>
+</ul>
+</li>
+<li>
+<a href=/go-internals-v2/docs/Toolchain/ABI/>ABI</a>
+<ul>
+<li>[go register ABI](Toolchain/ABI/go register ABI.md)</li>
 </ul>
 </li>
 <li>
@@ -777,28 +856,9 @@ bookhidden: true
 </ul>
 </li>
 <li>
-<a href=/go-internals-v2/docs/Synchronization/>Synchronization</a>
-<ul>
-<li>
-<a href=/go-internals-v2/docs/Synchronization/Locks/>Locks</a>
-<ul>
-<li>[how to reduce lock contention with the atomic package](Synchronization/Locks/how to reduce lock contention with the atomic package.md)</li>
-<li>[locks: sync.Mutex internals](Synchronization/Locks/locks: sync.Mutex internals.md)</li>
-<li>[mutex and starvation](Synchronization/Locks/mutex and starvation.md)</li>
-</ul>
-</li>
-<li>
-<a href=/go-internals-v2/docs/Synchronization/RaceDetection/>RaceDetection</a>
-<ul>
-<li>[a race detector unfurled](Synchronization/RaceDetection/a race detector unfurled.md)</li>
-<li>[race detector with thread sanitizer](Synchronization/RaceDetection/race detector with thread sanitizer.md)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
 <a href=/go-internals-v2/docs/runtime/>Runtime</a>
 <ul>
+<li>[a whirlwind tour of Go’s runtime environment variables](Runtime/a whirlwind tour of Go’s runtime environment variables.md)</li>
 <li>
 <a href=/go-internals-v2/docs/runtime/Scheduler/>Scheduler</a>
 <ul>
@@ -814,6 +874,26 @@ bookhidden: true
 <a href=/go-internals-v2/docs/runtime/Monitor/>Monitor</a>
 <ul>
 <li>[monitor pattern](Runtime/Monitor/monitor pattern.md)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href=/go-internals-v2/docs/Synchronization/>Synchronization</a>
+<ul>
+<li>
+<a href=/go-internals-v2/docs/Synchronization/Locks/>Locks</a>
+<ul>
+<li>[how to reduce lock contention with the atomic package](Synchronization/Locks/how to reduce lock contention with the atomic package.md)</li>
+<li>[locks: sync.Mutex internals](Synchronization/Locks/locks: sync.Mutex internals.md)</li>
+<li>[mutex and starvation](Synchronization/Locks/mutex and starvation.md)</li>
+</ul>
+</li>
+<li>
+<a href=/go-internals-v2/docs/Synchronization/RaceDetection/>RaceDetection</a>
+<ul>
+<li>[a race detector unfurled](Synchronization/RaceDetection/a race detector unfurled.md)</li>
+<li>[race detector with thread sanitizer](Synchronization/RaceDetection/race detector with thread sanitizer.md)</li>
 </ul>
 </li>
 </ul>
@@ -846,16 +926,11 @@ bookhidden: true
 <li>
 <a href=/go-internals-v2/docs/Testing/>Testing</a>
 <ul>
+<li>[Benchmarking in Golang: Improving function performance](Testing/Benchmarking in Golang: Improving function performance.md)</li>
 <li>
 <a href=/go-internals-v2/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a></li>
 <li>[practical fuzzing with go](Testing/practical fuzzing with go.md)</li>
 <li>[unknown parts of the test package](Testing/unknown parts of the test package.md)</li>
-</ul>
-</li>
-<li>
-<a href=/go-internals-v2/docs/Patterns/>Patterns</a>
-<ul>
-<li>[rethinking classical concurrency patterns](Patterns/rethinking classical concurrency patterns.md)</li>
 </ul>
 </li>
 <li>
@@ -883,8 +958,15 @@ bookhidden: true
 </ul>
 </li>
 <li>
+<a href=/go-internals-v2/docs/Builtins/context/>context</a>
+<ul>
+<li>[context and cancellation by propagation](Builtins/context/context and cancellation by propagation.md)</li>
+</ul>
+</li>
+<li>
 <a href=/go-internals-v2/docs/Builtins/defer/>defer</a>
 <ul>
+<li>[defer internals](Builtins/defer/defer internals.md)</li>
 <li>[how does defer statement work](Builtins/defer/how does defer statement work.md)</li>
 </ul>
 </li>
@@ -901,9 +983,9 @@ bookhidden: true
 </ul>
 </li>
 <li>
-<a href=/go-internals-v2/docs/Builtins/context/>context</a>
+<a href=/go-internals-v2/docs/Builtins/constants/>constants</a>
 <ul>
-<li>[context and cancellation by propagation](Builtins/context/context and cancellation by propagation.md)</li>
+<li>[learn go constants - a visual guide](Builtins/constants/learn go constants - a visual guide.md)</li>
 </ul>
 </li>
 <li>
@@ -959,8 +1041,28 @@ bookhidden: true
 </ul>
 </li>
 <li>
+<a href=/go-internals-v2/docs/Patterns/>Patterns</a>
+<ul>
+<li>[rethinking classical concurrency patterns](Patterns/rethinking classical concurrency patterns.md)</li>
+</ul>
+</li>
+<li>
+<a href=/go-internals-v2/docs/Plugins/>Plugins</a>
+<ul>
+<li>[go plugin system](Plugins/go plugin system.md)</li>
+</ul>
+</li>
+<li>
+<a href=/go-internals-v2/docs/Types/>Types</a>
+<ul>
+<li>[duck typing, structural typing, nominal typing](Types/duck typing, structural typing, nominal typing.md)</li>
+<li>[structural typing and norminal typing](Types/structural typing and norminal typing.md)</li>
+</ul>
+</li>
+<li>
 <a href=/go-internals-v2/docs/Infrastructure/>Infrastructure</a>
 <ul>
+<li>[playing with go module proxy](Infrastructure/playing with go module proxy.md)</li>
 <li>[what is a goproxy](Infrastructure/what is a goproxy.md)</li>
 </ul>
 </li>

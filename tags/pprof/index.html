@@ -12,7 +12,7 @@
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.43e2b41ff5839e10e46bf3a6cc733079ffd3397bc2bd00b899588b3d1ca6eb3e.js integrity="sha256-Q+K0H/WDnhDka/OmzHMwef/TOXvCvQC4mViLPRym6z4="></script>
+<script defer src=/go-internals-v2/zh.search.min.031ce1b3505748875ae99e00ac656f5513feed0a775ce5bd5dda347e6fb2ca39.js integrity="sha256-Axzhs1BXSIda6Z4ArGVvVRP+7Qp3XOW9Xdo0fm+yyjk="></script>
 <script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 <link rel=alternate type=application/rss+xml href=https://hitzhangjie.pro/go-internals-v2/tags/pprof/index.xml title=Go设计实现内幕>
 </head>
@@ -38,6 +38,17 @@
 </li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/introduction/>简介</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/setup-environment/>准备</a>
+</li>
+<li>
+<input type=checkbox id=section-a0d8d71f426b3018d3ea2b0d39cb80dd class=toggle>
+<label for=section-a0d8d71f426b3018d3ea2b0d39cb80dd class="flex justify-between">
+<a>Specification</a>
+</label>
+<ul>
+</ul>
 </li>
 <li>
 <input type=checkbox id=section-5b4c35c78aaa50e4262cf5f000ff643f class=toggle>
@@ -115,6 +126,17 @@
 </li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/object-file-relocations/>object file & relocations</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ff16c11cae45273096ca6b9016ad8f91 class=toggle>
+<label for=section-ff16c11cae45273096ca6b9016ad8f91 class="flex justify-between">
+<a>Abi</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/ABI/go-register-ABI/>go register ABI</a>
 </li>
 </ul>
 </li>
@@ -302,6 +324,9 @@
 </li>
 </ul>
 </li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/a-whirlwind-tour-of-Gos-runtime-environment-variables/>a whirlwind tour of Go’s runtime environment variables</a>
+</li>
 </ul>
 </li>
 <li>
@@ -397,6 +422,9 @@
 </label>
 <ul>
 <li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/Benchmarking-in-Golang-Improving-function-performance/>Benchmarking in Golang: Improving function performance</a>
+</li>
+<li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a>
 </li>
 <li>
@@ -467,6 +495,17 @@
 </ul>
 </li>
 <li>
+<input type=checkbox id=section-89e63630549fc7d7179c5ff90b10c96f class=toggle>
+<label for=section-89e63630549fc7d7179c5ff90b10c96f class="flex justify-between">
+<a>Constants</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
+</li>
+</ul>
+</li>
+<li>
 <input type=checkbox id=section-09774e50ad4b214a713fa8f577f26533 class=toggle>
 <label for=section-09774e50ad4b214a713fa8f577f26533 class="flex justify-between">
 <a>Context</a>
@@ -483,6 +522,9 @@
 <a>Defer</a>
 </label>
 <ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/defer-internals/>defer internals</a>
+</li>
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/how-does-defer-statement-work/>how does defer statement work</a>
 </li>
@@ -615,6 +657,34 @@
 <li>
 <a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/what-is-a-goproxy/>what is a goproxy</a>
 </li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/playing-with-go-module-proxy/>playing with go module proxy</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ce52ab5a3ea7b9d335993e1906973892 class=toggle>
+<label for=section-ce52ab5a3ea7b9d335993e1906973892 class="flex justify-between">
+<a>Plugins</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Plugins/go-plugin-system/>go plugin system</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-f126f3c1abfdb1f388f4aa1d63bf636e class=toggle>
+<label for=section-f126f3c1abfdb1f388f4aa1d63bf636e class="flex justify-between">
+<a>Types</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
+</li>
 </ul>
 </li>
 <li>
@@ -666,6 +736,10 @@ Blog
 <strong>Tags</strong>
 <ul>
 <li class="flex justify-between">
+<a href=/go-internals-v2/tags/abi/>abi</a>
+<span>1</span>
+</li>
+<li class="flex justify-between">
 <a href=/go-internals-v2/tags/ast/>ast</a>
 <span>2</span>
 </li>
@@ -703,7 +777,7 @@ Blog
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer/>defer</a>
-<span>1</span>
+<span>2</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer-panic/>defer, panic</a>
@@ -712,6 +786,10 @@ Blog
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer-panic-recover/>defer, panic, recover</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/design/>design</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>
@@ -727,7 +805,7 @@ Blog
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/goproxy/>goproxy</a>
-<span>2</span>
+<span>3</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/goroutine/>goroutine</a>
@@ -748,6 +826,10 @@ Blog
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/init/>init</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/install/>install</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/instrumentation/>instrumentation</a>
@@ -786,6 +868,10 @@ Blog
 <span>2</span>
 </li>
 <li class="flex justify-between">
+<a href=/go-internals-v2/tags/plugin/>plugin</a>
+<span>1</span>
+</li>
+<li class="flex justify-between">
 <a href=/go-internals-v2/tags/pointer/>pointer</a>
 <span>2</span>
 </li>
@@ -800,6 +886,10 @@ Blog
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/random/>random</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/runtime/>runtime</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/string/>string</a>
@@ -819,7 +909,7 @@ Blog
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/test/>test</a>
-<span>2</span>
+<span>3</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/timer/>timer</a>
@@ -827,6 +917,10 @@ Blog
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/trace/>trace</a>
+<span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/types/>types</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
@@ -904,6 +998,10 @@ English
 <strong>Tags</strong>
 <ul>
 <li class="flex justify-between">
+<a href=/go-internals-v2/tags/abi/>abi</a>
+<span>1</span>
+</li>
+<li class="flex justify-between">
 <a href=/go-internals-v2/tags/ast/>ast</a>
 <span>2</span>
 </li>
@@ -941,7 +1039,7 @@ English
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer/>defer</a>
-<span>1</span>
+<span>2</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer-panic/>defer, panic</a>
@@ -950,6 +1048,10 @@ English
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/defer-panic-recover/>defer, panic, recover</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/design/>design</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>
@@ -965,7 +1067,7 @@ English
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/goproxy/>goproxy</a>
-<span>2</span>
+<span>3</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/goroutine/>goroutine</a>
@@ -986,6 +1088,10 @@ English
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/init/>init</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/install/>install</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/instrumentation/>instrumentation</a>
@@ -1024,6 +1130,10 @@ English
 <span>2</span>
 </li>
 <li class="flex justify-between">
+<a href=/go-internals-v2/tags/plugin/>plugin</a>
+<span>1</span>
+</li>
+<li class="flex justify-between">
 <a href=/go-internals-v2/tags/pointer/>pointer</a>
 <span>2</span>
 </li>
@@ -1038,6 +1148,10 @@ English
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/random/>random</a>
 <span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/runtime/>runtime</a>
+<span>1</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/string/>string</a>
@@ -1057,7 +1171,7 @@ English
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/test/>test</a>
-<span>2</span>
+<span>3</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/timer/>timer</a>
@@ -1065,6 +1179,10 @@ English
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/trace/>trace</a>
+<span>2</span>
+</li>
+<li class="flex justify-between">
+<a href=/go-internals-v2/tags/types/>types</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
