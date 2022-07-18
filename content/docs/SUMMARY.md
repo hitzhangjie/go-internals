@@ -9,6 +9,7 @@ bookhidden: true
 * [introduction](introduction.md)
 * [setup environment](setup environment.md)
 * [Specification](Specification/_index.md)
+  * [go spec](Specification/go spec.md)
 * [Toolchain](Toolchain/_index.md)
   * [instrumentation in go](Toolchain/instrumentation in go.md)
   * [Compiler](Toolchain/Compiler/_index.md)
