@@ -76,6 +76,7 @@ bookhidden: true
     * [a race detector unfurled](Synchronization/RaceDetection/a race detector unfurled.md)
     * [race detector with thread sanitizer](Synchronization/RaceDetection/race detector with thread sanitizer.md)
 * [Runtime](Runtime/_index.md)
+  * [a whirlwind tour of Go’s runtime environment variables](Runtime/a whirlwind tour of Go’s runtime environment variables.md)
   * [Scheduler](Runtime/Scheduler/_index.md)
     * [GOMAXPROCS & live updates](Runtime/Scheduler/GOMAXPROCS & live updates.md)
     * [concurrency & scheduler affinity](Runtime/Scheduler/concurrency & scheduler affinity.md)
