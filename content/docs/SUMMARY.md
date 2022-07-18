@@ -7,7 +7,7 @@ bookhidden: true
 * [SUMMARY](SUMMARY.md)
 * [preface](preface.md)
 * [introduction](introduction.md)
-* [setup environment](setup environment.md)
+* [setup](setup.md)
 * [Specification](Specification/_index.md)
   * [go spec](Specification/go spec.md)
 * [Toolchain](Toolchain/_index.md)
