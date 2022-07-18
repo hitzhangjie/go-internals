@@ -3,18 +3,34 @@
 <meta name=generator content="Hugo 0.91.2">
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="简介 #  Ferre hinnitibus erat accipitrem dixi Troiae tollens #  Lorem markdownum, a quoque nutu est quodcumque mandasset veluti. Passim inportuna totidemque nympha fert; repetens pendent, poenarum guttura sed vacet non, mortali undas. Omnis pharetramque gramen portentificisque membris servatum novabis fallit de nubibus atque silvas mihi. Dixit repetitaque Quid; verrit longa; sententia mandat quascumque nescio solebat litore; noctes. Hostem haerentem circuit plenaque tamen.
- Pedum ne indigenae finire invergens carpebat Velit posses summoque De fumos illa foret  Est simul fameque tauri qua ad #  Locum nullus nisi vomentes.">
+<meta name=description content="简介 #  Go语言简介 #  go语言是由Google设计开发的一种编程语言，说go语言师出名门一点不过分，它的三位设计者 Robert Griesemer, Rob Pike，以及 Ken Thompson，都是计算机科学技术方面颇有造诣的专家。
+ Robert Griesemer，1964年生，其主要贡献包括：Chrome V8 Javascript引擎、Sawzall语言、Java Hotspot虚拟机、Strongtalk（在smalltalk上增加了一些强类型检查支持）； Rob Pike，1956年生，其主要贡献包括：分布式操作系统Plan9、分布式操作系统Inferno、编程语言Limbo； Ken Thompson，1943年生，Unix操作系统、B语言、和Dennis Ritchie共同发明的C语言、分布式操作系统Plan9；  go设计时吸收了其他编程语言的经验、教训，最终呈现出来的是尽可能实用高效的特性：
+  支持静态类型的编译型语言 see go programming language；
+  类似c语言的简单的语法（ compact and simple）see go spec；
+  更好的内存安全性；
+  支持动态内存管理，更简单的GC调优控制；
+  支持结构化类型 see types checking；
+  支持通信串行处理风格的并发编程模式。
+  go语言深受广大开发者喜爱，在 TIOBE 2021编程语言排名上位列第13名，但是我们限定下使用场景的话，强类型、编译型语言、网络服务、大型分布式系统，实际上Go的排名会更加亮眼。结合自己C\C++\Java开发体验来看，go语言无疑是一门不错的编程语言。
+   Jul 2022 Jul 2021 Change Programming Language Ratings Change      1 3   Python 13.">
 <meta name=theme-color content="#FFFFFF"><meta property="og:title" content="简介">
-<meta property="og:description" content="简介 #  Ferre hinnitibus erat accipitrem dixi Troiae tollens #  Lorem markdownum, a quoque nutu est quodcumque mandasset veluti. Passim inportuna totidemque nympha fert; repetens pendent, poenarum guttura sed vacet non, mortali undas. Omnis pharetramque gramen portentificisque membris servatum novabis fallit de nubibus atque silvas mihi. Dixit repetitaque Quid; verrit longa; sententia mandat quascumque nescio solebat litore; noctes. Hostem haerentem circuit plenaque tamen.
- Pedum ne indigenae finire invergens carpebat Velit posses summoque De fumos illa foret  Est simul fameque tauri qua ad #  Locum nullus nisi vomentes.">
+<meta property="og:description" content="简介 #  Go语言简介 #  go语言是由Google设计开发的一种编程语言，说go语言师出名门一点不过分，它的三位设计者 Robert Griesemer, Rob Pike，以及 Ken Thompson，都是计算机科学技术方面颇有造诣的专家。
+ Robert Griesemer，1964年生，其主要贡献包括：Chrome V8 Javascript引擎、Sawzall语言、Java Hotspot虚拟机、Strongtalk（在smalltalk上增加了一些强类型检查支持）； Rob Pike，1956年生，其主要贡献包括：分布式操作系统Plan9、分布式操作系统Inferno、编程语言Limbo； Ken Thompson，1943年生，Unix操作系统、B语言、和Dennis Ritchie共同发明的C语言、分布式操作系统Plan9；  go设计时吸收了其他编程语言的经验、教训，最终呈现出来的是尽可能实用高效的特性：
+  支持静态类型的编译型语言 see go programming language；
+  类似c语言的简单的语法（ compact and simple）see go spec；
+  更好的内存安全性；
+  支持动态内存管理，更简单的GC调优控制；
+  支持结构化类型 see types checking；
+  支持通信串行处理风格的并发编程模式。
+  go语言深受广大开发者喜爱，在 TIOBE 2021编程语言排名上位列第13名，但是我们限定下使用场景的话，强类型、编译型语言、网络服务、大型分布式系统，实际上Go的排名会更加亮眼。结合自己C\C++\Java开发体验来看，go语言无疑是一门不错的编程语言。
+   Jul 2022 Jul 2021 Change Programming Language Ratings Change      1 3   Python 13.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/docs/introduction/"><meta property="article:section" content="docs">
 <title>简介 | Go设计实现内幕</title>
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.1f2539cdca5f231c73716ee5318a716a9f4b6fbcea3da7f974f7bce12617eeab.js integrity="sha256-HyU5zcpfIxxzcW7lMYpxap9Lb7zqPaf5dPe84SYX7qs="></script>
+<script defer src=/go-internals-v2/zh.search.min.43e2b41ff5839e10e46bf3a6cc733079ffd3397bc2bd00b899588b3d1ca6eb3e.js integrity="sha256-Q+K0H/WDnhDka/OmzHMwef/TOXvCvQC4mViLPRym6z4="></script>
 <script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 </head>
 <body dir=ltr>
@@ -660,10 +676,10 @@ Blog
 <ul>
 <li><a href=#简介>简介</a>
 <ul>
-<li><a href=#ferre-hinnitibus-erat-accipitrem-dixi-troiae-tollens>Ferre hinnitibus erat accipitrem dixi Troiae tollens</a></li>
-<li><a href=#est-simul-fameque-tauri-qua-ad>Est simul fameque tauri qua ad</a></li>
-<li><a href=#me-sol>Me sol</a></li>
-<li><a href=#trepident-sitimque>Trepident sitimque</a></li>
+<li><a href=#go语言简介>Go语言简介</a></li>
+<li><a href=#目标读者>目标读者</a></li>
+<li><a href=#本书内容>本书内容</a></li>
+<li><a href=#作者介绍>作者介绍</a></li>
 </ul>
 </li>
 </ul>
@@ -674,76 +690,296 @@ Blog
 简介
 <a class=anchor href=#%e7%ae%80%e4%bb%8b>#</a>
 </h1>
-<h2 id=ferre-hinnitibus-erat-accipitrem-dixi-troiae-tollens>
-Ferre hinnitibus erat accipitrem dixi Troiae tollens
-<a class=anchor href=#ferre-hinnitibus-erat-accipitrem-dixi-troiae-tollens>#</a>
+<h2 id=go语言简介>
+Go语言简介
+<a class=anchor href=#go%e8%af%ad%e8%a8%80%e7%ae%80%e4%bb%8b>#</a>
 </h2>
-<p>Lorem markdownum, a quoque nutu est <em>quodcumque mandasset</em> veluti. Passim
-inportuna totidemque nympha fert; repetens pendent, poenarum guttura sed vacet
-non, mortali undas. Omnis pharetramque gramen portentificisque membris servatum
-novabis fallit de nubibus atque silvas mihi. <strong>Dixit repetitaque Quid</strong>; verrit
-longa; sententia
-<a href=http://pastor-ad.io/questussilvas>mandat</a> quascumque nescio
-solebat
-<a href=http://lacrimas-ab.net/>litore</a>; noctes. <em>Hostem haerentem</em> circuit
-<a href=http://www.sine.io/in>plenaque tamen</a>.</p>
+<p>go语言是由Google设计开发的一种编程语言，说go语言师出名门一点不过分，它的三位设计者
+<a href=https://en.wikipedia.org/wiki/Robert_Griesemer_%28computer_programmer%29>Robert Griesemer</a>,
+<a href=https://en.wikipedia.org/wiki/Rob_Pike>Rob Pike</a>，以及
+<a href=https://en.wikipedia.org/wiki/Ken_Thompson>Ken Thompson</a>，都是计算机科学技术方面颇有造诣的专家。</p>
 <ul>
-<li>Pedum ne indigenae finire invergens carpebat</li>
-<li>Velit posses summoque</li>
-<li>De fumos illa foret</li>
+<li>Robert Griesemer，1964年生，其主要贡献包括：Chrome V8 Javascript引擎、Sawzall语言、Java Hotspot虚拟机、Strongtalk（在smalltalk上增加了一些强类型检查支持）；</li>
+<li>Rob Pike，1956年生，其主要贡献包括：分布式操作系统Plan9、分布式操作系统Inferno、编程语言Limbo；</li>
+<li>Ken Thompson，1943年生，Unix操作系统、B语言、和Dennis Ritchie共同发明的C语言、分布式操作系统Plan9；</li>
 </ul>
-<h2 id=est-simul-fameque-tauri-qua-ad>
-Est simul fameque tauri qua ad
-<a class=anchor href=#est-simul-fameque-tauri-qua-ad>#</a>
+<p>go设计时吸收了其他编程语言的经验、教训，最终呈现出来的是尽可能实用高效的特性：</p>
+<ul>
+<li>
+<p>支持静态类型的编译型语言 see
+<a href=https://en.wikipedia.org/wiki/Go_%28programming_language%29 title="Go programming language">go programming language</a>；</p>
+</li>
+<li>
+<p>类似c语言的简单的语法（
+<a href="https://go.dev/ref/spec#:~:text=The%20grammar%20is%20compact%20and%20simple%20to%20parse">compact and simple</a>）see
+<a href=https://go.dev/ref/spec title="go spec">go spec</a>；</p>
+</li>
+<li>
+<p>更好的内存安全性；</p>
+</li>
+<li>
+<p>支持动态内存管理，更简单的GC调优控制；</p>
+</li>
+<li>
+<p>支持结构化类型 see
+<a href=https://medium.com/higher-order-functions/duck-typing-vs-structural-typing-vs-nominal-typing-e0881860bf10>types checking</a>；</p>
+</li>
+<li>
+<p>支持通信串行处理风格的并发编程模式。</p>
+</li>
+</ul>
+<p>go语言深受广大开发者喜爱，在
+<a href=https://www.tiobe.com/tiobe-index title="TIOBE Index">TIOBE 2021编程语言排名</a>上位列第13名，但是我们限定下使用场景的话，强类型、编译型语言、网络服务、大型分布式系统，实际上Go的排名会更加亮眼。结合自己C\C++\Java开发体验来看，go语言无疑是一门不错的编程语言。</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>Jul 2022</th>
+<th style=text-align:left>Jul 2021</th>
+<th style=text-align:left>Change</th>
+<th style=text-align:left>Programming Language</th>
+<th style=text-align:left>Ratings</th>
+<th style=text-align:left>Change</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>1</td>
+<td style=text-align:left>3</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Python.png alt="Python page"></td>
+<td style=text-align:left>Python</td>
+<td style=text-align:left>13.44%</td>
+<td>+2.48%</td>
+</tr>
+<tr>
+<td style=text-align:left>2</td>
+<td style=text-align:left>1</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/down.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/C.png alt="C page"></td>
+<td style=text-align:left>C</td>
+<td style=text-align:left>13.13%</td>
+<td>+1.50%</td>
+</tr>
+<tr>
+<td style=text-align:left>3</td>
+<td style=text-align:left>2</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/down.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Java.png alt="Java page"></td>
+<td style=text-align:left>Java</td>
+<td style=text-align:left>11.59%</td>
+<td>+0.40%</td>
+</tr>
+<tr>
+<td style=text-align:left>4</td>
+<td style=text-align:left>4</td>
+<td style=text-align:left></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/C__.png alt="C++ page"></td>
+<td style=text-align:left>C++</td>
+<td style=text-align:left>10.00%</td>
+<td>+1.98%</td>
+</tr>
+<tr>
+<td style=text-align:left>5</td>
+<td style=text-align:left>5</td>
+<td style=text-align:left></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/C_.png alt="C# page"></td>
+<td style=text-align:left>C#</td>
+<td style=text-align:left>5.65%</td>
+<td>+0.82%</td>
+</tr>
+<tr>
+<td style=text-align:left>6</td>
+<td style=text-align:left>6</td>
+<td style=text-align:left></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Visual_Basic.png alt="Visual Basic page"></td>
+<td style=text-align:left>Visual Basic</td>
+<td style=text-align:left>4.97%</td>
+<td>+0.47%</td>
+</tr>
+<tr>
+<td style=text-align:left>7</td>
+<td style=text-align:left>7</td>
+<td style=text-align:left></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/JavaScript.png alt="JavaScript page"></td>
+<td style=text-align:left>JavaScript</td>
+<td style=text-align:left>1.78%</td>
+<td>-0.93%</td>
+</tr>
+<tr>
+<td style=text-align:left>8</td>
+<td style=text-align:left>9</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Assembly_language.png alt="Assembly language page"></td>
+<td style=text-align:left>Assembly language</td>
+<td style=text-align:left>1.65%</td>
+<td>-0.76%</td>
+</tr>
+<tr>
+<td style=text-align:left>9</td>
+<td style=text-align:left>10</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/SQL.png alt="SQL page"></td>
+<td style=text-align:left>SQL</td>
+<td style=text-align:left>1.64%</td>
+<td>+0.11%</td>
+</tr>
+<tr>
+<td style=text-align:left>10</td>
+<td style=text-align:left>16</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/upup.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Swift.png alt="Swift page"></td>
+<td style=text-align:left>Swift</td>
+<td style=text-align:left>1.27%</td>
+<td>+0.20%</td>
+</tr>
+<tr>
+<td style=text-align:left>11</td>
+<td style=text-align:left>8</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/down.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/PHP.png alt="PHP page"></td>
+<td style=text-align:left>PHP</td>
+<td style=text-align:left>1.20%</td>
+<td>-1.38%</td>
+</tr>
+<tr>
+<td style=text-align:left>12</td>
+<td style=text-align:left>13</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Go.png alt="Go page"></td>
+<td style=text-align:left>Go</td>
+<td style=text-align:left>1.14%</td>
+<td>-0.03%</td>
+</tr>
+<tr>
+<td style=text-align:left>13</td>
+<td style=text-align:left>11</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/down.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Classic_Visual_Basic.png alt="Classic Visual Basic page"></td>
+<td style=text-align:left>Classic Visual Basic</td>
+<td style=text-align:left>1.07%</td>
+<td>-0.32%</td>
+</tr>
+<tr>
+<td style=text-align:left>14</td>
+<td style=text-align:left>20</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/upup.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Delphi_Object_Pascal.png alt="Delphi/Object Pascal page"></td>
+<td style=text-align:left>Delphi/Object Pascal</td>
+<td style=text-align:left>1.06%</td>
+<td>+0.21%</td>
+</tr>
+<tr>
+<td style=text-align:left>15</td>
+<td style=text-align:left>17</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Ruby.png alt="Ruby page"></td>
+<td style=text-align:left>Ruby</td>
+<td style=text-align:left>0.99%</td>
+<td>+0.04%</td>
+</tr>
+<tr>
+<td style=text-align:left>16</td>
+<td style=text-align:left>21</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/upup.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Objective_C.png alt="Objective-C page"></td>
+<td style=text-align:left>Objective-C</td>
+<td style=text-align:left>0.94%</td>
+<td>+0.17%</td>
+</tr>
+<tr>
+<td style=text-align:left>17</td>
+<td style=text-align:left>18</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/up.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Perl.png alt="Perl page"></td>
+<td style=text-align:left>Perl</td>
+<td style=text-align:left>0.78%</td>
+<td>-0.12%</td>
+</tr>
+<tr>
+<td style=text-align:left>18</td>
+<td style=text-align:left>14</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/downdown.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/Fortran.png alt="Fortran page"></td>
+<td style=text-align:left>Fortran</td>
+<td style=text-align:left>0.76%</td>
+<td>-0.36%</td>
+</tr>
+<tr>
+<td style=text-align:left>19</td>
+<td style=text-align:left>12</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/downdown.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/R.png alt="R page"></td>
+<td style=text-align:left>R</td>
+<td style=text-align:left>0.76%</td>
+<td>-0.57%</td>
+</tr>
+<tr>
+<td style=text-align:left>20</td>
+<td style=text-align:left>19</td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tpci/images/down.png alt=change></td>
+<td style=text-align:left>
+<img src=https://www.tiobe.com/wp-content/themes/tiobe/tiobe-index/images/MATLAB.png alt="MATLAB page"></td>
+<td style=text-align:left>MATLAB</td>
+<td style=text-align:left>0.73%</td>
+<td>-0.15%</td>
+</tr>
+</tbody>
+</table>
+<p>see</p>
+<h2 id=目标读者>
+目标读者
+<a class=anchor href=#%e7%9b%ae%e6%a0%87%e8%af%bb%e8%80%85>#</a>
 </h2>
-<p>Locum nullus nisi vomentes. Ab Persea sermone vela, miratur aratro; eandem
-Argolicas gener.</p>
-<h2 id=me-sol>
-Me sol
-<a class=anchor href=#me-sol>#</a>
+<p>我们会把内容重点放在语言核心特性、标准库、优秀三方组件的设计实现的思路上，而非介绍基础的语法、标准库怎么用、并发编程应该怎么写这类问题。本电子书内容不是去介绍“how-to”，而是倾向于介绍“why”。</p>
+<p>当然，我们可能会借助一些示例代码来引入设计实现的内容（“why”），这样也能帮助读者更好地掌握如何写代码（“how-to”），但是还是要提一下 :)</p>
+<p>如果读者已经熟悉了go，有了一定的编程经验，并且希望来了解下go语言具体的设计实现的时候，我觉得这个时候来读这本书就很合适。</p>
+<h2 id=本书内容>
+本书内容
+<a class=anchor href=#%e6%9c%ac%e4%b9%a6%e5%86%85%e5%ae%b9>#</a>
 </h2>
-<p>Nec dis certa fuit socer, Nonacria <strong>dies</strong> manet tacitaque sibi? Sucis est
-iactata Castrumque iudex, et iactato quoque terraeque es tandem et maternos
-vittis. Lumina litus bene poenamque animos callem ne tuas in leones illam dea
-cadunt genus, et pleno nunc in quod. Anumque crescentesque sanguinis
-<a href=http://www.late.net/alimentavirides>progenies</a> nuribus rustica tinguet. Pater
-omnes liquido creditis noctem.</p>
-<pre><code>if (mirrored(icmp_dvd_pim, 3, smbMirroredHard) != lion(clickImportQueue,
-        viralItunesBalancing, bankruptcy_file_pptp)) {
-    file += ip_cybercrime_suffix;
-}
-if (runtimeSmartRom == netMarketingWord) {
-    virusBalancingWin *= scriptPromptBespoke + raster(post_drive,
-            windowsSli);
-    cd = address_hertz_trojan;
-    soap_ccd.pcbServerGigahertz(asp_hardware_isa, offlinePeopleware, nui);
-} else {
-    megabyte.api = modem_flowchart - web + syntaxHalftoneAddress;
-}
-if (3 &lt; mebibyteNetworkAnimated) {
-    pharming_regular_error *= jsp_ribbon + algorithm * recycleMediaKindle(
-            dvrSyntax, cdma);
-    adf_sla *= hoverCropDrive;
-    templateNtfs = -1 - vertical;
-} else {
-    expressionCompressionVariable.bootMulti = white_eup_javascript(
-            table_suffix);
-    guidPpiPram.tracerouteLinux += rtfTerabyteQuicktime(1,
-            managementRosetta(webcamActivex), 740874);
-}
-var virusTweetSsl = nullGigo;
-</code></pre>
-<h2 id=trepident-sitimque>
-Trepident sitimque
-<a class=anchor href=#trepident-sitimque>#</a>
+<p>本电子书内容会尽可能覆盖go语言设计开发所涉及到的各个方面，范围包括编译器、链接器、调试器工具链，包括问题诊断debugging、pprof、tracing使用及工作原理、包括goroutine、go运行时（monitor、scheduler）、内存管理（内存分配器、垃圾回收器）、标准库、goproxy、testing技术等等吧。</p>
+<p>每一项内容深究下去都会有非常多的挑战点，这会超越个体的知识极限，所以我不打算自己去琢磨这些内容，而是选择站在巨人肩膀上，在别人已经输出的高价值的内容基础上去学习、完善，所以读者会在本书中看到大量的参考链接，如果我的理解有误、读者发现后也可以求证后给我指出来。</p>
+<h2 id=作者介绍>
+作者介绍
+<a class=anchor href=#%e4%bd%9c%e8%80%85%e4%bb%8b%e7%bb%8d>#</a>
 </h2>
-<p>Sentiet et ferali errorem fessam, coercet superbus, Ascaniumque in pennis
-mediis; dolor? Vidit imi <strong>Aeacon</strong> perfida propositos adde, tua Somni Fluctibus
-errante lustrat non.</p>
-<p>Tamen inde, vos videt e flammis Scythica parantem rupisque pectora umbras. Haec
-ficta canistris repercusso simul ego aris Dixit! Esse Fama trepidare hunc
-crescendo vigor ululasse vertice <em>exspatiantur</em> celer tepidique petita aversata
-oculis iussa est me ferro.</p>
+<p>一名想变大师傅的小码农 🥷</p>
 </article>
 <footer class=book-footer>
 <div class="flex flex-wrap justify-between">
@@ -787,10 +1023,10 @@ English
 <ul>
 <li><a href=#简介>简介</a>
 <ul>
-<li><a href=#ferre-hinnitibus-erat-accipitrem-dixi-troiae-tollens>Ferre hinnitibus erat accipitrem dixi Troiae tollens</a></li>
-<li><a href=#est-simul-fameque-tauri-qua-ad>Est simul fameque tauri qua ad</a></li>
-<li><a href=#me-sol>Me sol</a></li>
-<li><a href=#trepident-sitimque>Trepident sitimque</a></li>
+<li><a href=#go语言简介>Go语言简介</a></li>
+<li><a href=#目标读者>目标读者</a></li>
+<li><a href=#本书内容>本书内容</a></li>
+<li><a href=#作者介绍>作者介绍</a></li>
 </ul>
 </li>
 </ul>
