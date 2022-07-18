@@ -113,6 +113,7 @@ bookhidden: true
   * [unsafe](Builtins/unsafe/_index.md)
     * [what is the unsafe package](Builtins/unsafe/what is the unsafe package.md)
   * [defer](Builtins/defer/_index.md)
+    * [defer internals](Builtins/defer/defer internals.md)
     * [how does defer statement work](Builtins/defer/how does defer statement work.md)
   * [init](Builtins/init/_index.md)
     * [init functions](Builtins/init/init functions.md)
