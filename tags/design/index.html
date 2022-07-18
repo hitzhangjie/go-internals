@@ -12,7 +12,7 @@
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.031ce1b3505748875ae99e00ac656f5513feed0a775ce5bd5dda347e6fb2ca39.js integrity="sha256-Axzhs1BXSIda6Z4ArGVvVRP+7Qp3XOW9Xdo0fm+yyjk="></script>
+<script defer src=/go-internals-v2/zh.search.min.d7393837a808e343d763c7c5e0c3394f4ebbd99edb68a158cc0afadfa26d5f99.js integrity="sha256-1zk4N6gI40PXY8fF4MM5T0672Z7baKFYzAr636JtX5k="></script>
 <script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
 <link rel=alternate type=application/rss+xml href=https://hitzhangjie.pro/go-internals-v2/tags/design/index.xml title=Go设计实现内幕>
 </head>
@@ -48,6 +48,9 @@
 <a>Specification</a>
 </label>
 <ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Specification/go-spec/>go spec</a>
+</li>
 </ul>
 </li>
 <li>
@@ -789,7 +792,7 @@ Blog
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/design/>design</a>
-<span>1</span>
+<span>2</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>
@@ -935,6 +938,24 @@ Blog
 </header>
 <article class="markdown book-post">
 <h2>
+<a href=/go-internals-v2/docs/Specification/go-spec/>go spec</a>
+</h2>
+<div>
+<a href=/go-internals-v2/tags/design/>design</a>
+</div>
+<p>Let&rsquo;s Summarize # go spec描述了go语言文法（语法），通过阅读这里的内容，可以了解到整个语言在常规写法上的一些内容，一些可能比较隐晦的问题也能搞明白这背后的原因是什么，比如断行规则怎么来的、iota取值怎么来的等等的吧。个人感觉通读一下还是很有帮助的。
+—————————————————————————————————————
+go spec就是go语言的一些规范，包括：
+描述了go语言文法（grammar），go spec的文法是通过EBNF定义的。 从这里可以了解到这门编程语言在文法层面是如何定义的，我们写代码的时候写出的源代码必须符合文法定义，编译器也会依照此文法对源代码进行检查（词法分析、语法分析）。 在学习编译原理课程时，我们设计一门语言，假设这门语言的功能支持已经确定了，我们现在也大致确定了这门编程语言的写法，为了指导别人这个语言可以怎么写、编译器该如何解析，就要定义出文法。 文法定义一般通过BNF或者EBNF，后者用的更多些，其在描述编程语言能力上并没有比BNF强很多，但是它可以生成更精炼的规则。要想理解go spec中定义的文法，还是需要理解下EBNF的大致内容，see also：https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form。
+go源代码采用utf8编码，对于特殊字符如0xfeff（bom）的忽略等特殊处理。
+go源码表示
+characters：newline、unicode_char、unicode_letter、unicode_digit的表示 letters and digits：letter、decimal_digit、binary_digit、octal_digit、hex_digit的表示 go词法元素（lexical elements）
+注释、 tokens（四类：identifier, keyword, operators 和 punctuation, literals)，whitespace的构成（空格、tab、回车、换行）及什么情况下可忽略，换行EOL和文件结束EOF会替换成分号’;’。 semicolons（分号的断行规则），词法分析时什么时候会自动插入分号。这些分号是自动插入的以充当语句结束时的终结符。 identifiers的生成规则 keywords，不能定义与关键字、保留字相同的标识符 operators and punctruation，有几个位运算符有点和其他语言不一样😟 integer literals，如何表示一个数是什么进制的数字呢？0b/0B前缀表示二进制数，0/0o/0O表示八进制数，0x/0X表示十六进制数，没有前缀、单独一个0表示十进制数。这些进制数的前缀后面可以通过下划线’_’和数字相连来提高可读性。对于十进制数而言，1_2 == 12（weired! 😟) floating-point literals，略 imaginary literals，虚数，略 rune literals，主要是这几个：\a（alert or bell），\f （form feed，效果相当于光标下移一行），\r（carriage return，效果相当于移到行首覆盖写），\n（new line，换新行），\t （horizontal tab），\v（vertical tab），\b （backspace，删除前面的输出字符） string literals，这个注释两种模式raw string和”interpreted string”，前者string中的转移字符’\’都是普通字符、没有转义动作，而后者里面的字符转义字符就有转义动作。 constants，包括bool、rune、integer、浮点、复数、字符串常量，rune、integer、浮点、复数统一看做数值常量。constants可以是有类型的，也可以是无类型的。对于无类型数值常量，可以使用更高的精度（256bits精度），see：https://blog.
+<a href=/go-internals-v2/docs/Specification/go-spec/>...</a>
+</p>
+</article>
+<article class="markdown book-post">
+<h2>
 <a href=/go-internals-v2/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
 </h2>
 <div>
@@ -1038,7 +1059,7 @@ English
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/design/>design</a>
-<span>1</span>
+<span>2</span>
 </li>
 <li class="flex justify-between">
 <a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>

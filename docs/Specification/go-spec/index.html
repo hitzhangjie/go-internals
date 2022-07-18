@@ -1,0 +1,902 @@
+<!doctype html><html lang=zh dir=ltr>
+<head>
+<meta name=generator content="Hugo 0.91.2">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Let&rsquo;s Summarize #  go spec描述了go语言文法（语法），通过阅读这里的内容，可以了解到整个语言在常规写法上的一些内容，一些可能比较隐晦的问题也能搞明白这背后的原因是什么，比如断行规则怎么来的、iota取值怎么来的等等的吧。个人感觉通读一下还是很有帮助的。
+—————————————————————————————————————
+go spec就是go语言的一些规范，包括：
+  描述了go语言文法（grammar），go spec的文法是通过EBNF定义的。 从这里可以了解到这门编程语言在文法层面是如何定义的，我们写代码的时候写出的源代码必须符合文法定义，编译器也会依照此文法对源代码进行检查（词法分析、语法分析）。 在学习编译原理课程时，我们设计一门语言，假设这门语言的功能支持已经确定了，我们现在也大致确定了这门编程语言的写法，为了指导别人这个语言可以怎么写、编译器该如何解析，就要定义出文法。 文法定义一般通过BNF或者EBNF，后者用的更多些，其在描述编程语言能力上并没有比BNF强很多，但是它可以生成更精炼的规则。要想理解go spec中定义的文法，还是需要理解下EBNF的大致内容，see also：https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form。
+  go源代码采用utf8编码，对于特殊字符如0xfeff（bom）的忽略等特殊处理。
+  go源码表示
+ characters：newline、unicode_char、unicode_letter、unicode_digit的表示 letters and digits：letter、decimal_digit、binary_digit、octal_digit、hex_digit的表示    go词法元素（lexical elements）
+ 注释、 tokens（四类：identifier, keyword, operators 和 punctuation, literals)，whitespace的构成（空格、tab、回车、换行）及什么情况下可忽略，换行EOL和文件结束EOF会替换成分号’;’。 semicolons（分号的断行规则），词法分析时什么时候会自动插入分号。这些分号是自动插入的以充当语句结束时的终结符。 identifiers的生成规则 keywords，不能定义与关键字、保留字相同的标识符 operators and punctruation，有几个位运算符有点和其他语言不一样😟 integer literals，如何表示一个数是什么进制的数字呢？0b/0B前缀表示二进制数，0/0o/0O表示八进制数，0x/0X表示十六进制数，没有前缀、单独一个0表示十进制数。这些进制数的前缀后面可以通过下划线’_’和数字相连来提高可读性。对于十进制数而言，1_2 == 12（weired! 😟) floating-point literals，略 imaginary literals，虚数，略 rune literals，主要是这几个：\a（alert or bell），\f （form feed，效果相当于光标下移一行），\r（carriage return，效果相当于移到行首覆盖写），\n（new line，换新行），\t （horizontal tab），\v（vertical tab），\b （backspace，删除前面的输出字符） string literals，这个注释两种模式raw string和”interpreted string”，前者string中的转移字符’\’都是普通字符、没有转义动作，而后者里面的字符转义字符就有转义动作。 constants，包括bool、rune、integer、浮点、复数、字符串常量，rune、integer、浮点、复数统一看做数值常量。constants可以是有类型的，也可以是无类型的。对于无类型数值常量，可以使用更高的精度（256bits精度），see：https://blog.">
+<meta name=theme-color content="#FFFFFF"><meta property="og:title" content="go spec">
+<meta property="og:description" content="Let&rsquo;s Summarize #  go spec描述了go语言文法（语法），通过阅读这里的内容，可以了解到整个语言在常规写法上的一些内容，一些可能比较隐晦的问题也能搞明白这背后的原因是什么，比如断行规则怎么来的、iota取值怎么来的等等的吧。个人感觉通读一下还是很有帮助的。
+—————————————————————————————————————
+go spec就是go语言的一些规范，包括：
+  描述了go语言文法（grammar），go spec的文法是通过EBNF定义的。 从这里可以了解到这门编程语言在文法层面是如何定义的，我们写代码的时候写出的源代码必须符合文法定义，编译器也会依照此文法对源代码进行检查（词法分析、语法分析）。 在学习编译原理课程时，我们设计一门语言，假设这门语言的功能支持已经确定了，我们现在也大致确定了这门编程语言的写法，为了指导别人这个语言可以怎么写、编译器该如何解析，就要定义出文法。 文法定义一般通过BNF或者EBNF，后者用的更多些，其在描述编程语言能力上并没有比BNF强很多，但是它可以生成更精炼的规则。要想理解go spec中定义的文法，还是需要理解下EBNF的大致内容，see also：https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form。
+  go源代码采用utf8编码，对于特殊字符如0xfeff（bom）的忽略等特殊处理。
+  go源码表示
+ characters：newline、unicode_char、unicode_letter、unicode_digit的表示 letters and digits：letter、decimal_digit、binary_digit、octal_digit、hex_digit的表示    go词法元素（lexical elements）
+ 注释、 tokens（四类：identifier, keyword, operators 和 punctuation, literals)，whitespace的构成（空格、tab、回车、换行）及什么情况下可忽略，换行EOL和文件结束EOF会替换成分号’;’。 semicolons（分号的断行规则），词法分析时什么时候会自动插入分号。这些分号是自动插入的以充当语句结束时的终结符。 identifiers的生成规则 keywords，不能定义与关键字、保留字相同的标识符 operators and punctruation，有几个位运算符有点和其他语言不一样😟 integer literals，如何表示一个数是什么进制的数字呢？0b/0B前缀表示二进制数，0/0o/0O表示八进制数，0x/0X表示十六进制数，没有前缀、单独一个0表示十进制数。这些进制数的前缀后面可以通过下划线’_’和数字相连来提高可读性。对于十进制数而言，1_2 == 12（weired! 😟) floating-point literals，略 imaginary literals，虚数，略 rune literals，主要是这几个：\a（alert or bell），\f （form feed，效果相当于光标下移一行），\r（carriage return，效果相当于移到行首覆盖写），\n（new line，换新行），\t （horizontal tab），\v（vertical tab），\b （backspace，删除前面的输出字符） string literals，这个注释两种模式raw string和”interpreted string”，前者string中的转移字符’\’都是普通字符、没有转义动作，而后者里面的字符转义字符就有转义动作。 constants，包括bool、rune、integer、浮点、复数、字符串常量，rune、integer、浮点、复数统一看做数值常量。constants可以是有类型的，也可以是无类型的。对于无类型数值常量，可以使用更高的精度（256bits精度），see：https://blog.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/docs/Specification/go-spec/"><meta property="article:section" content="docs">
+<title>go spec | Go设计实现内幕</title>
+<link rel=manifest href=/go-internals-v2/manifest.json>
+<link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
+<link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
+<script defer src=/go-internals-v2/zh.search.min.d7393837a808e343d763c7c5e0c3394f4ebbd99edb68a158cc0afadfa26d5f99.js integrity="sha256-1zk4N6gI40PXY8fF4MM5T0672Z7baKFYzAr636JtX5k="></script>
+<script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
+</head>
+<body dir=ltr>
+<input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control>
+<main class="container flex">
+<aside class=book-menu>
+<div class=book-menu-content>
+<nav>
+<h2 class=book-brand>
+<a href=/go-internals-v2><img src=/go-internals-v2/logo.png alt=Logo><span>Go设计实现内幕</span>
+</a>
+</h2>
+<div class=book-search>
+<input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/>
+<div class="book-search-spinner hidden"></div>
+<ul id=book-search-results></ul>
+</div>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/preface/>前言</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/introduction/>简介</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/setup-environment/>准备</a>
+</li>
+<li>
+<input type=checkbox id=section-a0d8d71f426b3018d3ea2b0d39cb80dd class=toggle checked>
+<label for=section-a0d8d71f426b3018d3ea2b0d39cb80dd class="flex justify-between">
+<a>Specification</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Specification/go-spec/ class=active>go spec</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-5b4c35c78aaa50e4262cf5f000ff643f class=toggle>
+<label for=section-5b4c35c78aaa50e4262cf5f000ff643f class="flex justify-between">
+<a>Toolchain</a>
+</label>
+<ul>
+<li>
+<input type=checkbox id=section-1478ad0225f3c1062830d9c09d8b93f3 class=toggle>
+<label for=section-1478ad0225f3c1062830d9c09d8b93f3 class="flex justify-between">
+<a>Compiler</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/aliases-simple-and-efficient/>aliases, simple and efficient</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/builds-linkers-timeline/>builds & linker"s timeline</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/built-in-functions-optimizations/>built-in functions optimizations</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-go-build-works/>how "go build" works</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/>how are loops translated to assembly</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/>how to take advantage of symbols tables</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/inline-strategy-limitation/>inline strategy & limitation</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/>introduction to the escape analysis</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler/>introduction to the go compiler</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/>introduction to the go compiler ssa backend</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/>language semantics on escape analysis</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/memory-safety-with-bounds-check/>memory safety with bounds check</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/overview-of-the-compiler/>overview of the compiler</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/slice-and-memory-management/>slice and memory management</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/understanding-compiler-directives/>understanding compiler directives</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-7e4c79944057f12c630cadb7f66ae71d class=toggle>
+<label for=section-7e4c79944057f12c630cadb7f66ae71d class="flex justify-between">
+<a>Linker</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/build-a-better-linker/>build a better linker</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/builds-linkers-timeline/>builds & linker"s timeline</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/how-go-build-works/>how "go build" works</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/object-file-relocations/>object file & relocations</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ff16c11cae45273096ca6b9016ad8f91 class=toggle>
+<label for=section-ff16c11cae45273096ca6b9016ad8f91 class="flex justify-between">
+<a>Abi</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/ABI/go-register-ABI/>go register ABI</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-92155f78ab2fea96864dc8e5f605cf23 class=toggle>
+<label for=section-92155f78ab2fea96864dc8e5f605cf23 class="flex justify-between">
+<a>Ast</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/AST/visualize-your-go-code/>visualize your go code</a>
+</li>
+</ul>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/instrumentation-in-go/>instrumentation in go</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-2cf4e97d00d6e0846a455aed8f898520 class=toggle>
+<label for=section-2cf4e97d00d6e0846a455aed8f898520 class="flex justify-between">
+<a>Memory</a>
+</label>
+<ul>
+<li>
+<input type=checkbox id=section-93dba9f40586c2c35d783752f434d3fe class=toggle>
+<label for=section-93dba9f40586c2c35d783752f434d3fe class="flex justify-between">
+<a>Memory Allocation</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/demystifying-memory-management-in-modern-programming-languages/>demystifying memory management in modern programming languages</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-allocation/>memory management and allocation</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-memory-sweep/>memory management and memory sweep</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/slice-and-memory-management/>slice and memory management</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/visualizing-memory-management-in-go/>visualizing memory management in go</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-c7a4c22522235f51a39ce7f70ed7225e class=toggle>
+<label for=section-c7a4c22522235f51a39ce7f70ed7225e class="flex justify-between">
+<a>Garbage Collection</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/>an insight into go garbage collector</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/finalizers/>finalizers</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/>go GC: latency problem solved</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/>go GC: prioritizing low latency and simplicity</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/>how does GC mark the memory</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/>how does GC watch your application</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-go-stop-the-world/>how does go stop the world</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/keeping-a-variable-alive/>keeping a variable alive</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-allocation/>memory management and allocation</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/>memory management and memory sweep</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-garbage-collection-handbook/>the garbage collection handbook</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/>the rules of unsafe.Pointer and uintptr</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/tracing-garbage-collection/>tracing garbage collection</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-52225bc65f7b2a78999589b1479ab0c3 class=toggle>
+<label for=section-52225bc65f7b2a78999589b1479ab0c3 class="flex justify-between">
+<a>Goroutine</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/asynchronous-preemption/>asynchronous preemption</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/g0-special-goroutines/>g0, special goroutines</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-and-preemption/>goroutine and preemption</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-os-thread-and-cpu-management/>goroutine, os thread, and cpu management</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/gsignal-master-of-signals/>gsignal, master of signals</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-a-goroutine-start-and-exit/>how does a goroutine start and exit</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-go-recycle-goroutines/>how does go recycle goroutines</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-goroutine-stack-size-evolve/>how goroutine stack size evolve</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/improve-the-usage-of-your-goroutines-with-GODEBUG/>improve the usage of your goroutines with GODEBUG</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/observing-stack-grow-and-shrink/>observing stack grow and shrink</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/what-does-a-goroutine-switch-actually-involve/>what does a goroutine switch actually involve</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-f31e09d220fe3252a0eb99bdea817893 class=toggle>
+<label for=section-f31e09d220fe3252a0eb99bdea817893 class="flex justify-between">
+<a>Runtime</a>
+</label>
+<ul>
+<li>
+<input type=checkbox id=section-6af4e9ddadfe05b53d5ba165c38f1e3e class=toggle>
+<label for=section-6af4e9ddadfe05b53d5ba165c38f1e3e class="flex justify-between">
+<a>Scheduler</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/GOMAXPROCS-live-updates/>GOMAXPROCS & live updates</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-i-os-scheduler/>scheduling in go: part i - os scheduler</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-ii-go-scheduler/>scheduling in go: part ii - go scheduler</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-iii-concurrency/>scheduling in go: part iii - concurrency</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-825adbd2b838041eea46d2a10adc5f9a class=toggle>
+<label for=section-825adbd2b838041eea46d2a10adc5f9a class="flex justify-between">
+<a>Monitor</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Monitor/monitor-pattern/>monitor pattern</a>
+</li>
+</ul>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/a-whirlwind-tour-of-Gos-runtime-environment-variables/>a whirlwind tour of Go’s runtime environment variables</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-93d588918944a298d3f4270e6df9e968 class=toggle>
+<label for=section-93d588918944a298d3f4270e6df9e968 class="flex justify-between">
+<a>Synchronization</a>
+</label>
+<ul>
+<li>
+<input type=checkbox id=section-e4f56fa00191ca8306d1438c969bef3e class=toggle>
+<label for=section-e4f56fa00191ca8306d1438c969bef3e class="flex justify-between">
+<a>Locks</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/how-to-reduce-lock-contention-with-the-atomic-package/>how to reduce lock contention with the atomic package</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/locks-sync.Mutex-internals/>locks: sync.Mutex internals</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/mutex-and-starvation/>mutex and starvation</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-d90698102847b301cf3137d159da1529 class=toggle>
+<label for=section-d90698102847b301cf3137d159da1529 class="flex justify-between">
+<a>Race Detection</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/a-race-detector-unfurled/>a race detector unfurled</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/race-detector-with-thread-sanitizer/>race detector with thread sanitizer</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-8c09d3d57dd5ee0090220d9bf96ec092 class=toggle>
+<label for=section-8c09d3d57dd5ee0090220d9bf96ec092 class="flex justify-between">
+<a>Diagnostics</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/diagnostics-methods/>Diagnostics Methods</a>
+</li>
+<li>
+<input type=checkbox id=section-1c55d6e534f174d1a9d86e1f0d27011e class=toggle>
+<label for=section-1c55d6e534f174d1a9d86e1f0d27011e class="flex justify-between">
+<a>Debugging</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Debugging/debugging-with-delve-coredumps/>debugging with delve & coredumps</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-25c014c40c4708b8f9b278eab857403a class=toggle>
+<label for=section-25c014c40c4708b8f9b278eab857403a class="flex justify-between">
+<a>PProf</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/language-semantics-on-memory-profiling/>language semantics on memory profiling</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/samples-collection-with-pprof/>samples collection with pprof</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ef57056641f9c66c69d93a6c9fc4c689 class=toggle>
+<label for=section-ef57056641f9c66c69d93a6c9fc4c689 class="flex justify-between">
+<a>Tracing</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Tracing/discovery-of-the-trace-package/>discovery of the trace package</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-51db080d4a3f95e2e371c478fda59b4e class=toggle>
+<label for=section-51db080d4a3f95e2e371c478fda59b4e class="flex justify-between">
+<a>Testing</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/Benchmarking-in-Golang-Improving-function-performance/>Benchmarking in Golang: Improving function performance</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/practical-fuzzing-with-go/>practical fuzzing with go</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/unknown-parts-of-the-test-package/>unknown parts of the test package</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-129195bb7d4d59f2206f00e863a8ebdb class=toggle>
+<label for=section-129195bb7d4d59f2206f00e863a8ebdb class="flex justify-between">
+<a>Builtins</a>
+</label>
+<ul>
+<li>
+<input type=checkbox id=section-651c7afe116c240343430442fd77600a class=toggle>
+<label for=section-651c7afe116c240343430442fd77600a class="flex justify-between">
+<a>Chan</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/buffered-and-unbuffered-channels/>buffered and unbuffered channels</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/ordering-in-select-statements/>ordering in select statements</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-8e712e14ba6fe05a22de8ae756efc620 class=toggle>
+<label for=section-8e712e14ba6fe05a22de8ae756efc620 class="flex justify-between">
+<a>Map</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/concurrent-access-with-maps-part-3/>concurrent access with maps - part 3</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-1/>map design by code - part 1</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-2/>map design by code - part 2</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-631a92c08b04d863b1a494f36d547be5 class=toggle>
+<label for=section-631a92c08b04d863b1a494f36d547be5 class="flex justify-between">
+<a>Unsafe</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/unsafe/what-is-the-unsafe-package/>what is the unsafe package</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-a30ce872f66ddfa47ddd53e71fd3fd9b class=toggle>
+<label for=section-a30ce872f66ddfa47ddd53e71fd3fd9b class="flex justify-between">
+<a>Closure</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/closure/how-does-go-implement-closures/>how does go implement closures</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-89e63630549fc7d7179c5ff90b10c96f class=toggle>
+<label for=section-89e63630549fc7d7179c5ff90b10c96f class="flex justify-between">
+<a>Constants</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-09774e50ad4b214a713fa8f577f26533 class=toggle>
+<label for=section-09774e50ad4b214a713fa8f577f26533 class="flex justify-between">
+<a>Context</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/context/context-and-cancellation-by-propagation/>context and cancellation by propagation</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-e85e2a8e1719b54415998cfeaa4c64c5 class=toggle>
+<label for=section-e85e2a8e1719b54415998cfeaa4c64c5 class="flex justify-between">
+<a>Defer</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/defer-internals/>defer internals</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/how-does-defer-statement-work/>how does defer statement work</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-48164f93f23fb4774ca384e9dc84f94d class=toggle>
+<label for=section-48164f93f23fb4774ca384e9dc84f94d class="flex justify-between">
+<a>Init</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/init/init-functions/>init functions</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-982535b748a0cf94fc4e363a4220c45e class=toggle>
+<label for=section-982535b748a0cf94fc4e363a4220c45e class="flex justify-between">
+<a>Interface</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/interface/understand-the-empty-interface/>understand the empty interface</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-95d1523b99d14914e1c43fbb32ebdfa3 class=toggle>
+<label for=section-95d1523b99d14914e1c43fbb32ebdfa3 class="flex justify-between">
+<a>Panic&Recover</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/panicrecover/how-does-a-program-recover/>how does a program recover</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-41006be660761bf1634dc3afef87d119 class=toggle>
+<label for=section-41006be660761bf1634dc3afef87d119 class="flex justify-between">
+<a>Pointer</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/design-philosophy-on-data-and-semantics/>design philosophy on data and semantics</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/language-mechanics-on-stacks-and-pointers/>language mechanics on stacks and pointers</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/should-i-use-pointer-instead-of-a-copy-of-struct/>should i use pointer instead of a copy of struct</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-518237b5864e05a88795053dc0aadf7a class=toggle>
+<label for=section-518237b5864e05a88795053dc0aadf7a class="flex justify-between">
+<a>Pool</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pool/understand-the-design-of-sync.pool/>understand the design of sync.pool</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-02c17940ee18fd0e28da376b638e2d61 class=toggle>
+<label for=section-02c17940ee18fd0e28da376b638e2d61 class="flex justify-between">
+<a>Random</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/random/how-are-random-numbers-generated/>how are random numbers generated</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-9eb4f02a7524818c4c71d8579f485a0a class=toggle>
+<label for=section-9eb4f02a7524818c4c71d8579f485a0a class="flex justify-between">
+<a>String</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/string/string-conversion-optimization/>string & conversion optimization</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-5fd51849c5efc7c80caa0bfef5a0f76f class=toggle>
+<label for=section-5fd51849c5efc7c80caa0bfef5a0f76f class="flex justify-between">
+<a>Syscall</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/syscall/how-does-go-runtime-handles-syscall/>how does go runtime handles syscall</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-dc98d3d867181a4b7f4594d457e17777 class=toggle>
+<label for=section-dc98d3d867181a4b7f4594d457e17777 class="flex justify-between">
+<a>Timer</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/timer/timers-life-cycle/>timers" life cycle</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-54ff0ab7dec4280864e76f3fd0b3d0c8 class=toggle>
+<label for=section-54ff0ab7dec4280864e76f3fd0b3d0c8 class="flex justify-between">
+<a>Patterns</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Patterns/rethinking-classical-concurrency-patterns/>rethinking classical concurrency patterns</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-9e07a1bfbe561ed3f6806c311a77856d class=toggle>
+<label for=section-9e07a1bfbe561ed3f6806c311a77856d class="flex justify-between">
+<a>Infrastructure</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/what-is-a-goproxy/>what is a goproxy</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/playing-with-go-module-proxy/>playing with go module proxy</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-ce52ab5a3ea7b9d335993e1906973892 class=toggle>
+<label for=section-ce52ab5a3ea7b9d335993e1906973892 class="flex justify-between">
+<a>Plugins</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Plugins/go-plugin-system/>go plugin system</a>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox id=section-f126f3c1abfdb1f388f4aa1d63bf636e class=toggle>
+<label for=section-f126f3c1abfdb1f388f4aa1d63bf636e class="flex justify-between">
+<a>Types</a>
+</label>
+<ul>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
+</li>
+</ul>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/docs/SUMMARY/>Summary</a>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<a href=/go-internals-v2/posts/>
+Posts
+</a>
+</li>
+<li>
+<a href=https://github.com/hitzhangjie/go-internals-v2 target=_blank rel=noopener>
+Github
+</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro target=_blank rel=noopener>
+Blog
+</a>
+</li>
+</ul>
+</nav>
+<script>(function(){var a=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+</div>
+</aside>
+<div class=book-page>
+<header class=book-header>
+<div class="flex align-center justify-between">
+<label for=menu-control>
+<img src=/go-internals-v2/svg/menu.svg class=book-icon alt=Menu>
+</label>
+<strong>go spec</strong>
+<label for=toc-control>
+<img src=/go-internals-v2/svg/toc.svg class=book-icon alt="Table of Contents">
+</label>
+</div>
+<aside class="hidden clearfix">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#lets-summarize>Let&rsquo;s Summarize</a></li>
+<li><a href=#source-analysis>Source Analysis</a></li>
+<li><a href=#references>References</a></li>
+</ul>
+</nav>
+</aside>
+</header>
+<article class=markdown><h1 id=lets-summarize>
+Let&rsquo;s Summarize
+<a class=anchor href=#lets-summarize>#</a>
+</h1>
+<p>go spec描述了go语言文法（语法），通过阅读这里的内容，可以了解到整个语言在常规写法上的一些内容，一些可能比较隐晦的问题也能搞明白这背后的原因是什么，比如断行规则怎么来的、iota取值怎么来的等等的吧。个人感觉通读一下还是很有帮助的。</p>
+<p>—————————————————————————————————————</p>
+<p>go spec就是go语言的一些规范，包括：</p>
+<ul>
+<li>
+<p>描述了go语言文法（grammar），go spec的文法是通过EBNF定义的。
+从这里可以了解到这门编程语言在文法层面是如何定义的，我们写代码的时候写出的源代码必须符合文法定义，编译器也会依照此文法对源代码进行检查（词法分析、语法分析）。
+在学习编译原理课程时，我们设计一门语言，假设这门语言的功能支持已经确定了，我们现在也大致确定了这门编程语言的写法，为了指导别人这个语言可以怎么写、编译器该如何解析，就要定义出文法。
+文法定义一般通过BNF或者EBNF，后者用的更多些，其在描述编程语言能力上并没有比BNF强很多，但是它可以生成更精炼的规则。要想理解go spec中定义的文法，还是需要理解下EBNF的大致内容，see also：https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form。</p>
+</li>
+<li>
+<p>go源代码采用utf8编码，对于特殊字符如0xfeff（bom）的忽略等特殊处理。</p>
+</li>
+<li>
+<p>go源码表示</p>
+<ul>
+<li>characters：newline、unicode_char、unicode_letter、unicode_digit的表示</li>
+<li>letters and digits：letter、decimal_digit、binary_digit、octal_digit、hex_digit的表示</li>
+</ul>
+</li>
+<li>
+<p>go词法元素（lexical elements）</p>
+<ul>
+<li>注释、</li>
+<li>tokens（四类：identifier, keyword, operators 和 punctuation, literals)，whitespace的构成（空格、tab、回车、换行）及什么情况下可忽略，换行EOL和文件结束EOF会替换成分号’;’。</li>
+<li>semicolons（分号的断行规则），词法分析时什么时候会自动插入分号。这些分号是自动插入的以充当语句结束时的终结符。</li>
+<li>identifiers的生成规则</li>
+<li>keywords，不能定义与关键字、保留字相同的标识符</li>
+<li>operators and punctruation，有几个位运算符有点和其他语言不一样😟</li>
+<li>integer literals，如何表示一个数是什么进制的数字呢？0b/0B前缀表示二进制数，0/0o/0O表示八进制数，0x/0X表示十六进制数，没有前缀、单独一个0表示十进制数。这些进制数的前缀后面可以通过下划线’_’和数字相连来提高可读性。对于十进制数而言，1_2 == 12（weired! 😟)</li>
+<li>floating-point literals，略</li>
+<li>imaginary literals，虚数，略</li>
+<li>rune literals，主要是这几个：\a（alert or bell），\f （form feed，效果相当于光标下移一行），\r（carriage return，效果相当于移到行首覆盖写），\n（new line，换新行），\t （horizontal tab），\v（vertical tab），\b （backspace，删除前面的输出字符）</li>
+<li>string literals，这个注释两种模式<code>raw string</code>和”interpreted string”，前者string中的转移字符’\’都是普通字符、没有转义动作，而后者里面的字符转义字符就有转义动作。</li>
+<li>constants，包括bool、rune、integer、浮点、复数、字符串常量，rune、integer、浮点、复数统一看做数值常量。constants可以是有类型的，也可以是无类型的。对于无类型数值常量，可以使用更高的精度（256bits精度），see：https://blog.learngoprogramming.com/learn-golang-typed-untyped-constants-70b4df443b61。</li>
+<li>variables</li>
+<li>types，类型确定的是value范围以及对value的操作集合。bool类型true/false，number类型（整数是用补码表示的），string类型（字符串是不可变的，也不能取s[i]的地址），array类型（数组长度是类型的一部分），slice类型（data、cap、len，data指向底层数组，注意slices共享底层数组的情况），struct（如何定义、怎么写tag、字段匿名嵌套及约束）</li>
+<li>pointers，指针类型（go中的指针没有运算功能，如+1、-1等）</li>
+<li>function，函数签名只需参数列表、返回值列表有关系，与函数名没有关系。</li>
+<li>interfaces（接口主要分为eface和iface两种，eface可以接受任何值，iface只能接收实现了接口方法的类型值。接口中存储的值及其类型通常称为dynamic value、dynamic type，eface{dtype, dvalue}，iface{itab, dvalue}，eface和iface在结构上稍有不同，后者主要是为了实现类似c++ vtable一样的功能，通过接口T是否实现了接口X：1）如果T不是接口，T必须实现X的所有方法；2）如果T是接口，T必须包含了X定义的所有方法。实现了接口X的类型T的任何value都实现了这个接口X。
+注意，go后续版本引入了关键字any，any是interface{}的一个alias。</li>
+<li>map类型，map是通过hash表实现的无序的map，map定义时map[key]value，keytype必须是可比较的，因此function、map、slice这几个都不能作为key类型，如果keytype是interface类型，那么interface中的dynamic type必须是可比较的，即必须支持==和≠的比较。</li>
+<li>channel类型，通信串行处理csp并发编程范式，channel定义时可以限定发送、接收的方向，channel定义时也可以指定是否为buffered/unbuffered通信。
+unbuffered chan必须有一个sender、receiver就绪才不会阻塞，buffered chan在不满时send不会阻塞，在不空时recv不会阻塞，nil chan上执行send、recv总是阻塞。
+chan recv操作如果是v, ok := ← ch，这里的ok表示的是sent before closed的意思，close(ch)其实只是打个类似结束的标记，所以closed ch的recv动作不会阻塞，但是ok为false。
+轮询多个ch的读写通过select-case来完成，加个default分支可以实现try-send、try-recv操作。</li>
+<li>type A=B定义类型别名，type A B定义一种新类型。</li>
+<li>类型要么完全相同，要么不同。对于named type（有名类型）肯定是与其他类型不同的，对于unnamed type（无名类型）就要比结构，see：https://go.dev/ref/spec#:~:text=that%20is%2C%20they%20have%20the%20same%20literal%20structure%20and%20corresponding%20components%20have%20identical%20types.%20In%20detail%3A。</li>
+<li>method sets的概念，首先接收器类型不能是pointer或者interface，我们为类型T添加方法，写的时候func (t T) …以及func(t <em>T)…这里的t T和t T都是针对类型T而言的。通过value去访问方法可以访问到T上定义的方法，通过指针去访问方法可以访问到T以及</em>T上的方法。注意，这个方法集的理解没有问题。但是呢，现在为了方便调用，编译器做了这方面的支持，例如通过value调用*T上定义的方法时，会做一层中间转换doSomething(t T, args…) { doSomething(t <em>T, args…) }，就调用到</em>T上定义的方法了。</li>
+<li>block，语法块的意思，显示的block和隐式的block，package、file都有自己隐式的block，另外if、for、switch、select也有自己隐式的block，block影响了scope（作用域）。</li>
+<li>导出identifier：关注这些，首字母大写的包级别类型名、函数名，或者导出的结构体的首字母大写的成员名。</li>
+<li>iota的用法，iota用来定义一组相关性很强的数值常量时非常有用。1）iota的值取决于在constspec在constspec list中的索引位置（空行会被删除，空行不算）；2）iota在同一个constspec中出现多次的话值不变。</li>
+<li>定义新类型type A B。1）A和B是不同的类型，A也不继承B的方法集，除非B是一个接口；2）如果是type A struct {B}，这种形式的话A则通过嵌套类型B获得了B的方法集。ps：定义别名type A = B，A和B的方法集相同，但是因为A可能出现在与定义B时不同的package内，这时也只能显示调用A的导出方法。</li>
+<li>变量声明<code>var</code> & 短变量声明<code>:=</code></li>
+<li>函数声明，包括函数和方法，比较特殊的是范型函数、泛型函数的类型参数、泛型函数调用前的实例化</li>
+<li>表达式：运算符、合法的identifier、组合字面量、函数字面量、method values、index表达式、slice表达式、type assert（类型断言）、函数调用、传递实参（arguments）给形参列表（parameters）、泛型函数的实例化</li>
+<li>type inference（类型推断）、type unification（fixme？）、function arguments inference（fixme？）、constraint type inference（fixme？）；</li>
+<li>运算符及运算符优先级，算术运算符、逻辑运算符、字符串连接、地址运算、chan运算符、类型转换运算符（数值、字符串、slice等）</li>
+<li>evaluation order，看下语句调用时参数的初始化顺序是怎样，比如<code>y[f()], ok = g(h(), i()+x[j()], &lt;-c), k()</code>，初始化顺序为<code>f(), h(), i(), j(), &lt;-c, g(), and k()</code>，是按照从左到右的顺序，并且是递归的。</li>
+<li>语句，各种各样的语句类型，略。
+<ul>
+<li>注意++\—是语句，而非运算符，gospec中对运算符的定义没有包含++\—，而是当做语句来介绍的，see：https://go.dev/ref/spec#:~:text=The%20%22%2B%2B%22%20and%20%22%2D%2D%22%20statements%20increment%20or%20decrement%20their%20operands%20by%20the%20untyped%20constant%201.</li>
+<li>switch分为expression switch和type switch，后者可以这么写的<code>switch v := x.(type) {case int: fmt.Printf(”%d”, v), case …}</code>，这样写TypeSwitchGuard这里的文法定义了可以这样写，这样写会比较简单，省的在case后在做类型断言并转换了，v就是对应类型的值了。</li>
+</ul>
+</li>
+<li>goto，goto并不是能够随意跳转的，goto在c\cpp里面一般是用于函数内跳转的，setjmp/longjmp可以用于函数间跳转。goto是不是在函数内随便就可以跳呢，也不是：1）goto语句只能在相同的block内跳；2）goto语句跳转到的位置不能跳过这个位置处应该有的变量定义语句。</li>
+<li>fallthrough，expression switch中有个fallthrough允许继续执行到下一个条件去判断，而不是默认break（和c\c++不一样，go里面的switch-case默认会从case分支break出来）</li>
+<li>defer语句，defer语句将对应的函数放入后进先出的一个栈，函数参数在入栈时已经evaluated了。什么时候执行栈里面的函数呢？return的时候，或者所在的goroutine panicking的时候。联想下panic位置和recover的关系，以及recover什么情况下才能正常recover。</li>
+<li>recover and panic，panic的序列成为panicking</li>
+<li>print、println不能保证后续仍然出现在语言中，慎用</li>
+<li>其他内置函数以及常见的基础操作，略</li>
+<li>源代码组织：package、file、import dependencies</li>
+<li>程序执行及包初始化顺序：注意包初始化顺序，see：https://stackoverflow.com/a/49831018</li>
+<li>runtime.Error是在error接口上包装了下，这么做是为了方便识别运行时错误</li>
+<li>其他系统考虑：unsafe下的alignof\offsetof\sizeof……，这里也描述了下go的内存对齐的规则，see
+<a href="https://go.dev/ref/spec#:~:text=The%20following%20minimal,array%27s%20element%20type">https://go.dev/ref/spec#:~:text=The%20following%20minimal,array%27s%20element%20type</a>.</li>
+<li>其他一些边边角角的略掉了。</li>
+</ul>
+</li>
+</ul>
+<h1 id=source-analysis>
+Source Analysis
+<a class=anchor href=#source-analysis>#</a>
+</h1>
+<ul>
+<li></li>
+</ul>
+<h1 id=references>
+References
+<a class=anchor href=#references>#</a>
+</h1>
+<ol>
+<li>
+<a href=https://go.dev/ref/spec>https://go.dev/ref/spec</a></li>
+</ol>
+</article>
+<footer class=book-footer>
+<div class="flex flex-wrap justify-between">
+<div class=book-languages tabindex=0 aria-haspopup=true>
+<ul>
+<li class="flex align-center">
+<img src=/go-internals-v2/svg/translate.svg class=book-icon alt=Languages>
+Chinese
+</li>
+</ul>
+<ul class=book-languages-list>
+<li class=active>
+<a href=https://hitzhangjie.pro/go-internals-v2/ class="flex align-center">
+<img src=/go-internals-v2/svg/translate.svg class=book-icon alt=Languages>
+Chinese
+</a>
+</li>
+<li>
+<a href=https://hitzhangjie.pro/go-internals-v2/en/ class="flex align-center">
+<img src=/go-internals-v2/svg/translate.svg class=book-icon alt=Languages>
+English
+</a>
+</li>
+</ul>
+</div>
+<div>
+<a class="flex align-center" href=https://github.com/hitzhangjie/go-internals/edit/master//content/docs/Specification/go%20spec.md target=_blank rel=noopener>
+<img src=/go-internals-v2/svg/edit.svg class=book-icon alt=Edit>
+<span>编辑本页</span>
+</a>
+</div>
+</div>
+</footer>
+<div class=book-comments>
+</div>
+<label for=menu-control class="hidden book-menu-overlay"></label>
+</div>
+<aside class=book-toc>
+<div class=book-toc-content>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#lets-summarize>Let&rsquo;s Summarize</a></li>
+<li><a href=#source-analysis>Source Analysis</a></li>
+<li><a href=#references>References</a></li>
+</ul>
+</nav>
+</div>
+</aside>
+</main>
+</body>
+</html>
