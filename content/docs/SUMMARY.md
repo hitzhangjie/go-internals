@@ -141,4 +141,6 @@ bookhidden: true
     * [how does a program recover](Builtins/panic&recover/how does a program recover.md)
 * [Infrastructure](Infrastructure/_index.md)
   * [what is a goproxy](Infrastructure/what is a goproxy.md)
+* [Types](Types/_index.md)
+  * [duck typing, structural typing, nominal typing](Types/duck typing, structural typing, nominal typing.md)
 
