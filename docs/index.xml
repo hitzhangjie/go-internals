@@ -12,7 +12,7 @@ ps：腾讯内部trpc微服务框架实例数，go版本的有2w+，rust版本�
 嵌入式开发领域，go有GC机制，可能要做类似tinygo的编译器调整、特性裁剪； 超大规模长连接管理，go的默认实现是goroutine per connection模型，连接数多了goroutine数也上来了，goroutine stack、为连接分配的resizable buffer、连接上事件的polling都会成为不可忽略的问题。业界比较好的方案是两级reactor的实现思路，类似地go版本实现gnet； 密集计算的问题，go比较大的优势在于goroutine并发处理，但是goroutine切换有固定的切换时机（网络IO等等），密集计算场景下goroutine切换不符合“预期”，并发处理效率跟不上，可能需要考虑多进程+taskset绑核处理； 其他问题； 在不合适的场景下就需要多考虑、多钻研透一些，需要综合投入产出比慎重考虑，这种情况下其他语言是否更有优势就很值得考虑了。</description></item><item><title>简介</title><link>https://hitzhangjie.pro/go-internals-v2/docs/introduction/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hitzhangjie.pro/go-internals-v2/docs/introduction/</guid><description>简介 # Go语言简介 # go语言是由Google设计开发的一种编程语言，说go语言师出名门一点不过分，它的三位设计者 Robert Griesemer, Rob Pike，以及 Ken Thompson，都是计算机科学技术方面颇有造诣的专家。
 Robert Griesemer，1964年生，其主要贡献包括：Chrome V8 Javascript引擎、Sawzall语言、Java Hotspot虚拟机、Strongtalk（在smalltalk上增加了一些强类型检查支持）； Rob Pike，1956年生，其主要贡献包括：分布式操作系统Plan9、分布式操作系统Inferno、编程语言Limbo； Ken Thompson，1943年生，Unix操作系统、B语言、和Dennis Ritchie共同发明的C语言、分布式操作系统Plan9； go设计时吸收了其他编程语言的经验、教训，最终呈现出来的是尽可能实用高效的特性：
 支持静态类型的编译型语言 see go programming language；
-类似c语言的简单的语法（ compact and simple）see go spec；
+类似c语言的简洁的语法 see go spec；
 更好的内存安全性；
 支持动态内存管理，更简单的GC调优控制；
 支持结构化类型 see types checking；
