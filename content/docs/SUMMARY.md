@@ -95,6 +95,7 @@ bookhidden: true
   * [Tracing](Diagnostics/Tracing/_index.md)
     * [discovery of the trace package](Diagnostics/Tracing/discovery of the trace package.md)
 * [Testing](Testing/_index.md)
+  * [Benchmarking in Golang: Improving function performance](Testing/Benchmarking in Golang: Improving function performance.md)
   * [learn-go-with-tests](Testing/learn-go-with-tests.md)
   * [practical fuzzing with go](Testing/practical fuzzing with go.md)
   * [unknown parts of the test package](Testing/unknown parts of the test package.md)
