@@ -7,8 +7,7 @@ type: docs
 
 “**一万小时定律**”大家应该都不陌生，如果我们想成为一个领域内的专家，需要花费大量的时间精力去积累相关的知识和技能。如何更有效地学习才能加速这个过程呢？我的理解就是会借力、会学习、会总结，进而融会贯通。很希望能有个类似 [learn-everything.xyz](https://learn-everything.xyz) 的站点能帮助我们快速构建出一条最佳的学习路径。
 
-总有这么一个时刻，我们想获得的知识需要更高浓度的淬炼、浓缩，已经不是道听途说可解决的了。这个阶段我戏称为“**小码农准备变大师傅**”的阶段，对点亮我们的技能树起到至关重要的作用。
-
+总有这么一个时刻，我们想获得的知识需要更高浓度的淬炼，已经不是道听途说可解决的了。这个阶段我戏称为“**小码农准备变大师傅**”的阶段，对于点亮我们的技能树起到至关重要的作用。
 
 {{< columns >}}
 ## 我们准备做什么
@@ -31,5 +30,5 @@ type: docs
 
 # 贡献指引
 
-您可以点击左侧的[Github](https://github.com/hitzhangjie/go-internals-v2)跳转到该电子书对应的github repository，技术文档在目录 [content/docs](https://github.com/hitzhangjie/go-internals-v2/tree/master/content/docs) 下进行组织，您可以在其下添加新的文档并发起PR即可。
+您可以点击左侧的[Github](https://github.com/hitzhangjie/go-internals-v2)跳转到该电子书对应的github repository，技术文档在目录 [content/docs](https://github.com/hitzhangjie/go-internals-v2/tree/master/content/docs) 下进行组织，您可以在其下添加新的文档并发起PR :)
 

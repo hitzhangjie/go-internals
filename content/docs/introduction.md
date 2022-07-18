@@ -18,7 +18,7 @@ go设计时吸收了其他编程语言的经验、教训，最终呈现出来的
 
 - 支持静态类型的编译型语言 see [go programming language][1]；
 
-- 类似c语言的简单的语法（[compact and simple](https://go.dev/ref/spec#:~:text=The%20grammar%20is%20compact%20and%20simple%20to%20parse)）see [go spec][2]；
+- 类似c语言的简洁的语法 see [go spec][2]；
 
 - 更好的内存安全性；
 
