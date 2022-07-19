@@ -3,9 +3,4 @@ switch string(b) { &amp;hellip; }：这里的string(b)做了优化不会执行�
 访问map元素时：m := map[string]int{}, m[string(b)] 这里的key对应的string底层数组也是直接用的b的底层数组；
 字符串连接时：println(&amp;quot;(&amp;quot;+string(b)+&amp;quot;)&amp;quot;)，这字符串连接结果肯定要分配新空间，但是string(b)自己是没有再分配新空间的；
 字符串比较时：这种情况和switch时的比较类似，先比较string长度，再比较底层bytes数组长度，再比较string内容本身；
-Source Analysis # References # https://medium.com/a-journey-with-go/go-string-conversion-optimization-767b019b75ef</description></item><item><title>string &amp; conversion optimization</title><link>https://hitzhangjie.pro/go-internals/posts/string-conversion-optimization/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://hitzhangjie.pro/go-internals/posts/string-conversion-optimization/</guid><description>Let&amp;rsquo;s Summarize # b := genBytes() []byte { return []byte{&amp;ldquo;a&amp;rdquo;,&amp;ldquo;b&amp;rdquo;} }
-switch string(b) { &amp;hellip; }：这里的string(b)做了优化不会执行拷贝，直接用了原来b的底层数组做为string的底层数组；
-访问map元素时：m := map[string]int{}, m[string(b)] 这里的key对应的string底层数组也是直接用的b的底层数组；
-字符串连接时：println(&amp;quot;(&amp;quot;+string(b)+&amp;quot;)&amp;quot;)，这字符串连接结果肯定要分配新空间，但是string(b)自己是没有再分配新空间的；
-字符串比较时：这种情况和switch时的比较类似，先比较string长度，再比较底层bytes数组长度，再比较string内容本身；
 Source Analysis # References # https://medium.com/a-journey-with-go/go-string-conversion-optimization-767b019b75ef</description></item></channel></rss>
