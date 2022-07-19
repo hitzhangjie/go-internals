@@ -27,10 +27,10 @@ languages:
     languageName: Chinese
     contentDir: content
     weight: 1
-  en:
-    languageName: English
-    contentDir: content.en
-    weight: 2 
+  #en:
+    #languageName: English
+    #contentDir: content.en
+    #weight: 2 
 
 menu:
   # before: []
