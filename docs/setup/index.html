@@ -12,8 +12,7 @@
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.03efe1901aaf65ad56a0dc61b98f7ee9404cb2be476c18c55129f06f1711d975.js integrity="sha256-A+/hkBqvZa1WoNxhuY9+6UBMsr5HbBjFUSnwbxcR2XU="></script>
-<script defer src=/go-internals-v2/sw.min.e3f8d329ac7f45d9b3ff588e83620122ab38761b68b73d194944ff43613a3b8d.js integrity="sha256-4/jTKax/Rdmz/1iOg2IBIqs4dhtotz0ZSUT/Q2E6O40="></script>
+<script defer src=/go-internals-v2/zh.search.min.17c5d8c9575e67102f6a7d6248a0f2cc028892a321cd6d0ae421067c1d5bb3b6.js integrity="sha256-F8XYyVdeZxAvan1iSKDyzAKIkqMhzW0K5CEGfB1bs7Y="></script>
 </head>
 <body dir=ltr>
 <input type=checkbox class="hidden toggle" id=menu-control>
@@ -809,6 +808,8 @@ IDE如何设置
 <p>因为all.bash执行的脚本里面对GOROOT进行了正确的设置，编译时才没有报错。</p>
 <p><strong>那如何解决这个问题呢？</strong></p>
 <p>IDE里面需要正确设置GOROOT，让其指向新检出的源码目录即可解决。搞定了这个就可以在IDE里正常阅读，并执行单测。以GoLand为例，打开Preferences->Go->GOROOT，添加新检出的go源码位置作为新的Go SDK路径，点击保存即可。</p>
+<p>
+<img src=https://hitzhangjie.pro/go-internals-v2/docs/assets/setup/image-20220719111034758.png alt="GoLand GOROOT Settings"></p>
 <h1 id=references>
 References
 <a class=anchor href=#references>#</a>
