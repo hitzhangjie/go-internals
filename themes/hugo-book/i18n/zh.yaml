@@ -15,6 +15,7 @@
     {
       encode: false,
       tokenize: function(str) {
-        return str.replace(/[\x00-\x7F]/g, '').split('');
+        return str.split(/\W+/).concat(str.replace(/[\x00-\x7F]/g, '').split('')).filter(e => !!e);
       }
     }
+
