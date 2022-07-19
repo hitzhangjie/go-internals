@@ -7,13 +7,13 @@
 <meta name=theme-color content="#FFFFFF"><meta property="og:title" content="types">
 <meta property="og:description" content>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://hitzhangjie.pro/go-internals-v2/tags/types/">
+<meta property="og:url" content="https://hitzhangjie.pro/go-internals/tags/types/">
 <title>types | Go设计实现内幕</title>
-<link rel=manifest href=/go-internals-v2/manifest.json>
-<link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
-<link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.9686d2e38746a084a4556eb3a72f2791ecbb91cd05587e21a43a5b0bf6726c57.js integrity="sha256-lobS44dGoISkVW6zpy8nkey7kc0FWH4hpDpbC/ZybFc="></script>
-<link rel=alternate type=application/rss+xml href=https://hitzhangjie.pro/go-internals-v2/tags/types/index.xml title=Go设计实现内幕>
+<link rel=manifest href=/go-internals/manifest.json>
+<link rel=icon href=/go-internals/favicon.png type=image/x-icon>
+<link rel=stylesheet href=/go-internals/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
+<script defer src=/go-internals/zh.search.min.cfc57077e74bf0a2fbf89809c2492fb8c2bce07336cb937d6a566a463ee48590.js integrity="sha256-z8Vwd+dL8KL7+JgJwkkvuMK84HM2y5N9alZqRj7khZA="></script>
+<link rel=alternate type=application/rss+xml href=https://hitzhangjie.pro/go-internals/tags/types/index.xml title=Go设计实现内幕>
 </head>
 <body dir=ltr>
 <input type=checkbox class="hidden toggle" id=menu-control>
@@ -23,7 +23,7 @@
 <div class=book-menu-content>
 <nav>
 <h2 class=book-brand>
-<a href=/go-internals-v2><img src=/go-internals-v2/logo.png alt=Logo><span>Go设计实现内幕</span>
+<a href=/go-internals><img src=/go-internals/logo.png alt=Logo><span>Go设计实现内幕</span>
 </a>
 </h2>
 <div class=book-search>
@@ -33,13 +33,13 @@
 </div>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/preface/>前言</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/preface/>前言</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/introduction/>简介</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/introduction/>简介</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/setup/>准备</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/setup/>准备</a>
 </li>
 <li>
 <input type=checkbox id=section-a0d8d71f426b3018d3ea2b0d39cb80dd class=toggle>
@@ -48,7 +48,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Specification/go-spec/>go spec</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Specification/go-spec/>go spec</a>
 </li>
 </ul>
 </li>
@@ -65,49 +65,49 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/aliases-simple-and-efficient/>aliases, simple and efficient</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/aliases-simple-and-efficient/>aliases, simple and efficient</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/builds-linkers-timeline/>builds & linker"s timeline</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/builds-linkers-timeline/>builds & linker"s timeline</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/built-in-functions-optimizations/>built-in functions optimizations</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/built-in-functions-optimizations/>built-in functions optimizations</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-go-build-works/>how "go build" works</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/how-go-build-works/>how "go build" works</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/>how are loops translated to assembly</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/how-are-loops-translated-to-assembly/>how are loops translated to assembly</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/>how to take advantage of symbols tables</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/how-to-take-advantage-of-symbols-tables/>how to take advantage of symbols tables</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/inline-strategy-limitation/>inline strategy & limitation</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/inline-strategy-limitation/>inline strategy & limitation</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/>introduction to the escape analysis</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/introduction-to-the-escape-analysis/>introduction to the escape analysis</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler/>introduction to the go compiler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/introduction-to-the-go-compiler/>introduction to the go compiler</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/>introduction to the go compiler ssa backend</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/introduction-to-the-go-compiler-ssa-backend/>introduction to the go compiler ssa backend</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/>language semantics on escape analysis</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/language-semantics-on-escape-analysis/>language semantics on escape analysis</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/memory-safety-with-bounds-check/>memory safety with bounds check</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/memory-safety-with-bounds-check/>memory safety with bounds check</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/overview-of-the-compiler/>overview of the compiler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/overview-of-the-compiler/>overview of the compiler</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/slice-and-memory-management/>slice and memory management</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/slice-and-memory-management/>slice and memory management</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Compiler/understanding-compiler-directives/>understanding compiler directives</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Compiler/understanding-compiler-directives/>understanding compiler directives</a>
 </li>
 </ul>
 </li>
@@ -118,16 +118,16 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/build-a-better-linker/>build a better linker</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Linker/build-a-better-linker/>build a better linker</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/builds-linkers-timeline/>builds & linker"s timeline</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Linker/builds-linkers-timeline/>builds & linker"s timeline</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/how-go-build-works/>how "go build" works</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Linker/how-go-build-works/>how "go build" works</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/Linker/object-file-relocations/>object file & relocations</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/Linker/object-file-relocations/>object file & relocations</a>
 </li>
 </ul>
 </li>
@@ -138,7 +138,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/ABI/go-register-ABI/>go register ABI</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/ABI/go-register-ABI/>go register ABI</a>
 </li>
 </ul>
 </li>
@@ -149,12 +149,12 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/AST/visualize-your-go-code/>visualize your go code</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/AST/visualize-your-go-code/>visualize your go code</a>
 </li>
 </ul>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Toolchain/instrumentation-in-go/>instrumentation in go</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Toolchain/instrumentation-in-go/>instrumentation in go</a>
 </li>
 </ul>
 </li>
@@ -171,19 +171,19 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/demystifying-memory-management-in-modern-programming-languages/>demystifying memory management in modern programming languages</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/MemoryAllocation/demystifying-memory-management-in-modern-programming-languages/>demystifying memory management in modern programming languages</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-allocation/>memory management and allocation</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/MemoryAllocation/memory-management-and-allocation/>memory management and allocation</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/memory-management-and-memory-sweep/>memory management and memory sweep</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/MemoryAllocation/memory-management-and-memory-sweep/>memory management and memory sweep</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/slice-and-memory-management/>slice and memory management</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/MemoryAllocation/slice-and-memory-management/>slice and memory management</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/MemoryAllocation/visualizing-memory-management-in-go/>visualizing memory management in go</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/MemoryAllocation/visualizing-memory-management-in-go/>visualizing memory management in go</a>
 </li>
 </ul>
 </li>
@@ -194,43 +194,43 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/>an insight into go garbage collector</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/an-insight-into-go-garbage-collector/>an insight into go garbage collector</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/finalizers/>finalizers</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/finalizers/>finalizers</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/>go GC: latency problem solved</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/go-GC-latency-problem-solved/>go GC: latency problem solved</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/>go GC: prioritizing low latency and simplicity</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/go-GC-prioritizing-low-latency-and-simplicity/>go GC: prioritizing low latency and simplicity</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/>how does GC mark the memory</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/how-does-GC-mark-the-memory/>how does GC mark the memory</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/>how does GC watch your application</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/how-does-GC-watch-your-application/>how does GC watch your application</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/how-does-go-stop-the-world/>how does go stop the world</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/how-does-go-stop-the-world/>how does go stop the world</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/keeping-a-variable-alive/>keeping a variable alive</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/keeping-a-variable-alive/>keeping a variable alive</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-allocation/>memory management and allocation</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/memory-management-and-allocation/>memory management and allocation</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/>memory management and memory sweep</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/memory-management-and-memory-sweep/>memory management and memory sweep</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-garbage-collection-handbook/>the garbage collection handbook</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/the-garbage-collection-handbook/>the garbage collection handbook</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/>the rules of unsafe.Pointer and uintptr</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/the-rules-of-unsafe.Pointer-and-uintptr/>the rules of unsafe.Pointer and uintptr</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Memory/GarbageCollection/tracing-garbage-collection/>tracing garbage collection</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Memory/GarbageCollection/tracing-garbage-collection/>tracing garbage collection</a>
 </li>
 </ul>
 </li>
@@ -243,43 +243,43 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/asynchronous-preemption/>asynchronous preemption</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/asynchronous-preemption/>asynchronous preemption</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/g0-special-goroutines/>g0, special goroutines</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/g0-special-goroutines/>g0, special goroutines</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-and-preemption/>goroutine and preemption</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/goroutine-and-preemption/>goroutine and preemption</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/goroutine-os-thread-and-cpu-management/>goroutine, os thread, and cpu management</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/goroutine-os-thread-and-cpu-management/>goroutine, os thread, and cpu management</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/gsignal-master-of-signals/>gsignal, master of signals</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/gsignal-master-of-signals/>gsignal, master of signals</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-a-goroutine-start-and-exit/>how does a goroutine start and exit</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/how-does-a-goroutine-start-and-exit/>how does a goroutine start and exit</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-does-go-recycle-goroutines/>how does go recycle goroutines</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/how-does-go-recycle-goroutines/>how does go recycle goroutines</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/how-goroutine-stack-size-evolve/>how goroutine stack size evolve</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/how-goroutine-stack-size-evolve/>how goroutine stack size evolve</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/improve-the-usage-of-your-goroutines-with-GODEBUG/>improve the usage of your goroutines with GODEBUG</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/improve-the-usage-of-your-goroutines-with-GODEBUG/>improve the usage of your goroutines with GODEBUG</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/observing-stack-grow-and-shrink/>observing stack grow and shrink</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/observing-stack-grow-and-shrink/>observing stack grow and shrink</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/what-does-a-goroutine-switch-actually-involve/>what does a goroutine switch actually involve</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/what-does-a-goroutine-switch-actually-involve/>what does a goroutine switch actually involve</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Goroutine/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Goroutine/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
 </li>
 </ul>
 </li>
@@ -296,22 +296,22 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/concurrency-scheduler-affinity/>concurrency & scheduler affinity</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/GOMAXPROCS-live-updates/>GOMAXPROCS & live updates</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/GOMAXPROCS-live-updates/>GOMAXPROCS & live updates</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-i-os-scheduler/>scheduling in go: part i - os scheduler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/scheduling-in-go-part-i-os-scheduler/>scheduling in go: part i - os scheduler</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-ii-go-scheduler/>scheduling in go: part ii - go scheduler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/scheduling-in-go-part-ii-go-scheduler/>scheduling in go: part ii - go scheduler</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/scheduling-in-go-part-iii-concurrency/>scheduling in go: part iii - concurrency</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/scheduling-in-go-part-iii-concurrency/>scheduling in go: part iii - concurrency</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Scheduler/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Scheduler/work-stealing-in-go-scheduler/>work-stealing in go scheduler</a>
 </li>
 </ul>
 </li>
@@ -322,12 +322,12 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/Monitor/monitor-pattern/>monitor pattern</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/Monitor/monitor-pattern/>monitor pattern</a>
 </li>
 </ul>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/runtime/a-whirlwind-tour-of-Gos-runtime-environment-variables/>a whirlwind tour of Go’s runtime environment variables</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/runtime/a-whirlwind-tour-of-Gos-runtime-environment-variables/>a whirlwind tour of Go’s runtime environment variables</a>
 </li>
 </ul>
 </li>
@@ -344,13 +344,13 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/how-to-reduce-lock-contention-with-the-atomic-package/>how to reduce lock contention with the atomic package</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Synchronization/Locks/how-to-reduce-lock-contention-with-the-atomic-package/>how to reduce lock contention with the atomic package</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/locks-sync.Mutex-internals/>locks: sync.Mutex internals</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Synchronization/Locks/locks-sync.Mutex-internals/>locks: sync.Mutex internals</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/Locks/mutex-and-starvation/>mutex and starvation</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Synchronization/Locks/mutex-and-starvation/>mutex and starvation</a>
 </li>
 </ul>
 </li>
@@ -361,10 +361,10 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/a-race-detector-unfurled/>a race detector unfurled</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Synchronization/RaceDetection/a-race-detector-unfurled/>a race detector unfurled</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Synchronization/RaceDetection/race-detector-with-thread-sanitizer/>race detector with thread sanitizer</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Synchronization/RaceDetection/race-detector-with-thread-sanitizer/>race detector with thread sanitizer</a>
 </li>
 </ul>
 </li>
@@ -377,7 +377,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/diagnostics-methods/>Diagnostics Methods</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Diagnostics/diagnostics-methods/>Diagnostics Methods</a>
 </li>
 <li>
 <input type=checkbox id=section-1c55d6e534f174d1a9d86e1f0d27011e class=toggle>
@@ -386,7 +386,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Debugging/debugging-with-delve-coredumps/>debugging with delve & coredumps</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Diagnostics/Debugging/debugging-with-delve-coredumps/>debugging with delve & coredumps</a>
 </li>
 </ul>
 </li>
@@ -397,10 +397,10 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/language-semantics-on-memory-profiling/>language semantics on memory profiling</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Diagnostics/PProf/language-semantics-on-memory-profiling/>language semantics on memory profiling</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/PProf/samples-collection-with-pprof/>samples collection with pprof</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Diagnostics/PProf/samples-collection-with-pprof/>samples collection with pprof</a>
 </li>
 </ul>
 </li>
@@ -411,7 +411,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Diagnostics/Tracing/discovery-of-the-trace-package/>discovery of the trace package</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Diagnostics/Tracing/discovery-of-the-trace-package/>discovery of the trace package</a>
 </li>
 </ul>
 </li>
@@ -424,16 +424,16 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/Benchmarking-in-Golang-Improving-function-performance/>Benchmarking in Golang: Improving function performance</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Testing/Benchmarking-in-Golang-Improving-function-performance/>Benchmarking in Golang: Improving function performance</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Testing/learn-go-with-tests/>learn-go-with-tests</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/practical-fuzzing-with-go/>practical fuzzing with go</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Testing/practical-fuzzing-with-go/>practical fuzzing with go</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Testing/unknown-parts-of-the-test-package/>unknown parts of the test package</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Testing/unknown-parts-of-the-test-package/>unknown parts of the test package</a>
 </li>
 </ul>
 </li>
@@ -450,10 +450,10 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/buffered-and-unbuffered-channels/>buffered and unbuffered channels</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/chan/buffered-and-unbuffered-channels/>buffered and unbuffered channels</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/chan/ordering-in-select-statements/>ordering in select statements</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/chan/ordering-in-select-statements/>ordering in select statements</a>
 </li>
 </ul>
 </li>
@@ -464,13 +464,13 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/concurrent-access-with-maps-part-3/>concurrent access with maps - part 3</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/map/concurrent-access-with-maps-part-3/>concurrent access with maps - part 3</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-1/>map design by code - part 1</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/map/map-design-by-code-part-1/>map design by code - part 1</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/map/map-design-by-code-part-2/>map design by code - part 2</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/map/map-design-by-code-part-2/>map design by code - part 2</a>
 </li>
 </ul>
 </li>
@@ -481,7 +481,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/unsafe/what-is-the-unsafe-package/>what is the unsafe package</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/unsafe/what-is-the-unsafe-package/>what is the unsafe package</a>
 </li>
 </ul>
 </li>
@@ -492,7 +492,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/closure/how-does-go-implement-closures/>how does go implement closures</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/closure/how-does-go-implement-closures/>how does go implement closures</a>
 </li>
 </ul>
 </li>
@@ -503,7 +503,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/constants/learn-go-constants-a-visual-guide/>learn go constants - a visual guide</a>
 </li>
 </ul>
 </li>
@@ -514,7 +514,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/context/context-and-cancellation-by-propagation/>context and cancellation by propagation</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/context/context-and-cancellation-by-propagation/>context and cancellation by propagation</a>
 </li>
 </ul>
 </li>
@@ -525,10 +525,10 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/defer-internals/>defer internals</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/defer/defer-internals/>defer internals</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/defer/how-does-defer-statement-work/>how does defer statement work</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/defer/how-does-defer-statement-work/>how does defer statement work</a>
 </li>
 </ul>
 </li>
@@ -539,7 +539,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/init/init-functions/>init functions</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/init/init-functions/>init functions</a>
 </li>
 </ul>
 </li>
@@ -550,7 +550,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/interface/understand-the-empty-interface/>understand the empty interface</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/interface/understand-the-empty-interface/>understand the empty interface</a>
 </li>
 </ul>
 </li>
@@ -561,7 +561,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/panicrecover/how-does-a-program-recover/>how does a program recover</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/panicrecover/how-does-a-program-recover/>how does a program recover</a>
 </li>
 </ul>
 </li>
@@ -572,13 +572,13 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/design-philosophy-on-data-and-semantics/>design philosophy on data and semantics</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/pointer/design-philosophy-on-data-and-semantics/>design philosophy on data and semantics</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/language-mechanics-on-stacks-and-pointers/>language mechanics on stacks and pointers</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/pointer/language-mechanics-on-stacks-and-pointers/>language mechanics on stacks and pointers</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pointer/should-i-use-pointer-instead-of-a-copy-of-struct/>should i use pointer instead of a copy of struct</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/pointer/should-i-use-pointer-instead-of-a-copy-of-struct/>should i use pointer instead of a copy of struct</a>
 </li>
 </ul>
 </li>
@@ -589,7 +589,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/pool/understand-the-design-of-sync.pool/>understand the design of sync.pool</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/pool/understand-the-design-of-sync.pool/>understand the design of sync.pool</a>
 </li>
 </ul>
 </li>
@@ -600,7 +600,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/random/how-are-random-numbers-generated/>how are random numbers generated</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/random/how-are-random-numbers-generated/>how are random numbers generated</a>
 </li>
 </ul>
 </li>
@@ -611,7 +611,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/string/string-conversion-optimization/>string & conversion optimization</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/string/string-conversion-optimization/>string & conversion optimization</a>
 </li>
 </ul>
 </li>
@@ -622,7 +622,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/syscall/how-does-go-runtime-handles-syscall/>how does go runtime handles syscall</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/syscall/how-does-go-runtime-handles-syscall/>how does go runtime handles syscall</a>
 </li>
 </ul>
 </li>
@@ -633,7 +633,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Builtins/timer/timers-life-cycle/>timers" life cycle</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Builtins/timer/timers-life-cycle/>timers" life cycle</a>
 </li>
 </ul>
 </li>
@@ -646,7 +646,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Patterns/rethinking-classical-concurrency-patterns/>rethinking classical concurrency patterns</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Patterns/rethinking-classical-concurrency-patterns/>rethinking classical concurrency patterns</a>
 </li>
 </ul>
 </li>
@@ -657,10 +657,10 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/what-is-a-goproxy/>what is a goproxy</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Infrastructure/what-is-a-goproxy/>what is a goproxy</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Infrastructure/playing-with-go-module-proxy/>playing with go module proxy</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Infrastructure/playing-with-go-module-proxy/>playing with go module proxy</a>
 </li>
 </ul>
 </li>
@@ -671,7 +671,7 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Plugins/go-plugin-system/>go plugin system</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Plugins/go-plugin-system/>go plugin system</a>
 </li>
 </ul>
 </li>
@@ -682,26 +682,26 @@
 </label>
 <ul>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
 </li>
 </ul>
 </li>
 <li>
-<a href=https://hitzhangjie.pro/go-internals-v2/docs/SUMMARY/>Summary</a>
+<a href=https://hitzhangjie.pro/go-internals/docs/SUMMARY/>Summary</a>
 </li>
 </ul>
 <hr>
 <ul>
 <li>
-<a href=/go-internals-v2/posts/>
+<a href=/go-internals/posts/>
 Posts
 </a>
 </li>
 <li>
-<a href=https://github.com/hitzhangjie/go-internals-v2 target=_blank rel=noopener>
+<a href=https://github.com/hitzhangjie/go-internals target=_blank rel=noopener>
 Github
 </a>
 </li>
@@ -719,11 +719,11 @@ Blog
 <header class=book-header>
 <div class="flex align-center justify-between">
 <label for=menu-control>
-<img src=/go-internals-v2/svg/menu.svg class=book-icon alt=Menu>
+<img src=/go-internals/svg/menu.svg class=book-icon alt=Menu>
 </label>
 <strong>types</strong>
 <label for=toc-control>
-<img src=/go-internals-v2/svg/toc.svg class=book-icon alt="Table of Contents">
+<img src=/go-internals/svg/toc.svg class=book-icon alt="Table of Contents">
 </label>
 </div>
 <aside class="hidden clearfix">
@@ -738,195 +738,195 @@ Blog
 <strong>Tags</strong>
 <ul>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/abi/>abi</a>
+<a href=/go-internals/tags/abi/>abi</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/ast/>ast</a>
+<a href=/go-internals/tags/ast/>ast</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/chan/>chan</a>
+<a href=/go-internals/tags/chan/>chan</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/chan-select-case/>chan, select-case</a>
+<a href=/go-internals/tags/chan-select-case/>chan, select-case</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/closure/>closure</a>
+<a href=/go-internals/tags/closure/>closure</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/compiler/>compiler</a>
+<a href=/go-internals/tags/compiler/>compiler</a>
 <span>25</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/compiler-linker/>compiler, linker</a>
+<a href=/go-internals/tags/compiler-linker/>compiler, linker</a>
 <span>6</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/concurrency/>concurrency</a>
+<a href=/go-internals/tags/concurrency/>concurrency</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/context/>context</a>
+<a href=/go-internals/tags/context/>context</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/debug/>debug</a>
+<a href=/go-internals/tags/debug/>debug</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer/>defer</a>
+<a href=/go-internals/tags/defer/>defer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer-panic/>defer, panic</a>
+<a href=/go-internals/tags/defer-panic/>defer, panic</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer-panic-recover/>defer, panic, recover</a>
+<a href=/go-internals/tags/defer-panic-recover/>defer, panic, recover</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/design/>design</a>
+<a href=/go-internals/tags/design/>design</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>
+<a href=/go-internals/tags/diagnostics/>diagnostics</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/fuzzy-test/>fuzzy, test</a>
+<a href=/go-internals/tags/fuzzy-test/>fuzzy, test</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/garbage-collector/>garbage collector</a>
+<a href=/go-internals/tags/garbage-collector/>garbage collector</a>
 <span>23</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goproxy/>goproxy</a>
+<a href=/go-internals/tags/goproxy/>goproxy</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine/>goroutine</a>
+<a href=/go-internals/tags/goroutine/>goroutine</a>
 <span>23</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine-gpm-scheduler/>goroutine, gpm scheduler</a>
+<a href=/go-internals/tags/goroutine-gpm-scheduler/>goroutine, gpm scheduler</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine-select-case/>goroutine, select-case</a>
+<a href=/go-internals/tags/goroutine-select-case/>goroutine, select-case</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/gpm-scheduler/>gpm scheduler</a>
+<a href=/go-internals/tags/gpm-scheduler/>gpm scheduler</a>
 <span>8</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/init/>init</a>
+<a href=/go-internals/tags/init/>init</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/install/>install</a>
+<a href=/go-internals/tags/install/>install</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/instrumentation/>instrumentation</a>
+<a href=/go-internals/tags/instrumentation/>instrumentation</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/interface/>interface</a>
+<a href=/go-internals/tags/interface/>interface</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/linker/>linker</a>
+<a href=/go-internals/tags/linker/>linker</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/locks/>locks</a>
+<a href=/go-internals/tags/locks/>locks</a>
 <span>6</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/map/>map</a>
+<a href=/go-internals/tags/map/>map</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/map-race-detector/>map, race detector</a>
+<a href=/go-internals/tags/map-race-detector/>map, race detector</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/mechanics/>mechanics</a>
+<a href=/go-internals/tags/mechanics/>mechanics</a>
 <span>8</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/memory-management/>memory management</a>
+<a href=/go-internals/tags/memory-management/>memory management</a>
 <span>9</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/monitor/>monitor</a>
+<a href=/go-internals/tags/monitor/>monitor</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/plugin/>plugin</a>
+<a href=/go-internals/tags/plugin/>plugin</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/pointer/>pointer</a>
+<a href=/go-internals/tags/pointer/>pointer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/pprof/>pprof</a>
+<a href=/go-internals/tags/pprof/>pprof</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/race-detector/>race detector</a>
+<a href=/go-internals/tags/race-detector/>race detector</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/random/>random</a>
+<a href=/go-internals/tags/random/>random</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/runtime/>runtime</a>
+<a href=/go-internals/tags/runtime/>runtime</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/string/>string</a>
+<a href=/go-internals/tags/string/>string</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/sync.pool/>sync.pool</a>
+<a href=/go-internals/tags/sync.pool/>sync.pool</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/syscall/>syscall</a>
+<a href=/go-internals/tags/syscall/>syscall</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/tdd-test/>tdd, test</a>
+<a href=/go-internals/tags/tdd-test/>tdd, test</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/test/>test</a>
+<a href=/go-internals/tags/test/>test</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/timer/>timer</a>
+<a href=/go-internals/tags/timer/>timer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/trace/>trace</a>
+<a href=/go-internals/tags/trace/>trace</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/types/>types</a>
+<a href=/go-internals/tags/types/>types</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/unsafe/>unsafe</a>
+<a href=/go-internals/tags/unsafe/>unsafe</a>
 <span>2</span>
 </li>
 </ul>
@@ -937,10 +937,10 @@ Blog
 </header>
 <article class="markdown book-post">
 <h2>
-<a href=/go-internals-v2/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
+<a href=/go-internals/docs/Types/duck-typing-structural-typing-nominal-typing/>duck typing, structural typing, nominal typing</a>
 </h2>
 <div>
-<a href=/go-internals-v2/tags/types/>types</a>
+<a href=/go-internals/tags/types/>types</a>
 </div>
 <p>Let&rsquo;s Summarize # 首先说结论，go语言类型是structural typing，可以理解成它是一种在duck typing之上增加了编译时类型安全检查的typing，所以也会看到有人称其为type-safe duck typing。 下面简单总结下这几种typing的异同点：
 duck typing，最灵活，但是类型安全性不够，容易导致编译时无法发现的运行时错误，因为duck typing机制下，obj.callMethod()这里的callMethod是否有在obj下定义是没有编译时检查保证的，在运行时才会去检查。比如python、js是支持duck typing的； norminal typing，这种通过显示的声明类型实现了哪个接口，编译时类型检查器就可以根据这个声明的依赖关系去检查类型是否实现了接口所声明的所有方法。这种方式能保证类型安全，但是开发人员需要显示写的代码也变多了，而且类型、接口之间的关系是存在比较强的绑定，没那么灵活。 structural typing，可以理解成duck typing和nominal typing的一种折中。首先开发人员在写代码的时候可以像duck typing那样去写代码，不需要显示声明类型实现了哪个接口，这样写代码写起来简单。另外，在编译时类型检查器可以做些类型安全检查，检查某个类型是否隐式实现了某个期望的接口。这样的话相当于吸收了duck typing、nominal typing各自的优点。 ps：将go称之为duck typing是不够严谨的，如果说成是type-safe duck typing还可以，准确地说还是应该用structural typing最准确。
@@ -949,10 +949,10 @@ Source Analysis # References # https://medium.com/higher-order-functions/duck-ty
 </article>
 <article class="markdown book-post">
 <h2>
-<a href=/go-internals-v2/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
+<a href=/go-internals/docs/Types/structural-typing-and-norminal-typing/>structural typing and norminal typing</a>
 </h2>
 <div>
-<a href=/go-internals-v2/tags/types/>types</a>
+<a href=/go-internals/tags/types/>types</a>
 </div>
 <p>Let&rsquo;s Summarize # 编程语言中的类型系统，可以分为structural typing和norminal typing。什么意思呢？就是类型检查器在进行类型比较的时候，前者是通过类型的结构来判断是否相等，后者是通过类型名进行比较。像c\c++\java主要是使用的norminal typing，而go、ocama、haskell主要是使用了structural typing。 其实在同一种编程语言里面，也是可以同时采用这两种特性的，比如有种语言针对class是采用的norminal typing，对于object则是采用的structural typing。
 Source Analysis # References # https://medium.com/@thejameskyle/type-systems-structural-vs-nominal-typing-explained-56511dd969f4#768b
@@ -977,195 +977,195 @@ Source Analysis # References # https://medium.com/@thejameskyle/type-systems-str
 <strong>Tags</strong>
 <ul>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/abi/>abi</a>
+<a href=/go-internals/tags/abi/>abi</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/ast/>ast</a>
+<a href=/go-internals/tags/ast/>ast</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/chan/>chan</a>
+<a href=/go-internals/tags/chan/>chan</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/chan-select-case/>chan, select-case</a>
+<a href=/go-internals/tags/chan-select-case/>chan, select-case</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/closure/>closure</a>
+<a href=/go-internals/tags/closure/>closure</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/compiler/>compiler</a>
+<a href=/go-internals/tags/compiler/>compiler</a>
 <span>25</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/compiler-linker/>compiler, linker</a>
+<a href=/go-internals/tags/compiler-linker/>compiler, linker</a>
 <span>6</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/concurrency/>concurrency</a>
+<a href=/go-internals/tags/concurrency/>concurrency</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/context/>context</a>
+<a href=/go-internals/tags/context/>context</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/debug/>debug</a>
+<a href=/go-internals/tags/debug/>debug</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer/>defer</a>
+<a href=/go-internals/tags/defer/>defer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer-panic/>defer, panic</a>
+<a href=/go-internals/tags/defer-panic/>defer, panic</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/defer-panic-recover/>defer, panic, recover</a>
+<a href=/go-internals/tags/defer-panic-recover/>defer, panic, recover</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/design/>design</a>
+<a href=/go-internals/tags/design/>design</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/diagnostics/>diagnostics</a>
+<a href=/go-internals/tags/diagnostics/>diagnostics</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/fuzzy-test/>fuzzy, test</a>
+<a href=/go-internals/tags/fuzzy-test/>fuzzy, test</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/garbage-collector/>garbage collector</a>
+<a href=/go-internals/tags/garbage-collector/>garbage collector</a>
 <span>23</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goproxy/>goproxy</a>
+<a href=/go-internals/tags/goproxy/>goproxy</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine/>goroutine</a>
+<a href=/go-internals/tags/goroutine/>goroutine</a>
 <span>23</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine-gpm-scheduler/>goroutine, gpm scheduler</a>
+<a href=/go-internals/tags/goroutine-gpm-scheduler/>goroutine, gpm scheduler</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/goroutine-select-case/>goroutine, select-case</a>
+<a href=/go-internals/tags/goroutine-select-case/>goroutine, select-case</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/gpm-scheduler/>gpm scheduler</a>
+<a href=/go-internals/tags/gpm-scheduler/>gpm scheduler</a>
 <span>8</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/init/>init</a>
+<a href=/go-internals/tags/init/>init</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/install/>install</a>
+<a href=/go-internals/tags/install/>install</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/instrumentation/>instrumentation</a>
+<a href=/go-internals/tags/instrumentation/>instrumentation</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/interface/>interface</a>
+<a href=/go-internals/tags/interface/>interface</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/linker/>linker</a>
+<a href=/go-internals/tags/linker/>linker</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/locks/>locks</a>
+<a href=/go-internals/tags/locks/>locks</a>
 <span>6</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/map/>map</a>
+<a href=/go-internals/tags/map/>map</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/map-race-detector/>map, race detector</a>
+<a href=/go-internals/tags/map-race-detector/>map, race detector</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/mechanics/>mechanics</a>
+<a href=/go-internals/tags/mechanics/>mechanics</a>
 <span>8</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/memory-management/>memory management</a>
+<a href=/go-internals/tags/memory-management/>memory management</a>
 <span>9</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/monitor/>monitor</a>
+<a href=/go-internals/tags/monitor/>monitor</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/plugin/>plugin</a>
+<a href=/go-internals/tags/plugin/>plugin</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/pointer/>pointer</a>
+<a href=/go-internals/tags/pointer/>pointer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/pprof/>pprof</a>
+<a href=/go-internals/tags/pprof/>pprof</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/race-detector/>race detector</a>
+<a href=/go-internals/tags/race-detector/>race detector</a>
 <span>4</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/random/>random</a>
+<a href=/go-internals/tags/random/>random</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/runtime/>runtime</a>
+<a href=/go-internals/tags/runtime/>runtime</a>
 <span>1</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/string/>string</a>
+<a href=/go-internals/tags/string/>string</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/sync.pool/>sync.pool</a>
+<a href=/go-internals/tags/sync.pool/>sync.pool</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/syscall/>syscall</a>
+<a href=/go-internals/tags/syscall/>syscall</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/tdd-test/>tdd, test</a>
+<a href=/go-internals/tags/tdd-test/>tdd, test</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/test/>test</a>
+<a href=/go-internals/tags/test/>test</a>
 <span>3</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/timer/>timer</a>
+<a href=/go-internals/tags/timer/>timer</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/trace/>trace</a>
+<a href=/go-internals/tags/trace/>trace</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/types/>types</a>
+<a href=/go-internals/tags/types/>types</a>
 <span>2</span>
 </li>
 <li class="flex justify-between">
-<a href=/go-internals-v2/tags/unsafe/>unsafe</a>
+<a href=/go-internals/tags/unsafe/>unsafe</a>
 <span>2</span>
 </li>
 </ul>
