@@ -64,11 +64,17 @@ typora-copy-images-to: upload
 
 如果想方便地阅读源码，设置好IDE是必须的。对于go源码，如果我们直接打开该工程并阅读源码，IDE会提示遇到些错误。最常见的一个错误就是“use of internal package not allowed”，当我们打开源码文件，如果该源码文件import了标准库中internal路径下的包，就会遇到这个错误。
 
-**先说下IDE报错的原因？**对于importpath internal在go中是有特殊意义的，它限定了其下的packages只能在与internal同级目录下及其子目录下packages引用，go源码中的package引用也遵循这个规则，当我们的GOROOT环境变量设置指向的不是当前检出的go工程目录时，go编译器会认为其import的标准库应该要从GOROOT（比如/usr/local/go/src）下去引用，此时就会认为引用了不被允许的internal package。
+**先说下IDE报错的原因？**
 
-**为何执行all.bash不报错？**因为all.bash执行的脚本里面对GOROOT进行了正确的设置，编译时才没有报错。
+对于importpath internal在go中是有特殊意义的，它限定了其下的packages只能在与internal同级目录下及其子目录下packages引用，go源码中的package引用也遵循这个规则，当我们的GOROOT环境变量设置指向的不是当前检出的go工程目录时，go编译器会认为其import的标准库应该要从GOROOT（比如/usr/local/go/src）下去引用，此时就会认为引用了不被允许的internal package。
 
-**那如何解决这个问题呢？**IDE里面需要正确设置GOROOT，让其指向新检出的源码目录即可解决。搞定了这个就可以在IDE里正常阅读，并执行单测。以GoLand为例，打开Preferences->Go->GOROOT，添加新检出的go源码位置作为新的Go SDK路径，点击保存即可。
+**为何执行all.bash不报错？**
+
+因为all.bash执行的脚本里面对GOROOT进行了正确的设置，编译时才没有报错。
+
+**那如何解决这个问题呢？**
+
+IDE里面需要正确设置GOROOT，让其指向新检出的源码目录即可解决。搞定了这个就可以在IDE里正常阅读，并执行单测。以GoLand为例，打开Preferences->Go->GOROOT，添加新检出的go源码位置作为新的Go SDK路径，点击保存即可。
 
 # References
 1. https://go.dev/doc/install/source
