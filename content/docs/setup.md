@@ -11,7 +11,7 @@ author: 'gophers'
 publisher: 'golang'
 status: 'Finished'
 link: 'https://go.dev/doc/install/source'
-typora-copy-images-to: upload
+
 ---
 
 # 准备
@@ -55,7 +55,6 @@ typora-copy-images-to: upload
   ```
   构建出的可执行程序会存放在path/to/goroot/bin下面，如果想测试可以通过`path/to/goroot/bin/go build`来对go源码进行编译。
   
-
  - 修改源码
 
    当我们希望修改源码并进行测试，也需要按照上述过程对path/to/goroot/bin/go进行重新构建，然后再对go源码进行编译、测试。
@@ -75,6 +74,8 @@ typora-copy-images-to: upload
 **那如何解决这个问题呢？**
 
 IDE里面需要正确设置GOROOT，让其指向新检出的源码目录即可解决。搞定了这个就可以在IDE里正常阅读，并执行单测。以GoLand为例，打开Preferences->Go->GOROOT，添加新检出的go源码位置作为新的Go SDK路径，点击保存即可。
+
+![GoLand GOROOT Settings](assets/setup/image-20220719111034758.png)
 
 # References
 1. https://go.dev/doc/install/source

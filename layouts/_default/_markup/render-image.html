@@ -1,19 +1,31 @@
 {{- if .Page.Site.Params.BookPortableLinks -}}
   {{- template "portable-image" . -}}
 {{- else -}}
-  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }}/>
+  <img src="/docs/{{ .Destination }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }}/>
 {{- end -}}
 
+<!-- generate links for remote and local images -->
 {{- define "portable-image" -}}
+  {{ $path := .Destination }}
+
   {{- $isRemote := or (in .Destination "://") (strings.HasPrefix .Destination "//") }}
+
   {{- if not $isRemote }}
-    {{- $path := print .Page.File.Dir .Destination }}
-    {{- if strings.HasPrefix .Destination "/" }}
-      {{- $path = print "/static" .Destination }}
-    {{- end }}
-    {{- if not (fileExists $path) }}
+
+    <!-- test file existed or not -->
+    {{ $rpath := print .Page.File.Dir .Destination }}
+    {{- if not (fileExists $rpath) }}
       {{- warnf "Image '%s' not found in '%s'" .Destination .Page.File }}
     {{- end }}
+
+    <!-- convert image url -->
+    {{- if strings.HasPrefix .Destination "/" }}
+      {{- $path = print .Page.Site.BaseURL "/static" .Destination }}
+    {{- else -}}
+      {{- $path = print .Page.Site.BaseURL .Page.File.Dir .Destination }}
+    {{- end }}
+
   {{- end }}
-  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }}/>
+
+  <img src="{{ $path | safeURL }}" alt="{{ .Text }}" {{ with .Title }}title="{{ . }}"{{ end }}/>
 {{- end -}}

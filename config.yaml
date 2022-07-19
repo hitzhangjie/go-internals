@@ -103,9 +103,11 @@ params:
   # Theme will print warning if page referenced in markdown does not exists.
   BookPortableLinks: true
 
+  # see issue: https://github.com/alex-shpak/hugo-book/issues/464
+  #
   # /!\ This is an experimental feature, might be removed or changed at any time
   # (Optional, experimental, default false) Enables service worker that caches visited pages and resources for offline use.
-  BookServiceWorker: true
+  #BookServiceWorker: true
 
   # /!\ This is an experimental feature, might be removed or changed at any time
   # (Optional, experimental, default false) Enables a drop-down menu for translations only if a translation is present.
