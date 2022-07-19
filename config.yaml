@@ -1,6 +1,6 @@
 # hugo server --minify --themesDir ... --baseURL=http://0.0.0.0:1313/theme/hugo-book/
 
-baseURL: https://hitzhangjie.pro/go-internals-v2/
+baseURL: https://hitzhangjie.pro/go-internals/
 title: Go设计实现内幕
 theme: hugo-book
 
@@ -36,7 +36,7 @@ menu:
   # before: []
   after:
     - name: "Github"
-      url: "https://github.com/hitzhangjie/go-internals-v2"
+      url: "https://github.com/hitzhangjie/go-internals"
       weight: 10
     - name: "Blog"
       url: "https://hitzhangjie.pro"
