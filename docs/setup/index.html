@@ -12,7 +12,7 @@
 <link rel=manifest href=/go-internals-v2/manifest.json>
 <link rel=icon href=/go-internals-v2/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/go-internals-v2/book.min.68be0b7a9674f2a612ce0e9b2e9447ff4b7ac96546e06b642bfd3ded0ca490ef.css integrity="sha256-aL4LepZ08qYSzg6bLpRH/0t6yWVG4GtkK/097QykkO8=">
-<script defer src=/go-internals-v2/zh.search.min.17c5d8c9575e67102f6a7d6248a0f2cc028892a321cd6d0ae421067c1d5bb3b6.js integrity="sha256-F8XYyVdeZxAvan1iSKDyzAKIkqMhzW0K5CEGfB1bs7Y="></script>
+<script defer src=/go-internals-v2/zh.search.min.c502cc1e7867019d317c0e03340c047979077d04edc8262eb7f9f698703fb60a.js integrity="sha256-xQLMHnhnAZ0xfA4DNAwEeXkHfQTtyCYut/n2mHA/tgo="></script>
 </head>
 <body dir=ltr>
 <input type=checkbox class="hidden toggle" id=menu-control>
@@ -732,8 +732,20 @@ Blog
 <li><a href=#环境设置>环境设置</a>
 <ul>
 <li><a href=#安装必要工具>安装必要工具</a></li>
-<li><a href=#从源码构建>从源码构建</a></li>
-<li><a href=#ide如何设置>IDE如何设置</a></li>
+<li><a href=#从源码构建>从源码构建</a>
+<ul>
+<li><a href=#下载源码>下载源码</a></li>
+<li><a href=#执行构建>执行构建</a></li>
+<li><a href=#修改源码>修改源码</a></li>
+</ul>
+</li>
+<li><a href=#ide如何设置>IDE如何设置</a>
+<ul>
+<li><a href=#说下ide报错的原因>说下IDE报错的原因</a></li>
+<li><a href=#为何allbash不报错>为何all.bash不报错</a></li>
+<li><a href=#如何解决这个问题呢>如何解决这个问题呢</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href=#references>References</a></li>
@@ -777,36 +789,46 @@ Blog
 从源码构建
 <a class=anchor href=#%e4%bb%8e%e6%ba%90%e7%a0%81%e6%9e%84%e5%bb%ba>#</a>
 </h2>
-<ul>
-<li>
-<p>下载源码</p>
+<h3 id=下载源码>
+下载源码
+<a class=anchor href=#%e4%b8%8b%e8%bd%bd%e6%ba%90%e7%a0%81>#</a>
+</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#新建目录用于存放go源码，不与GOROOT混在一起即可</span>
 mkdir path/to/goroot
 <span style=color:#75715e>#检出源代码</span>
 git clone https://github.com/golang/go path/to/goroot
-</code></pre></div></li>
-<li>
-<p>执行构建</p>
+</code></pre></div><h3 id=执行构建>
+执行构建
+<a class=anchor href=#%e6%89%a7%e8%a1%8c%e6%9e%84%e5%bb%ba>#</a>
+</h3>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#从源码执行构建</span>
 cd path/to/goroot
 cd src <span style=color:#f92672>&amp;&amp;</span> all.bash
 </code></pre></div><p>构建出的可执行程序会存放在path/to/goroot/bin下面，如果想测试可以通过<code>path/to/goroot/bin/go build</code>来对go源码进行编译。</p>
-</li>
-<li>
-<p>修改源码</p>
+<h3 id=修改源码>
+修改源码
+<a class=anchor href=#%e4%bf%ae%e6%94%b9%e6%ba%90%e7%a0%81>#</a>
+</h3>
 <p>当我们希望修改源码并进行测试，也需要按照上述过程对path/to/goroot/bin/go进行重新构建，然后再对go源码进行编译、测试。</p>
-</li>
-</ul>
 <h2 id=ide如何设置>
 IDE如何设置
 <a class=anchor href=#ide%e5%a6%82%e4%bd%95%e8%ae%be%e7%bd%ae>#</a>
 </h2>
 <p>如果想方便地阅读源码，设置好IDE是必须的。对于go源码，如果我们直接打开该工程并阅读源码，IDE会提示遇到些错误。最常见的一个错误就是“use of internal package not allowed”，当我们打开源码文件，如果该源码文件import了标准库中internal路径下的包，就会遇到这个错误。</p>
-<p><strong>先说下IDE报错的原因？</strong></p>
+<h3 id=说下ide报错的原因>
+说下IDE报错的原因
+<a class=anchor href=#%e8%af%b4%e4%b8%8bide%e6%8a%a5%e9%94%99%e7%9a%84%e5%8e%9f%e5%9b%a0>#</a>
+</h3>
 <p>对于importpath internal在go中是有特殊意义的，它限定了其下的packages只能在与internal同级目录下及其子目录下packages引用，go源码中的package引用也遵循这个规则，当我们的GOROOT环境变量设置指向的不是当前检出的go工程目录时，go编译器会认为其import的标准库应该要从GOROOT（比如/usr/local/go/src）下去引用，此时就会认为引用了不被允许的internal package。</p>
-<p><strong>为何执行all.bash不报错？</strong></p>
+<h3 id=为何allbash不报错>
+为何all.bash不报错
+<a class=anchor href=#%e4%b8%ba%e4%bd%95allbash%e4%b8%8d%e6%8a%a5%e9%94%99>#</a>
+</h3>
 <p>因为all.bash执行的脚本里面对GOROOT进行了正确的设置，编译时才没有报错。</p>
-<p><strong>那如何解决这个问题呢？</strong></p>
+<h3 id=如何解决这个问题呢>
+如何解决这个问题呢
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%e5%91%a2>#</a>
+</h3>
 <p>IDE里面需要正确设置GOROOT，让其指向新检出的源码目录即可解决。搞定了这个就可以在IDE里正常阅读，并执行单测。以GoLand为例，打开Preferences->Go->GOROOT，添加新检出的go源码位置作为新的Go SDK路径，点击保存即可。</p>
 <p>
 <img src=https://hitzhangjie.pro/go-internals-v2/docs/assets/setup/image-20220719111034758.png alt="GoLand GOROOT Settings"></p>
@@ -863,8 +885,20 @@ English
 <li><a href=#环境设置>环境设置</a>
 <ul>
 <li><a href=#安装必要工具>安装必要工具</a></li>
-<li><a href=#从源码构建>从源码构建</a></li>
-<li><a href=#ide如何设置>IDE如何设置</a></li>
+<li><a href=#从源码构建>从源码构建</a>
+<ul>
+<li><a href=#下载源码>下载源码</a></li>
+<li><a href=#执行构建>执行构建</a></li>
+<li><a href=#修改源码>修改源码</a></li>
+</ul>
+</li>
+<li><a href=#ide如何设置>IDE如何设置</a>
+<ul>
+<li><a href=#说下ide报错的原因>说下IDE报错的原因</a></li>
+<li><a href=#为何allbash不报错>为何all.bash不报错</a></li>
+<li><a href=#如何解决这个问题呢>如何解决这个问题呢</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href=#references>References</a></li>
