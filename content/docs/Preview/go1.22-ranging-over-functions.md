@@ -1,0 +1,1 @@
+see: https://eli.thegreenplace.net/2023/preview-ranging-over-functions-in-go
